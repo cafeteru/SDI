@@ -11,7 +11,7 @@ import com.uniovi.repositories.MarksRepository;
 
 @Service
 public class MarksService {
-	
+
 	@Autowired
 	private MarksRepository marksRepository;
 
@@ -32,5 +32,9 @@ public class MarksService {
 
 	public void deleteMark(Long id) {
 		marksRepository.delete(id);
+	}
+
+	public List<Mark> findByDescripcion(String descripcion) {
+		return marksRepository.findByDescipcion(descripcion);
 	}
 }

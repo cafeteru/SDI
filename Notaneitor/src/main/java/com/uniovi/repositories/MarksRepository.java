@@ -1,6 +1,9 @@
 package com.uniovi.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.uniovi.entities.Mark;
 
@@ -10,5 +13,8 @@ import com.uniovi.entities.Mark;
  * @author igm1990
  *
  */
-public interface MarksRepository extends CrudRepository<Mark, Long> {
+public interface MarksRepository extends JpaRepository<Mark, Long> {
+
+	@Query("Select m from Mark m where m.description like %?1%")
+	List<Mark> findByDescipcion(String descripcion);
 }

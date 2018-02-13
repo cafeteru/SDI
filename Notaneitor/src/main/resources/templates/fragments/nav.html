@@ -11,13 +11,22 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-				<li class="active">
+				<li th:if="@{${#httpServletRequest.requestURI}} == '/mark/list'" class="active">
 					<a href="/mark/list">Ver Notas</a>
 				</li>
-				<li>
+				<li th:unless="@{${#httpServletRequest.requestURI}} == '/mark/list'">
+					<a href="/mark/list">Ver Notas</a>
+				</li>
+				<li th:if="@{${#httpServletRequest.requestURI}} == '/mark/add'" class="active">
 					<a href="/mark/add">Agregar Nota</a>
 				</li>
-				<li>
+				<li th:unless="@{${#httpServletRequest.requestURI}} == '/mark/add'">
+					<a href="/mark/add">Agregar Nota</a>
+				</li>
+				<li th:if="@{${#httpServletRequest.requestURI}} == '/mark/filter'" class="active">
+					<a href="/mark/filter">Filtrar</a>
+				</li>
+				<li th:unless="@{${#httpServletRequest.requestURI}} == '/mark/filter'">
 					<a href="/mark/filter">Filtrar</a>
 				</li>
 			</ul>

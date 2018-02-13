@@ -28,12 +28,12 @@ public class MarkController {
 		return "mark/list";
 	}
 
-	@GetMapping(value = "/mark/add")
+	@GetMapping("/mark/add")
 	public String addMarkWeb(@ModelAttribute Mark mark) {
 		return "/mark/add";
 	}
 
-	@PostMapping(value = "/mark/add")
+	@PostMapping("/mark/add")
 	public String addMarkPeticion(@ModelAttribute Mark mark) {
 		marksService.addMark(mark);
 		return "redirect:/mark/list";
@@ -86,7 +86,7 @@ public class MarkController {
 
 	@GetMapping(value = "mark/filter")
 	public String setFilter(Model model,
-			@RequestParam(value = "description", required = false) String description) {
+		@RequestParam(value = "description", required = false) String description) {
 		List<Mark> a = marksService.findByDescripcion(description);
 		model.addAttribute("markList", a);
 		return "mark/filter";

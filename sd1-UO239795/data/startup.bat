@@ -1,1 +1,0 @@
-bin\neo4j console

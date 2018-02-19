@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="fragments/head" />
+
+<body>
+	<script src="scripts/checkForm.js"></script>
+	<nav th:replace="fragments/navs/nav" />
+	<main>
+		<form method="post" action="signup">
+			<p>
+				<label>Nombre:</label>
+				<input type="text" name="name" placeholder="Iván González Mahagamage" required="required" onkeyup="check.checkInputs()" />
+			</p>
+			<p>
+				<label>Email:</label>
+				<input type="email" name="email" placeholder="uo239795@uniovi.es" required="required" onkeyup="check.checkInputs()" />
+			</p>
+			<p>
+				<label>Contraseña:</label>
+				<input type="password" name="password" required="required" onkeyup="check.checkInputs()" />
+			</p>
+			<p>
+				<label>Repetir Contraseña:</label>
+				<input type="password" name="repassword" required="required" onkeyup="check.checkInputs()" />
+			</p>
+			<p>
+				<input type="submit" value="Registrar" onclick="check.checkPasswords()" disabled="disabled" />
+			</p>
+		</form>
+	</main>
+	<footer th:replace="fragments/footer" />
+</body>
+
+</html>

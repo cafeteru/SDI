@@ -6,7 +6,7 @@
 	<script src="scripts/checkForm.js"></script>
 	<nav th:replace="fragments/navs/nav" />
 	<main>
-		<script th:if="${added} == true">alert("Usuario añadido");</script>
+		<script th:if="${added} == true">alert("Usuario ya añadido");</script>
 		<form method="post" action="signup">
 			<p>
 				<label>Nombre:</label>

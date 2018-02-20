@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class User {
@@ -21,6 +22,11 @@ public class User {
 	private String role;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Mark> marks;
+
+	private String password;
+
+	@Transient // propiedad que no se almacena e la tabla.
+	private String passwordConfirm;
 
 	public User(String dni, String name, String lastName) {
 		super();
@@ -82,6 +88,29 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", dni=" + dni + ", name=" + name
+				+ ", lastName=" + lastName + ", role=" + role + ", marks="
+				+ marks + "]";
 	}
 
 }

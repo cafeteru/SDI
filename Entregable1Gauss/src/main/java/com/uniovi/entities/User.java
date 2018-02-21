@@ -5,11 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TUSERS")
 public class User {
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -22,6 +24,8 @@ public class User {
 
 	@NotNull
 	private String password;
+	@Transient
+	private String passwordConfirm;
 
 	public User() {
 	}
@@ -61,6 +65,14 @@ public class User {
 		this.password = password;
 	}
 
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -88,8 +100,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", name=" + name + ", password="
-				+ password + "]";
+		return "User [id=" + id + ", email=" + email + ", name=" + name + "]";
 	}
 
 }

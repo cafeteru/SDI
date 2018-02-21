@@ -7,23 +7,23 @@
 	<main>
 		<form method="post" action="signup">
 			<p>
-				<label for="name">Nombre:</label>
-				<input type="text" name="name" placeholder="Iván González Mahagamage" required="true" />
+				<label for="name" th:text="#{signup.name}">Nombre:</label>
+				<input type="text" name="name" placeholder="Iván González Mahagamage" required="required" />
 			</p>
 			<p>
-				<label for="name">Email:</label>
-				<input type="email" name="email" placeholder="uo239795@uniovi.es" required="true" />
+				<label for="name" th:text="#{signup.email}">Email:</label>
+				<input type="email" name="email" placeholder="uo239795@uniovi.es" required="required" />
 			</p>
 			<p>
-				<label for="password">Contraseña:</label>
-				<input type="password" name="password" required="true" />
+				<label for="password" th:text="#{signup.password}">Contraseña:</label>
+				<input type="password" name="password" required="required" th:attr="placeholder=#{signup.password.placeholder}" />
 			</p>
 			<p>
-				<label for="repassword">Repetir Contraseña:</label>
-				<input type="password" name="repassword" required="true" />
+				<label for="repassword" th:text="#{signup.repassword}">Repetir Contraseña:</label>
+				<input type="password" name="repassword" required="required" th:attr="placeholder=#{signup.repassword.placeholder}" />
 			</p>
 			<p>
-				<input type="submit" placeholder="Registrar" />
+				<input type="submit" value="Registrar" th:attr="value=#{signup.password.placeholder}" />
 			</p>
 		</form>
 	</main>

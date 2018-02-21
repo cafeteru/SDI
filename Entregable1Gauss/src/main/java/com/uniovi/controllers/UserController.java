@@ -2,37 +2,43 @@ package com.uniovi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.entities.User;
-import com.uniovi.services.UsersService;
+import com.uniovi.servicies.SecurityService;
+import com.uniovi.servicies.UsersService;
 
 @Controller
 public class UserController {
 	@Autowired
 	private UsersService us;
 
-	@RequestMapping("/signup")
+	@Autowired
+	private SecurityService securityService;
+
+	@GetMapping("/signup")
 	public String signUpHtml() {
 		return "users/signup";
 	}
 
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String signUpHtm(@ModelAttribute User user) {
+	@PostMapping("/signup")
+	public String signUpHtm(@ModelAttribute("user") User user, Model model) {
 		us.add(user);
+		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:/home";
 	}
 
-	@GetMapping("login")
+	@GetMapping("/login")
 	public String login() {
 		return "users/login";
 	}
 
 	@RequestMapping("/home")
-	public String getList() {
+	public String home(Model model) {
 		return "users/home";
 	}
 }

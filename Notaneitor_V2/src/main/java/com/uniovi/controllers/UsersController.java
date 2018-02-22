@@ -46,7 +46,7 @@ public class UsersController {
 		return "redirect:/user/list";
 	}
 
-	@RequestMapping("/user/L{id}")
+	@RequestMapping("/user/details/{id}")
 	public String getDetail(Model model, @PathVariable Long id) {
 		model.addAttribute("user", usersService.getUser(id));
 		return "user/details";
@@ -69,8 +69,8 @@ public class UsersController {
 	public String setEdit(Model model, @PathVariable Long id,
 			@ModelAttribute User user) {
 		user.setId(id);
-		usersService.modifyUser(user);
-		return "redirect:/user/L" + id;
+		usersService.editUser(user);
+		return "redirect:/user/details/" + id;
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)

@@ -40,7 +40,7 @@ public class UsersService {
 		usersRepository.save(user);
 	}
 
-	public void modifyUser(User user) {
+	public void editUser(User user) {
 		usersRepository.save(user);
 	}
 

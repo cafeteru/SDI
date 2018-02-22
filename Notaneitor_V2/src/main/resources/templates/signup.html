@@ -35,7 +35,7 @@
 				<label class="control-label col-sm-2" for="password" th:text="#{login.password}">Password:</label>
 				<div class="col-sm-10">
 					<input type="password" class="form-control" name="password" th:attr="placeholder=#{login.password.placeholder}, title=#{signup.password.title}"
-					    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,24}" onkeyup="check.checkInputs()" />
+					    pattern=".{2,24}" onkeyup="check.checkInputs()" />
 					<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
 				</div>
 			</div>
@@ -43,7 +43,7 @@
 				<label class="control-label col-sm-2" for="passwordConfirm" th:text="#{signup.passwordConfirm}">Repita el Password:</label>
 				<div class="col-sm-10">
 					<input type="password" class="form-control" name="passwordConfirm" th:attr="placeholder=#{signup.passwordConfirm.placeholder}, title=#{signup.passwordConfirm.placeholder}"
-					    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,24}" onkeyup="check.checkInputs()" />
+					    pattern=".{2,24}" onkeyup="check.checkInputs()" />
 					<span class="text-danger" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}" />
 				</div>
 			</div>

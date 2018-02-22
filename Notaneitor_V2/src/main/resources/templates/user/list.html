@@ -29,7 +29,7 @@
                         <td th:text="${user.name}">Nombre del alumno</td>
                         <td th:text="${user.lastName}">Apellidos del alumno</td>
                         <td>
-                            <a th:href="${'L' + user.id}" th:text="#{list.details}">detalles</a>
+                            <a th:href="${'/user/details/' + user.id}" th:text="#{list.details}">detalles</a>
                         </td>
                         <td>
                             <a th:href="${'/user/edit/' + user.id}" th:text="#{list.modify}">modificar</a>

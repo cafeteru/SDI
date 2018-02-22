@@ -1,4 +1,3 @@
-<!-- nav.html -->
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -50,7 +49,7 @@
 							<a href="/user/add" th:text="#{nav.user.add}"></a>
 						</li>
 						<li th:unless="@{${#httpServletRequest.requestURI}} == '/user/add'">
-							<a href="/user/add" th:text="#{nav.user.add}"></a>
+							<a href="/user/addWithOut" th:text="#{nav.user.add}"></a>
 						</li>
 						<li th:if="@{${#httpServletRequest.requestURI}} == '/user/list'" class="active">
 							<a href="/user/list" th:text="#{nav.user.list}"></a>

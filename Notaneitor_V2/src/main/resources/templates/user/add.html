@@ -11,17 +11,20 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="dni">DNI</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="dni" placeholder="99999999Y" required="required" />
+                    <input type="text" class="form-control" name="dni" placeholder="99999999Y" required="required" th:attr="title=#{signup.dni.title}"
+                        pattern="[0-9]{8}[A-Z]{1}" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="name" th:text="#{add.user.name}">Nombre:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="name" placeholder="Iván" required="required" />
+                    <input type="text" class="form-control" name="name" placeholder="Iván" required="required" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,24}"
+                        th:attr="title=#{signup.name.title}" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="lastName" th:text="#{add.user.lastname}">Apellidos:</label>
+                <label class="control-label col-sm-2" for="lastName" th:text="#{add.user.lastname}" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,24}"
+                    th:attr="title=#{signup.lastname.placeholder}">Apellidos:</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="lastName" placeholder="González Mahagamage" required="required" />
                 </div>

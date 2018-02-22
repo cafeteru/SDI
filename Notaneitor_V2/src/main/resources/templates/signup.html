@@ -27,7 +27,7 @@
 				<label class="control-label col-sm-2" for="lastName" th:text="#{add.user.lastname}">Apellidos:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="lastName" placeholder="González Mahagamage" required="required" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,24}"
-					    th:attr="title=#{signup.passwordConfirm.placeholder}" onkeyup="check.checkInputs()" />
+					    th:attr="title=#{signup.lastname.placeholder}" onkeyup="check.checkInputs()" />
 					<span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" />
 				</div>
 			</div>

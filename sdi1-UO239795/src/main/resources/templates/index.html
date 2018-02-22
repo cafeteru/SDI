@@ -3,11 +3,11 @@
 <head th:replace="fragments/head" />
 
 <body>
-	<nav th:replace="fragments/navs/nav" />
-	<main>
-		<h1>Bienvenidos a la página principal</h1>
-	</main>
-	<footer th:replace="fragments/footer" />
+    <nav th:replace="fragments/navs/nav" />
+    <main>
+        <h1 th:text="#{index.title}">Bienvenidos a la página principal</h1>
+    </main>
+    <footer th:replace="fragments/footer" />
 </body>
 
 </html>

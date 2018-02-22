@@ -5,9 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
-import org.apache.commons.codec.digest.DigestUtils;
 
 @Entity
 @Table(name = "TUSERS")
@@ -21,17 +20,22 @@ public class User {
 	private String email;
 
 	private String name;
+	private String subName;
 
 	@NotNull
 	private String password;
 
+	@Transient // propiedad que no se almacena e la tabla.
+	private String repassword;
+
 	public User() {
 	}
 
-	public User(String name, String email, String password) {
-		this.name = name;
+	public User(String email, String name, String subName, String password) {
 		this.email = email;
-		setPassword(password);
+		this.name = name;
+		this.subName = subName;
+		this.password = password;
 	}
 
 	public Long getId() {
@@ -44,6 +48,14 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSubName() {
+		return subName;
+	}
+
+	public void setSubName(String subName) {
+		this.subName = subName;
 	}
 
 	public String getEmail() {
@@ -59,7 +71,15 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = DigestUtils.md5Hex(password);
+		this.password = password;
+	}
+
+	public String getRepassword() {
+		return repassword;
+	}
+
+	public void setRepassword(String repassword) {
+		this.repassword = repassword;
 	}
 
 	@Override
@@ -89,8 +109,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", name=" + name + ", password="
-				+ password + "]";
+		return "User [id=" + id + ", email=" + email + ", name=" + name
+				+ ", subName=" + subName + ", password=" + password + "]";
 	}
 
 }

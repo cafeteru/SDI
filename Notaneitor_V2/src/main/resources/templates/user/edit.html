@@ -15,16 +15,17 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="name" th:text="#{add.user.name}" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,24}" th:attr="title=#{signup.name.title}">Nombre:</label>
+                <label class="control-label col-sm-2" for="name" th:text="#{add.user.name}">Nombre:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="name" th:value="${user.name}" required="required" />
+                    <input type="text" class="form-control" name="name" placeholder="IvÃ¡n" required="required" pattern="[a-zA-ZÃ±Ã‘Ã¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš]{2,24}"
+                        th:attr="title=#{signup.name.title}" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="lastName" th:text="#{add.user.lastname}" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,24}"
-                    th:attr="title=#{signup.passwordConfirm.placeholder}">Apellidos:</label>
+                <label class="control-label col-sm-2" for="lastName" th:text="#{add.user.lastname}" pattern="[a-zA-ZÃ±Ã‘Ã¡Ã©Ã­Ã³ÃºÃ�Ã‰Ã�Ã“Ãš]{2,24}"
+                    th:attr="title=#{signup.lastname.placeholder}">Apellidos:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="lastName" th:value="${user.lastName}" required="required" />
+                    <input type="text" class="form-control" name="lastName" placeholder="GonzÃ¡lez Mahagamage" required="required" />
                 </div>
             </div>
             <div class="form-group">

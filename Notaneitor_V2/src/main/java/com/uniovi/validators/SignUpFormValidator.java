@@ -8,6 +8,7 @@ import org.springframework.validation.Validator;
 
 import com.uniovi.entities.User;
 import com.uniovi.servicies.UsersService;
+import com.uniovi.util.ValidatorDNI;
 
 @Component
 public class SignUpFormValidator implements Validator {
@@ -23,13 +24,13 @@ public class SignUpFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dni", "Error.empty");
-		if (user.getDni().length() < 5 || user.getDni().length() > 24) {
+		if (!ValidatorDNI.validate(user.getDni())) {
 			errors.rejectValue("dni", "Error.signup.dni.length");
 		}
 		if (usersService.getUserByDni(user.getDni()) != null) {
 			errors.rejectValue("dni", "Error.signup.dni.duplicate");
 		}
-		if (user.getName().length() < 5 || user.getName().length() > 24) {
+		if (user.getName().length() < 4 || user.getName().length() > 24) {
 			errors.rejectValue("name", "Error.signup.name.length");
 		}
 		if (user.getLastName().length() < 5

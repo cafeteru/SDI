@@ -18,9 +18,15 @@ public class SecurityService {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
+
 	private static final Logger logger = LoggerFactory
 			.getLogger(SecurityService.class);
 
+	/**
+	 * Devuelve el usuario identificado y devolver el userName
+	 * 
+	 * @return
+	 */
 	public String findLoggedInDni() {
 		Object userDetails = SecurityContextHolder.getContext()
 				.getAuthentication().getDetails();

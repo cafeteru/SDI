@@ -13,7 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
 	
+	/**
+	 * Pregunta de teoria
+	 * Para seguridad definir WebSecurityConfig extends WebSecurityConfigurerAdapter
+	 * Implementar SecurityService y UserDetailsServiceImpl implements UserDetailsService
+	 */
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -22,13 +28,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+	/**
+	 * Configura a que url x usuarios tiene permiso para acceder
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests()
+		http.csrf().disable().authorizeRequests() // peticiones autorizadas
 				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup")
-				.permitAll().anyRequest().authenticated().and().formLogin()
-				.loginPage("/login").permitAll().defaultSuccessUrl("/home")
-				.and().logout().permitAll();
+				// Permite a todos los usuarios
+				.permitAll().anyRequest().authenticated().and().
+				// pagina de autentificacion por defecto
+				formLogin().loginPage("/login").permitAll()
+				// Si se loguea bien
+				.defaultSuccessUrl("/home").and().logout().permitAll();
 	}
 
 	@Autowired

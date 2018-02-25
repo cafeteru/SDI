@@ -26,7 +26,7 @@ public class SignUpFormValidator implements Validator {
 		if (usersService.getUserByEmail(user.getEmail()) != null) {
 			errors.rejectValue("email", "Error.signup.email.duplicate");
 		}
-		if (user.getName().length() < 4 || user.getName().length() > 24) {
+		if (user.getName().length() < 2 || user.getName().length() > 24) {
 			errors.rejectValue("name", "Error.signup.name.length");
 		}
 		if (user.getSubName().length() < 5 || user.getSubName().length() > 24) {
@@ -36,7 +36,7 @@ public class SignUpFormValidator implements Validator {
 				|| user.getPassword().length() > 24) {
 			errors.rejectValue("password", "Error.signup.password.length");
 		}
-		if (!user.getRepassword().equals(user.getPassword())) {
+		if (!user.getPasswordConfirm().equals(user.getPassword())) {
 			errors.rejectValue("passwordConfirm",
 					"Error.signup.passwordConfirm.coincidence");
 		}

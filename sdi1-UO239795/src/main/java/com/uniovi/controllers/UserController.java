@@ -22,16 +22,16 @@ public class UserController {
 	private SecurityService securityService;
 
 	@Autowired
-	SignUpFormValidator signUpFormValidator;
+	private SignUpFormValidator signUpFormValidator;
 
 	@GetMapping("/signup")
-	public String signUpHtml(Model model) {
+	public String signUp(Model model) {
 		model.addAttribute("user", new User());
 		return "signup";
 	}
 
 	@PostMapping("/signup")
-	public String signUpHtml(@Validated User user, BindingResult result,
+	public String signUp(@Validated User user, BindingResult result,
 			Model model) {
 		signUpFormValidator.validate(user, result);
 		if (result.hasErrors()) {
@@ -44,11 +44,11 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String login() {
-		return "users/login";
+		return "login";
 	}
 
 	@GetMapping("/home")
-	public String getList(Model model) {
-		return "users/home";
+	public String home(Model model) {
+		return "home";
 	}
 }

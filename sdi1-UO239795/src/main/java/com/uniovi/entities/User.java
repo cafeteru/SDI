@@ -25,8 +25,8 @@ public class User {
 	@NotNull
 	private String password;
 
-	@Transient // propiedad que no se almacena e la tabla.
-	private String repassword;
+	@Transient
+	private String passwordConfirm;
 
 	public User() {
 	}
@@ -74,12 +74,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getRepassword() {
-		return repassword;
+	public String getPasswordConfirm() {
+		return passwordConfirm;
 	}
 
-	public void setRepassword(String repassword) {
-		this.repassword = repassword;
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
 	}
 
 	@Override

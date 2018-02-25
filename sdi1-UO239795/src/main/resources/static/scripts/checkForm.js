@@ -3,9 +3,9 @@
 class Check {
     constructor() {}
 
-    checkPasswords() {
+     checkPasswords() {
         var password = $('input[name=password]').val();
-        var repassword = $('input[name=repassword]').val();
+        var repassword = $('input[name=passwordConfirm]').val();
         if (password !== repassword) {
             alert("Error: las contraseñas no coinciden");
             return false;

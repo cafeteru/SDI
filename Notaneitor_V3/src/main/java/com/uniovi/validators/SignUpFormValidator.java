@@ -7,7 +7,8 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.uniovi.entities.User;
-import com.uniovi.services.UsersService;
+import com.uniovi.servicies.UsersService;
+import com.uniovi.util.ValidatorDNI;
 
 @Component
 public class SignUpFormValidator implements Validator {
@@ -22,23 +23,23 @@ public class SignUpFormValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email",
-				"Error.empty");
-		if (usersService.getUserByEmail(user.getEmail()) != null) {
-			errors.rejectValue("email", "Error.signup.email.duplicate");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dni", "Error.empty");
+		if (!ValidatorDNI.validate(user.getDni())) {
+			errors.rejectValue("dni", "Error.signup.dni.length");
 		}
-		if (user.getName().length() < 2) {
+		if (usersService.getUserByDni(user.getDni()) != null) {
+			errors.rejectValue("dni", "Error.signup.dni.duplicate");
+		}
+		if (user.getName().length() < 4 || user.getName().length() > 24) {
 			errors.rejectValue("name", "Error.signup.name.length");
 		}
-		if (user.getSurName().length() < 2) {
-			errors.rejectValue("surName", "Error.signup.lastName.length");
+		if (user.getLastName().length() < 5
+				|| user.getLastName().length() > 24) {
+			errors.rejectValue("lastName", "Error.signup.lastName.length");
 		}
-		if (user.getPassword().length() < 5) {
+		if (user.getPassword().length() < 5
+				|| user.getPassword().length() > 24) {
 			errors.rejectValue("password", "Error.signup.password.length");
-		}
-		if (user.getPasswordConfirm().length() < 5) {
-			errors.rejectValue("passwordConfirm",
-					"Error.signup.password.length");
 		}
 		if (!user.getPasswordConfirm().equals(user.getPassword())) {
 			errors.rejectValue("passwordConfirm",

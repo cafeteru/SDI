@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head th:replace="fragments/head" />
+
+<body>
+	<nav th:replace="fragments/nav" />
+	<form method="post" action="/mark/add">
+		Descripción:
+		<br>
+		<input type="text" name="description">
+		</br>
+		Puntuación:
+		<br>
+		<input type="text" name="score">
+		</br>
+		<input type="submit" value="Send">
+	</form>
+	<footer th:replace="fragments/footer" />
+</body>
+
+</html>

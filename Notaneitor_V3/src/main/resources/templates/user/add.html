@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+
+<body>
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h2 th:text="#{add.user.title}">Agregar usuario</h2>
+		<form class="form-horizontal" method="post" action="/user/add">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for=role">Role:</label>
+				<div class="col-sm-10">
+					<select id="role" class="form-control" name="role">
+						<option th:each="role : ${rolesList}" th:value="${role}"
+							th:text="${role}"></option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="dni">DNI</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="dni"
+							placeholder="99999999Y" required="required"
+							th:attr="title=#{signup.dni.title}" pattern="[0-9]{8}[A-Z]{1}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="name"
+						th:text="#{add.user.name}">Nombre:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="name"
+							placeholder="Iván" required="required"
+							pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,24}"
+							th:attr="title=#{signup.name.title}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="lastName"
+						th:text="#{add.user.lastname}"
+						pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,24}"
+						th:attr="title=#{signup.lastname.placeholder}">Apellidos:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="lastName"
+							placeholder="González Mahagamage" required="required" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="password">Password:</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" name="password"
+							placeholder="Introduzca el Password" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary"
+							th:text="#{add.send}">Enviar</button>
+					</div>
+				</div>
+		</form>
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+
+</html>

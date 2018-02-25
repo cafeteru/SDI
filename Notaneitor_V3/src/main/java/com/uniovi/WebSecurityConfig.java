@@ -14,6 +14,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	/**
+	 * Pregunta de teoria Para seguridad definir WebSecurityConfig extends
+	 * WebSecurityConfigurerAdapter Implementar SecurityService y
+	 * UserDetailsServiceImpl implements UserDetailsService
+	 */
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -22,23 +27,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+	/**
+	 * Configura a que url x usuarios tiene permiso para acceder
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests() // peticiones autorizadas
-				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup",
-						"/login/**")
 				// Permite a todos los usuarios
-				.permitAll().anyRequest().authenticated()
-				// Especifica que usuarios pueden usar esas webs
-				// Orden de más espeficica a maás general
-				.antMatchers("/mark/edit/*").hasAuthority("ROLE_PROFESSOR")
-				.antMatchers("/mark/delete/*").hasAuthority("-ROLE_PROFESSOR")
-				.antMatchers("/mark/**")
-				.hasAnyAuthority("ROLE_STUDENT", "ROLE_PROFESSOR", "ROLE_ADMIN")
-				.antMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN")
-				.anyRequest().authenticated().and()
+				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup",
+						"/login/**").permitAll()
+				// Especifica usuario que modificar
+				.antMatchers("/mark/add").hasAuthority("ROLE_PROFESSOR")
+				.anyRequest().authenticated().and().
 				// pagina de autentificacion por defecto
-				.formLogin().loginPage("/login").permitAll()
+				formLogin().loginPage("/login").permitAll()
 				// Si se loguea bien
 				.defaultSuccessUrl("/home").and().logout().permitAll();
 	}

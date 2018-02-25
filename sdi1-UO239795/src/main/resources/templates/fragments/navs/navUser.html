@@ -1,21 +1,19 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-            <img src="/img/student-48.png" alt="logo" />
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/users/signup"> <span
-						class="glyphicon glyphicon-user"></span> Registrate
-				</a></li>
-                <li><a href="/users/login"> <span
-						class="glyphicon glyphicon-log-in"></span> Identifícate
-				</a></li>
-            </ul>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/home" th:text="#{nav.home}">Inicio</a>
+    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+    <div class="navbar-collapse collapse" id="navbarColor01" style="">
+        <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{language.change}">Dropdown</a>
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" th:text="#{language.es}" href="?lang=es">Something	else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:text="#{language.en}" href="?lang=en">Separated	link</a>
+                </div>
+            </li>
+            <li class="nav-item nav-inline"><a class="nav-link" href="login" th:text="#{nav.logout}">Identifícate</a></li>
+        </ul>
     </div>
 </nav>

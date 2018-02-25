@@ -25,8 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests() // peticiones autorizadas
-				.antMatchers("/css/**", "/img/**", "/scripts/**", "/",
-						"/signup")
+				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup",
+						"/login")
 				// Permite a todos los usuarios
 				.permitAll().anyRequest().authenticated().and().
 				// pagina de autentificacion por defecto

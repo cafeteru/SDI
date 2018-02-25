@@ -3,15 +3,14 @@
 <head th:replace="fragments/head" />
 
 <body>
-	<nav th:replace="fragments/nav" />
-	<div class="container" style="text-align: center">
-		<h1 th:text="#{home.title}">Esta es una zona privada la web</h1>
-		<h2>
-			<span th:text="#{home.like}"> Usuario Autenticado como :</span> <b
-				th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
-		</h2>
-	</div>
-	<footer th:replace="fragments/footer" />
+    <nav th:replace="fragments/navs/navUser" />
+    <main class="container" style="text-align: center">
+        <h1 th:text="#{home.title}">Esta es una zona privada la web</h1>
+        <h2>
+            <span th:text="#{home.like}"> Usuario Autenticado como :</span> <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+        </h2>
+    </main>
+    <footer th:replace="fragments/footer" />
 </body>
 
 </html>

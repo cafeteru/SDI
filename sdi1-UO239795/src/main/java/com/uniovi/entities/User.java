@@ -20,7 +20,7 @@ public class User {
 	private String email;
 
 	private String name;
-	private String subName;
+	private String surName;
 
 	@NotNull
 	private String password;
@@ -31,11 +31,10 @@ public class User {
 	public User() {
 	}
 
-	public User(String email, String name, String subName, String password) {
+	public User(String email, String name, String surName) {
 		this.email = email;
 		this.name = name;
-		this.subName = subName;
-		this.password = password;
+		this.surName = surName;
 	}
 
 	public Long getId() {
@@ -50,12 +49,12 @@ public class User {
 		this.name = name;
 	}
 
-	public String getSubName() {
-		return subName;
+	public String getSurName() {
+		return surName;
 	}
 
-	public void setSubName(String subName) {
-		this.subName = subName;
+	public void setSurName(String surName) {
+		this.surName = surName;
 	}
 
 	public String getEmail() {
@@ -110,7 +109,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", name=" + name
-				+ ", subName=" + subName + ", password=" + password + "]";
+				+ ", surName=" + surName + ", password=" + password + "]";
 	}
 
 }

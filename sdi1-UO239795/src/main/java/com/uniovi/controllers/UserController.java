@@ -30,15 +30,15 @@ public class UserController {
 		return "signup";
 	}
 
-	@PostMapping("/signup")
-	public String signUp(@Validated User user, BindingResult result,
+	@PostMapping(value = "/signup")
+	public String setUser(@Validated User user, BindingResult result,
 			Model model) {
 		signUpFormValidator.validate(user, result);
 		if (result.hasErrors()) {
 			return "signup";
 		}
 		us.add(user);
-		securityService.autoLogin(user.getEmail(), user.getPassword());
+		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
 	}
 
@@ -47,7 +47,7 @@ public class UserController {
 		return "login";
 	}
 
-	@GetMapping("/home")
+	@GetMapping(value = "/home")
 	public String home(Model model) {
 		return "home";
 	}

@@ -49,6 +49,9 @@ public class InsertSampleDataService {
 				add(new Mark("Nota A2", 9.0, user1));
 				add(new Mark("Nota A3", 7.0, user1));
 				add(new Mark("Nota A4", 6.5, user1));
+				add(new Mark("Nota A5", 6.5, user1));
+				add(new Mark("Nota A6", 6.5, user1));
+				add(new Mark("Nota A7", 6.5, user1));
 			}
 		};
 		user1.setMarks(user1Marks);
@@ -99,5 +102,30 @@ public class InsertSampleDataService {
 		usersService.addUser(user4);
 		usersService.addUser(user5);
 		usersService.addUser(user6);
+		
+		User user7 = new User("71676818D", "Iván", "González Mahagamage");
+		user7.setPassword("123456");
+		user7.setRole(rolesService.getRoles()[2]);
+		usersService.addUser(user7);
+		user7 = new User("72676818D", "Iván", "González Mahagamage");
+		user7.setPassword("123456");
+		user7.setRole(rolesService.getRoles()[2]);
+		usersService.addUser(user7);
+		user7 = new User("73676818D", "Iván", "González Mahagamage");
+		user7.setPassword("123456");
+		user7.setRole(rolesService.getRoles()[2]);
+		usersService.addUser(user7);
+		user7 = new User("74676818D", "Iván", "González Mahagamage");
+		user7.setPassword("123456");
+		user7.setRole(rolesService.getRoles()[2]);
+		usersService.addUser(user7);
+		user7 = new User("75676818D", "Iván", "González Mahagamage");
+		user7.setPassword("123456");
+		user7.setRole(rolesService.getRoles()[2]);
+		usersService.addUser(user7);
+		user7 = new User("76676818D", "Iván", "González Mahagamage");
+		user7.setPassword("123456");
+		user7.setRole(rolesService.getRoles()[2]);
+		usersService.addUser(user7);
 	}
 }

@@ -21,11 +21,11 @@
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li sec:authorize="hasRole('ROLE_PROFESSOR')"
+						<li sec:authorize="!hasRole('ROLE_STUDENT')"
 							th:if="@{${#httpServletRequest.requestURI}} == '/mark/add'"
 							class="active"><a href="/mark/add"
 							th:text="#{mark.add.message}"></a></li>
-						<li sec:authorize="hasRole('ROLE_PROFESSOR')"
+						<li sec:authorize="!hasRole('ROLE_STUDENT')"
 							th:unless="
 							@{${#httpServletRequest.requestURI}} =='/mark/add'"><a
 							href="/mark/add" th:text="#{mark.add.message}"></a></li>
@@ -55,7 +55,7 @@
 						</li>
 						<li
 							th:unless="@{${#httpServletRequest.requestURI}} == '/user/add'">
-							<a href="/user/addWithOut" th:text="#{nav.user.add}"></a>
+							<a href="/user/add" th:text="#{nav.user.add}"></a>
 						</li>
 						<li th:if="@{${#httpServletRequest.requestURI}} == '/user/list'"
 							class="active"><a href="/user/list"

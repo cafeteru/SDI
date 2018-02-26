@@ -38,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/login/**").permitAll()
 				// Especifica usuario que modificar
 				.antMatchers("/mark/add").hasAuthority("ROLE_PROFESSOR")
+				.antMatchers("/mark/add").hasAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated().and().
 				// pagina de autentificacion por defecto
 				formLogin().loginPage("/login").permitAll()

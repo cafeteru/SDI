@@ -45,11 +45,11 @@
                         <td th:text="${mark.id}"> 1</td>
                         <td th:text="${mark.description}"> Ejercicio 1</td>
                         <td th:text="${mark.score}">10</td>
-                        <td><a th:href="${'/mark/details/' + mark.id}">detalles</a></td>
-                        <td><a sec:authorize="!hasRole('ROLE_STUDENT')" th:href="${'/mark/edit/' + mark.id}">modificar</a>
+                        <td><a th:href="${'/mark/details/' + mark.id}" th:text="#{list.details}">detalles</a></td>
+                        <td><a sec:authorize="!hasRole('ROLE_STUDENT')" th:href="${'/mark/edit/' + mark.id}" th:text="#{list.modify}">modificar</a>
                             <div sec:authorize="hasRole('ROLE_STUDENT')">
                                 <div th:if="${mark.resend}">
-                                    <button type="button" th:id="${'resendButton' + mark.id}" class="btn btn-info">Reenviar</button>
+                                    <button type="button" th:id="${'resendButton' + mark.id}" class="btn btn-info" th:text="#{list.resend}">Reenviar</button>
                                     <script th:inline="javascript">
                                         /*<![CDATA[*/
                                         $("#resendButton[[${mark.id}]]").click(function() {
@@ -67,7 +67,7 @@
                                     </script>
                                 </div>
                                 <div th:unless="${mark.resend}">
-                                    <button type="button" th:id="${'noresendButton' + mark.id}" class="btn btn-default">No reenviar</button>
+                                    <button type="button" th:id="${'noresendButton' + mark.id}" class="btn btn-default" th:text="#{list.no.resend}">No reenviar</button>
                                     <script th:inline="javascript">
                                         /*<![CDATA[*/
                                         $("#noresendButton[[${mark.id}]]").click(function() {
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td><a sec:authorize="!hasRole('ROLE_STUDENT')" th:href="${'/mark/delete/' + mark.id}">eliminar</a></td>
+                        <td><a sec:authorize="!hasRole('ROLE_STUDENT')" th:href="${'/mark/delete/' + mark.id}" th:text="#{list.delete}">eliminar</a></td>
                     </tr>
                 </tbody>
             </table>

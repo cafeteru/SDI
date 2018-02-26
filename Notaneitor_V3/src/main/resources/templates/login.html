@@ -28,6 +28,7 @@
 			</div>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
+          <span class="text-danger" th:if="${param.error}" th:text="#{Error.login.dni}"/>
 	</div>
 	<footer th:replace="fragments/footer" />
 </body>

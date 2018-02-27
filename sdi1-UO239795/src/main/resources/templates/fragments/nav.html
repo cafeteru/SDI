@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a sec:authorize="!isAuthenticated()" class="navbar-brand" href="/" th:text="#{nav.home}">Inicio</a>
     <a sec:authorize="isAuthenticated()" class="navbar-brand" href="/home" th:text="#{nav.home}">Inicio</a>
+    <a sec:authorize="isAuthenticated()" class="navbar-brand" href="/user/list" th:text="#{nav.users}">Inicio</a>
     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
 		<span class="navbar-toggler-icon"></span>
 	</button>

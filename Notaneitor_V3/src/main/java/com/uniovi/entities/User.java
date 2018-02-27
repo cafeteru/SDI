@@ -108,10 +108,6 @@ public class User {
 		this.passwordConfirm = passwordConfirm;
 	}
 	
-	
-
-
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", dni=" + dni + ", name=" + name

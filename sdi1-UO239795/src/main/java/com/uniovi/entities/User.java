@@ -28,6 +28,8 @@ public class User {
 	@Transient
 	private String passwordConfirm;
 
+	private String role;
+
 	public User() {
 	}
 
@@ -81,6 +83,14 @@ public class User {
 		this.passwordConfirm = passwordConfirm;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -109,7 +119,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", name=" + name
-				+ ", surName=" + surName + ", password=" + password + "]";
+				+ ", surName=" + surName + ", role=" + role + "]";
 	}
 
 }

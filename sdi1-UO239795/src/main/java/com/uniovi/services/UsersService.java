@@ -3,6 +3,8 @@ package com.uniovi.services;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ import com.uniovi.repositories.UsersRepository;
 public class UsersService {
 
 	@Autowired
-	private UsersRepository ur;
+	private UsersRepository usersRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -24,11 +26,22 @@ public class UsersService {
 
 	public void add(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		ur.save(user);
+		usersRepository.save(user);
 	}
 
 	public User getUserByEmail(String email) {
-		return ur.findByEmail(email);
+		return usersRepository.findByEmail(email);
+	}
+	
+	public Page<User> getUsers(Pageable pageable) {
+		return usersRepository.findAll(pageable);
+	}
+	
+	public Page<User> searchByEmailAndNameAndSurname(Pageable pageable,
+			String searchText) {
+		searchText = "%" + searchText + "%";
+		return usersRepository.searchByEmailAndNameAndSurname(pageable,
+				searchText);
 	}
 
 }

@@ -1,5 +1,9 @@
 package com.uniovi.services;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,28 +19,12 @@ public class InsertSampleDataService {
 	@Autowired
 	private RolesService rolesService;
 
-	@PostConstruct
-	public void init() {
-		User user1 = new User("ivangonzalezmahagamage@gmail.com", "Iván",
-				"González Mahagamage");
-		user1.setPassword("123456");
-		user1.setRole(rolesService.getAdmin());
-		usersService.add(user1);
-
-	}
-	
-	private String[] nombres = { "MARIA CARMEN", "MARIA", "CARMEN", "JOSEFA",
-			"ISABEL", "ANA MARIA", "MARIA PILAR", "MARIA DOLORES",
-			"MARIA TERESA", "ANA", "LAURA", "FRANCISCA", "MARIA ANGELES",
-			"CRISTINA", "ANTONIA", "MARTA", "DOLORES", "MARIA ISABEL",
-			"MARIA JOSE", "LUCIA", "MARIA LUISA", "PILAR", "ELENA",
-			"CONCEPCION", "ANTONIO", "JOSE", "MANUEL", "FRANCISCO", "JUAN",
-			"DAVID", "JOSE ANTONIO", "JOSE LUIS", "JAVIER", "FRANCISCO JAVIER",
-			"JESUS", "DANIEL", "CARLOS", "MIGUEL", "ALEJANDRO", "JOSE MANUEL",
-			"RAFAEL", "PEDRO", "ANGEL", "MIGUEL ANGEL", "JOSE MARIA",
-			"FERNANDO", "PABLO", "LUIS", "SERGIO", "JORGE", "ALBERTO",
-			"JUAN CARLOS", "JUAN JOSE", "ALVARO", "DIEGO", "ADRIAN",
-			"JUAN ANTONIO", "RAUL", "ENRIQUE", "RAMON", "VICENTE", "IVAN" };
+	private String[] nombres = { "Iván", "Valery", "Ana", "Lorena", "Raúl",
+			" María", "Laura", "Cristina", "Marta", "Sara", "Andrea", "Ana",
+			"Alba", "Paula", "Sandra", "Nerea", " David", "Alejandro", "Daniel",
+			"Javier", "Sergio", "Adrián", "Carlos", "Pablo", "Álvaro", "Pablo",
+			"Jorge", "Hugo", "Manuel", "Pedro", "Elena", "Jairo", "Irene",
+			"Iris", "Iria", "Miriam", "Miguel" };
 
 	private String[] apellidos = { "Aguilar", "Alonso", "Álvarez", "Arias",
 			"Benítez", "Blanco", "Blesa", "Bravo", "Caballero", "Cabrera",
@@ -55,4 +43,51 @@ public class InsertSampleDataService {
 			"Santana", "Santiago", "Santos", "Sanz", "Serrano", "Soler", "Soto",
 			"Suárez", "Torres", "Vargas", "Vázquez", "Vega", "Velasco",
 			"Vicente", "Vidal" };
+
+	private String[] correos = { "gmail.com", "outlook.es", "yahoo.es",
+			"hotmail.com", "telecable.es", "uniovi.es" };
+
+	Set<User> users = new HashSet<User>();
+
+	@PostConstruct
+	public void init() {
+		// inicializar(1_000);
+	}
+
+	private void inicializar(int limite) {
+		User user1 = new User("ivangonzalezmahagamage@gmail.com", "Iván",
+				"González Mahagamage");
+		user1.setPassword("123456");
+		user1.setRole(rolesService.getAdmin());
+		usersService.add(user1);
+		rellenarBaseDatos(limite);
+	}
+
+	private void rellenarBaseDatos(int limite) {
+		while (users.size() < limite) {
+			createUser();
+		}
+
+		Iterator<User> a = users.iterator();
+		while (a.hasNext()) {
+			usersService.add(a.next());
+		}
+	}
+
+	private void createUser() {
+		String name = nombres[integer(0, nombres.length)];
+		String surName1 = apellidos[integer(0, apellidos.length)];
+		String surName2 = apellidos[integer(0, apellidos.length)];
+		String surName = surName1 + " " + surName2;
+		String emailEnd = "@" + correos[integer(0, correos.length)];
+		String email = name + surName1 + surName2 + emailEnd;
+		User user = new User(email.toLowerCase(), name, surName);
+		user.setPassword("123456");
+		user.setRole(rolesService.getUser());
+		users.add(user);
+	}
+
+	public Integer integer(int min, int max) {
+		return (int) (new java.util.Random().nextFloat() * (max - min) + min);
+	}
 }

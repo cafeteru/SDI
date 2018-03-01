@@ -1,5 +1,6 @@
 package com.uniovi.services;
 
+import java.text.Normalizer;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -51,7 +52,7 @@ public class InsertSampleDataService {
 
 	@PostConstruct
 	public void init() {
-		// inicializar(1_000);
+		inicializar(10);
 	}
 
 	private void inicializar(int limite) {
@@ -80,7 +81,7 @@ public class InsertSampleDataService {
 		String surName2 = apellidos[integer(0, apellidos.length)];
 		String surName = surName1 + " " + surName2;
 		String emailEnd = "@" + correos[integer(0, correos.length)];
-		String email = name + surName1 + surName2 + emailEnd;
+		String email = limpiarAcentos(name + surName1 + surName2) + emailEnd;
 		User user = new User(email.toLowerCase(), name, surName);
 		user.setPassword("123456");
 		user.setRole(rolesService.getUser());
@@ -89,5 +90,25 @@ public class InsertSampleDataService {
 
 	public Integer integer(int min, int max) {
 		return (int) (new java.util.Random().nextFloat() * (max - min) + min);
+	}
+
+	public String limpiarAcentos(String cadena) {
+		String limpio = null;
+		if (cadena != null) {
+			String valor = cadena;
+			valor = valor.toUpperCase();
+			// Normalizar texto para eliminar acentos, dieresis, cedillas y
+			// tildes
+			limpio = Normalizer.normalize(valor, Normalizer.Form.NFD);
+			// Quitar caracteres no ASCII excepto la enie, interrogacion que
+			// abre, exclamacion que abre, grados, U con dieresis.
+			limpio = limpio
+					.replaceAll("[^\\p{ASCII}(N\u0303)(n\u0303)(\u00A1)(\u00BF)"
+							+ "(\u00B0)(U\u0308)(u\u0308)]", "");
+			// Regresar a la forma compuesta, para poder comparar la enie con la
+			// tabla de valores
+			limpio = Normalizer.normalize(limpio, Normalizer.Form.NFC);
+		}
+		return limpio;
 	}
 }

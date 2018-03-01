@@ -1,9 +1,17 @@
 package com.uniovi.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -13,7 +21,7 @@ import javax.validation.constraints.NotNull;
 public class User {
 	@Id
 	@GeneratedValue
-	private Long id;
+	private long id;
 
 	@Column(unique = true)
 	@NotNull
@@ -29,6 +37,22 @@ public class User {
 	private String passwordConfirm;
 
 	private String role;
+
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<Request> sentRequest;
+
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+	private Set<Request> receiveRequest = new HashSet<>();;
+
+	@ManyToOne
+	@JoinColumn(name = "FRIEND_ID")
+	private User friend;
+
+	@OneToMany(mappedBy = "friend", fetch = FetchType.LAZY)
+	private Set<User> friends = new HashSet<>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Post> posts = new HashSet<>();
 
 	public User() {
 	}
@@ -91,6 +115,46 @@ public class User {
 		this.role = role;
 	}
 
+	public Set<Request> getSentRequest() {
+		return sentRequest;
+	}
+
+	public void setSentRequest(Set<Request> sentRequest) {
+		this.sentRequest = sentRequest;
+	}
+
+	public Set<Request> getReceiveRequest() {
+		return receiveRequest;
+	}
+
+	public void setReceiveRequest(Set<Request> receiveRequest) {
+		this.receiveRequest = receiveRequest;
+	}
+
+	public User getFriend() {
+		return friend;
+	}
+
+	public void setFriend(User friend) {
+		this.friend = friend;
+	}
+
+	public Set<User> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(Set<User> friends) {
+		this.friends = friends;
+	}
+
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -119,7 +183,10 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", name=" + name
-				+ ", surName=" + surName + ", role=" + role + "]";
+				+ ", surName=" + surName + ", role=" + role + ", sentRequest="
+				+ sentRequest + ", receiveRequest=" + receiveRequest
+				+ ", friend=" + friend + ", friends=" + friends + ", posts="
+				+ posts + "]";
 	}
 
 }

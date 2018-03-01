@@ -109,23 +109,23 @@ public class InsertSampleDataService {
 		usersService.addUser(user7);
 		user7 = new User("72676818D", "Iván", "González Mahagamage");
 		user7.setPassword("123456");
-		user7.setRole(rolesService.getRoles()[2]);
+		user7.setRole(rolesService.getRoles()[1]);
 		usersService.addUser(user7);
 		user7 = new User("73676818D", "Iván", "González Mahagamage");
 		user7.setPassword("123456");
-		user7.setRole(rolesService.getRoles()[2]);
+		user7.setRole(rolesService.getRoles()[1]);
 		usersService.addUser(user7);
 		user7 = new User("74676818D", "Iván", "González Mahagamage");
 		user7.setPassword("123456");
-		user7.setRole(rolesService.getRoles()[2]);
+		user7.setRole(rolesService.getRoles()[1]);
 		usersService.addUser(user7);
 		user7 = new User("75676818D", "Iván", "González Mahagamage");
 		user7.setPassword("123456");
-		user7.setRole(rolesService.getRoles()[2]);
+		user7.setRole(rolesService.getRoles()[0]);
 		usersService.addUser(user7);
 		user7 = new User("76676818D", "Iván", "González Mahagamage");
 		user7.setPassword("123456");
-		user7.setRole(rolesService.getRoles()[2]);
+		user7.setRole(rolesService.getRoles()[0]);
 		usersService.addUser(user7);
 	}
 }

@@ -16,11 +16,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="table-light" th:each="user,index : ${usersList}">
+                <tr class="table-light" th:each="user : ${usersList}">
                     <td th:text="${user.name}">Column content</td>
                     <td th:text="${user.surName}">Column content</td>
                     <td th:text="${user.email}">Column content</td>
-                    <td th:text="${user.email}">Column content</td>
+                    <td>
+                        <button type="button" class="btn btn-info" th:text="#{list.send.info}" disabled="disable">Success</button>
+                        <button type="button" class="btn btn-success" th:text="#{list.send}">Success</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

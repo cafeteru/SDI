@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -73,6 +75,10 @@ public class UserController {
 		} else {
 			users = usersService.getUsers(pageable);
 		}
+		Object a = SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		UserDetails actual = (UserDetails) a;
+		System.out.println(actual.getUsername());
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		return "users/list";

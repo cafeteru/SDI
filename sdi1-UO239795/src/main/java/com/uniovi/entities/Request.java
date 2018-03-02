@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.uniovi.entities.types.ResquestStatus;
+
 @Entity
 @Table(name = "TREQUEST")
 public class Request {
@@ -19,7 +21,7 @@ public class Request {
 	@ManyToOne
 	private User receiver;
 
-	private boolean accepted = false;
+	private ResquestStatus status;
 
 	public Request() {
 	}
@@ -27,6 +29,7 @@ public class Request {
 	public Request(User sender, User receiver) {
 		this.sender = sender;
 		this.receiver = receiver;
+		status = ResquestStatus.SENT;
 	}
 
 	public User getSender() {
@@ -49,16 +52,20 @@ public class Request {
 		return id;
 	}
 
-	public boolean isAccepted() {
-		return accepted;
+	public ResquestStatus getStatus() {
+		return status;
 	}
 
-	public void setAccepted(boolean accepted) {
-		this.accepted = accepted;
+	public void setStatus(ResquestStatus status) {
+		this.status = status;
 	}
 
-	public boolean checkSender(String nombre) {
-		return nombre.equals(sender.getEmail());
+	public void accept() {
+		setStatus(ResquestStatus.ACCEPTED);
+	}
+
+	public void deny() {
+		setStatus(ResquestStatus.DENIED);
 	}
 
 	@Override
@@ -96,7 +103,7 @@ public class Request {
 	@Override
 	public String toString() {
 		return "Request [id=" + id + ", sender=" + sender + ", receiver="
-				+ receiver + ", accepted=" + accepted + "]";
+				+ receiver + ", accepted=" + status + "]";
 	}
 
 }

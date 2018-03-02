@@ -79,7 +79,6 @@ public class UserController {
 		UserDetails actual = (UserDetails) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		User user = usersService.getUserByEmail(actual.getUsername());
-		user.checkSentRequests();
 		return user;
 	}
 

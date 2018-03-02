@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -48,7 +47,7 @@ public class User {
 	@JoinColumn(name = "FRIEND_ID")
 	private User friend;
 
-	@OneToMany(mappedBy = "friend", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "friend")
 	private Set<User> friends = new HashSet<>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -172,15 +171,6 @@ public class User {
 
 	public void setRecibida(boolean recibida) {
 		this.receiveRequest = recibida;
-	}
-
-	public void checkSentRequests() {
-		receiveRequest = false;
-		for (Request request : sentRequests) {
-			if (request.checkSender(email)) {
-				request.getReceiver().setRecibida(true);
-			}
-		}
 	}
 
 	@Override

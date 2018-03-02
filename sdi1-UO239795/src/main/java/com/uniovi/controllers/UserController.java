@@ -68,19 +68,30 @@ public class UserController {
 	@GetMapping("/user/list")
 	public String getListado(Model model, Pageable pageable,
 			@RequestParam(value = "", required = false) String searchText) {
-		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-		if (searchText != null && !searchText.isEmpty()) {
-			users = usersService.searchByEmailAndNameAndSurname(pageable,
-					searchText);
-		} else {
-			users = usersService.getUsers(pageable);
-		}
-		Object a = SecurityContextHolder.getContext().getAuthentication()
-				.getPrincipal();
-		UserDetails actual = (UserDetails) a;
-		System.out.println(actual.getUsername());
+		User user = getCurrentUser();
+		Page<User> users = getUsers(pageable, searchText, user);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		return "users/list";
+	}
+
+	private User getCurrentUser() {
+		UserDetails actual = (UserDetails) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		User user = usersService.getUserByEmail(actual.getUsername());
+		user.checkSentRequests();
+		return user;
+	}
+
+	private Page<User> getUsers(Pageable pageable, String searchText,
+			User user) {
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+		if (searchText != null && !searchText.isEmpty()) {
+			users = usersService.searchByEmailAndNameAndSurname(pageable,
+					searchText, user.getId());
+		} else {
+			users = usersService.getUsers(pageable, user.getId());
+		}
+		return users;
 	}
 }

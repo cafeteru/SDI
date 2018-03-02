@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// Permite a todos los usuarios
 				.permitAll().anyRequest().authenticated()
 				// Especifica que usuarios pueden usar esas webs
-				// Orden de más espeficica a maás general
+				// Orden de más espeficica a más general
 				.antMatchers("/mark/edit/*").hasAuthority("ROLE_PROFESSOR")
 				.antMatchers("/mark/delete/*").hasAuthority("-ROLE_PROFESSOR")
 				.antMatchers("/mark/**")

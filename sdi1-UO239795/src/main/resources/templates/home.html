@@ -7,7 +7,7 @@
     <main class="container" style="text-align: center">
         <h1 th:text="#{home.title}">Esta es una zona privada la web</h1>
         <h2>
-            <span th:text="#{home.like}"> Usuario Autenticado como :</span> <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+            <span th:text="#{home.like}"> Usuario Autenticado como :</span> <b sec:authentication="principal.username" th:inline="text"></b>
         </h2>
     </main>
     <footer th:replace="fragments/footer" />

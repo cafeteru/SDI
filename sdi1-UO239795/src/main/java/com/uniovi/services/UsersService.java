@@ -19,7 +19,7 @@ public class UsersService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@PostConstruct
 	public void init() {
 	}
@@ -32,16 +32,16 @@ public class UsersService {
 	public User getUserByEmail(String email) {
 		return usersRepository.findByEmail(email);
 	}
-	
-	public Page<User> getUsers(Pageable pageable) {
-		return usersRepository.findAll(pageable);
+
+	public Page<User> getUsers(Pageable pageable, Long id) {
+		return usersRepository.findAllList(pageable, id);
 	}
-	
+
 	public Page<User> searchByEmailAndNameAndSurname(Pageable pageable,
-			String searchText) {
+			String searchText, Long id) {
 		searchText = "%" + searchText + "%";
 		return usersRepository.searchByEmailAndNameAndSurname(pageable,
-				searchText);
+				searchText, id);
 	}
 
 }

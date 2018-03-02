@@ -57,6 +57,10 @@ public class Request {
 		this.accepted = accepted;
 	}
 
+	public boolean checkSender(String nombre) {
+		return nombre.equals(sender.getEmail());
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

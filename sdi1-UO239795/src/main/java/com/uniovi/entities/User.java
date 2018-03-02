@@ -39,10 +39,10 @@ public class User {
 	private String role;
 
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-	private Set<Request> sentRequest;
+	private Set<Request> sentRequests = new HashSet<>();
 
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-	private Set<Request> receiveRequest = new HashSet<>();;
+	private Set<Request> receiveRequests = new HashSet<>();
 
 	@ManyToOne
 	@JoinColumn(name = "FRIEND_ID")
@@ -53,6 +53,9 @@ public class User {
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Post> posts = new HashSet<>();
+
+	@Transient
+	private boolean receiveRequest;
 
 	public User() {
 	}
@@ -115,19 +118,27 @@ public class User {
 		this.role = role;
 	}
 
-	public Set<Request> getSentRequest() {
-		return sentRequest;
+	public Set<Request> getSentRequests() {
+		return sentRequests;
 	}
 
-	public void setSentRequest(Set<Request> sentRequest) {
-		this.sentRequest = sentRequest;
+	public void setSentRequests(Set<Request> sentRequests) {
+		this.sentRequests = sentRequests;
 	}
 
-	public Set<Request> getReceiveRequest() {
+	public Set<Request> getReceiveRequests() {
+		return receiveRequests;
+	}
+
+	public void setReceiveRequests(Set<Request> receiveRequests) {
+		this.receiveRequests = receiveRequests;
+	}
+
+	public boolean isReceiveRequest() {
 		return receiveRequest;
 	}
 
-	public void setReceiveRequest(Set<Request> receiveRequest) {
+	public void setReceiveRequest(boolean receiveRequest) {
 		this.receiveRequest = receiveRequest;
 	}
 
@@ -153,6 +164,23 @@ public class User {
 
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
+	}
+
+	public boolean isRecibida() {
+		return receiveRequest;
+	}
+
+	public void setRecibida(boolean recibida) {
+		this.receiveRequest = recibida;
+	}
+
+	public void checkSentRequests() {
+		receiveRequest = false;
+		for (Request request : sentRequests) {
+			if (request.checkSender(email)) {
+				request.getReceiver().setRecibida(true);
+			}
+		}
 	}
 
 	@Override
@@ -183,10 +211,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", name=" + name
-				+ ", surName=" + surName + ", role=" + role + ", sentRequest="
-				+ sentRequest + ", receiveRequest=" + receiveRequest
-				+ ", friend=" + friend + ", friends=" + friends + ", posts="
-				+ posts + "]";
+				+ ", surName=" + surName + ", role=" + role + "]";
 	}
 
 }

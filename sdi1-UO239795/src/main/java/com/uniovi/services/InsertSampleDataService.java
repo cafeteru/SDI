@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entities.Request;
 import com.uniovi.entities.User;
 
 @Service
@@ -25,7 +26,7 @@ public class InsertSampleDataService {
 			"Alba", "Paula", "Sandra", "Nerea", " David", "Alejandro", "Daniel",
 			"Javier", "Sergio", "Adrián", "Carlos", "Pablo", "Álvaro", "Pablo",
 			"Jorge", "Hugo", "Manuel", "Pedro", "Elena", "Jairo", "Irene",
-			"Iris", "Iria", "Miriam", "Miguel" };
+			"Iris", "Iria", "Miriam", "Miguel", "Luís" };
 
 	private String[] apellidos = { "Aguilar", "Alonso", "Álvarez", "Arias",
 			"Benítez", "Blanco", "Blesa", "Bravo", "Caballero", "Cabrera",
@@ -43,25 +44,35 @@ public class InsertSampleDataService {
 			"Rodríguez", "Román", "Romero", "Rubio", "Ruiz", "Sáez", "Sánchez",
 			"Santana", "Santiago", "Santos", "Sanz", "Serrano", "Soler", "Soto",
 			"Suárez", "Torres", "Vargas", "Vázquez", "Vega", "Velasco",
-			"Vicente", "Vidal" };
+			"Vicente", "Vidal", "Ortín", "Redondo" };
 
 	private String[] correos = { "gmail.com", "outlook.es", "yahoo.es",
 			"hotmail.com", "telecable.es", "uniovi.es" };
 
 	Set<User> users = new HashSet<User>();
 
+	private User user1;
+
 	@PostConstruct
 	public void init() {
-		inicializar(10);
+		inicializar(25);
 	}
 
 	private void inicializar(int limite) {
-		User user1 = new User("ivangonzalezmahagamage@gmail.com", "Iván",
+		user1 = new User("ivangonzalezmahagamage@gmail.com", "Iván",
 				"González Mahagamage");
 		user1.setPassword("123456");
 		user1.setRole(rolesService.getAdmin());
 		usersService.add(user1);
+
+		User user2 = new User("ivangonzalezmahagamage2@gmail.com", "Iván",
+				"González Mahagamage");
+		user2.setPassword("123456");
+		user2.setRole(rolesService.getAdmin());
+		user2.getReceiveRequests().add(new Request(user1, user2));
+		usersService.add(user2);
 		rellenarBaseDatos(limite);
+
 	}
 
 	private void rellenarBaseDatos(int limite) {
@@ -85,6 +96,9 @@ public class InsertSampleDataService {
 		User user = new User(email.toLowerCase(), name, surName);
 		user.setPassword("123456");
 		user.setRole(rolesService.getUser());
+		if (integer(0, 10) % 2 == 0) {
+			user.getReceiveRequests().add(new Request(user1, user));
+		}
 		users.add(user);
 	}
 

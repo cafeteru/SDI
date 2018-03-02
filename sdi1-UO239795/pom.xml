@@ -24,7 +24,7 @@
 	</properties>
 
 	<dependencies>
-	<dependency>
+		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-rest-hal-browser</artifactId>
 		</dependency>
@@ -72,4 +72,15 @@
 			</plugin>
 		</plugins>
 	</build>
+	<developers>
+		<developer>
+			<id>igm1990</id>
+			<name>Iván González Mahagamage</name>
+			<email>ivangonzalezmahagamge@gmail.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>2</timezone>
+		</developer>
+	</developers>
 </project>

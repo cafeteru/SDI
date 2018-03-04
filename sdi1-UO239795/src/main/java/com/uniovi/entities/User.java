@@ -53,8 +53,10 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Post> posts = new HashSet<>();
 
+	// Esta variable se usa para mostrar el estado de la solicitud con el
+	// usuario logeado a la hora de listar los usuarios en la aplicación
 	@Transient
-	private boolean receiveRequest;
+	private Request receiveRequest;
 
 	public User() {
 	}
@@ -133,11 +135,11 @@ public class User {
 		this.receiveRequests = receiveRequests;
 	}
 
-	public boolean isReceiveRequest() {
+	public Request getReceiveRequest() {
 		return receiveRequest;
 	}
 
-	public void setReceiveRequest(boolean receiveRequest) {
+	public void setReceiveRequest(Request receiveRequest) {
 		this.receiveRequest = receiveRequest;
 	}
 
@@ -163,14 +165,6 @@ public class User {
 
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
-	}
-
-	public boolean isRecibida() {
-		return receiveRequest;
-	}
-
-	public void setRecibida(boolean recibida) {
-		this.receiveRequest = recibida;
 	}
 
 	@Override

@@ -55,7 +55,7 @@ public class InsertSampleDataService {
 
 	@PostConstruct
 	public void init() {
-		inicializar(15);
+		inicializar(10);
 	}
 
 	private void inicializar(int limite) {
@@ -69,7 +69,9 @@ public class InsertSampleDataService {
 				"González Mahagamage");
 		user2.setPassword("123456");
 		user2.setRole(rolesService.getAdmin());
-		user2.getReceiveRequests().add(new Request(user1, user2));
+		Request a = new Request(user1, user2);
+		a.block();
+		user2.getReceiveRequests().add(a);
 		usersService.add(user2);
 		rellenarBaseDatos(limite);
 
@@ -81,8 +83,10 @@ public class InsertSampleDataService {
 		}
 
 		Iterator<User> a = users.iterator();
+		int i = 0;
 		while (a.hasNext()) {
 			usersService.add(a.next());
+			System.out.println(++i);
 		}
 	}
 
@@ -96,8 +100,17 @@ public class InsertSampleDataService {
 		User user = new User(email.toLowerCase(), name, surName);
 		user.setPassword("123456");
 		user.setRole(rolesService.getUser());
-		if (integer(0, 10) % 2 == 0) {
+		int i = integer(0, 20);
+		if (i % 5 == 0) {
 			user.getReceiveRequests().add(new Request(user1, user));
+		} else if (i % 11 == 0) {
+			Request a = new Request(user1, user);
+			a.block();
+			user.getReceiveRequests().add(a);
+		} else if (i % 2 == 0) {
+			Request a = new Request(user1, user);
+			a.accept();
+			user.getReceiveRequests().add(a);
 		}
 		users.add(user);
 	}

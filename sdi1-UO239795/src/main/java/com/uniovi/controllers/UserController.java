@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.uniovi.entities.Request;
 import com.uniovi.entities.User;
 import com.uniovi.services.RequestsService;
 import com.uniovi.services.RolesService;
@@ -76,10 +75,12 @@ public class UserController {
 			@RequestParam(value = "", required = false) String searchText) {
 		User user = getCurrentUser();
 		Page<User> users = getUsers(pageable, searchText, user);
-		List<Request> sentResquest = requestsService
-				.findSendRequestByUser(user.getId());
-		model.addAttribute("sentResquest", sentResquest);
-		model.addAttribute("usersList", users.getContent());
+		List<User> list = users.getContent();
+		for (User u : list) {
+			u.setReceiveRequest(requestsService
+					.findBySenderIdAndReceiverId(user.getId(), u.getId()));
+		}
+		model.addAttribute("usersList", list);
 		model.addAttribute("page", users);
 		return "users/list";
 	}

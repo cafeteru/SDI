@@ -17,4 +17,8 @@ public class RequestsService {
 		return requestRepository.findAllSentById(id);
 	}
 
+	public Request findBySenderIdAndReceiverId(Long sender, Long receiver) {
+		return requestRepository.findBySenderIdAndReceiverId(sender, receiver);
+	}
+
 }

@@ -1,6 +1,7 @@
 package com.uniovi.controllers;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.uniovi.entities.Request;
 import com.uniovi.entities.User;
+import com.uniovi.services.RequestsService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -26,6 +29,9 @@ import com.uniovi.validators.SignUpFormValidator;
 public class UserController {
 	@Autowired
 	private UsersService usersService;
+
+	@Autowired
+	private RequestsService requestsService;
 
 	@Autowired
 	private SecurityService securityService;
@@ -70,6 +76,9 @@ public class UserController {
 			@RequestParam(value = "", required = false) String searchText) {
 		User user = getCurrentUser();
 		Page<User> users = getUsers(pageable, searchText, user);
+		List<Request> sentResquest = requestsService
+				.findSendRequestByUser(user.getId());
+		model.addAttribute("sentResquest", sentResquest);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		return "users/list";

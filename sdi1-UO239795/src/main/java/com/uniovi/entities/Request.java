@@ -64,8 +64,8 @@ public class Request {
 		setStatus(ResquestStatus.ACCEPTED);
 	}
 
-	public void deny() {
-		setStatus(ResquestStatus.DENIED);
+	public void block() {
+		setStatus(ResquestStatus.BLOCKED);
 	}
 
 	@Override

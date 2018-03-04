@@ -20,8 +20,8 @@
 				<td th:text="${user.name}">Column content</td>
 				<td th:text="${user.surName}">Column content</td>
 				<td th:text="${user.email}">Column content</td>
-				<td>
-					<button th:if="${user.recibida}" type="button" class="btn btn-info"
+				<td th:each=" request:${sentResquest}" >
+					<button th:if="${user.name} == ${request.receiver.name}" type="button" class="btn btn-info"
 						th:text="#{list.send.info}" disabled="disable">Success</button>
 					<button th:unless="${user.recibida}" type="button" class="btn btn-success"
 						th:text="#{list.send}">Success</button>

@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,10 +20,14 @@ import com.uniovi.services.RequestsService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
+import com.uniovi.services.util.UtilService;
 import com.uniovi.validators.SignUpFormValidator;
 
 @Controller
 public class UserController {
+	@Autowired
+	private UtilService utilService;
+
 	@Autowired
 	private UsersService usersService;
 
@@ -73,7 +75,7 @@ public class UserController {
 	@GetMapping("/user/list")
 	public String getListado(Model model, Pageable pageable,
 			@RequestParam(value = "", required = false) String searchText) {
-		User user = getCurrentUser();
+		User user = utilService.getCurrentUser();
 		Page<User> users = getUsers(pageable, searchText, user);
 		List<User> list = users.getContent();
 		for (User u : list) {
@@ -83,13 +85,6 @@ public class UserController {
 		model.addAttribute("usersList", list);
 		model.addAttribute("page", users);
 		return "users/list";
-	}
-
-	private User getCurrentUser() {
-		UserDetails actual = (UserDetails) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		User user = usersService.getUserByEmail(actual.getUsername());
-		return user;
 	}
 
 	private Page<User> getUsers(Pageable pageable, String searchText,

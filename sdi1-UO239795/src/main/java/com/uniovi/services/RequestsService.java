@@ -13,6 +13,10 @@ public class RequestsService {
 	@Autowired
 	private RequestRepository requestRepository;
 
+	public void add(Request request) {
+		requestRepository.save(request);
+	}
+
 	public List<Request> findSendRequestByUser(Long id) {
 		return requestRepository.findAllSentById(id);
 	}

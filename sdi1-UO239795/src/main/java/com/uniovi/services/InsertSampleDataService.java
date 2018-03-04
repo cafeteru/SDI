@@ -83,10 +83,8 @@ public class InsertSampleDataService {
 		}
 
 		Iterator<User> a = users.iterator();
-		int i = 0;
 		while (a.hasNext()) {
 			usersService.add(a.next());
-			System.out.println(++i);
 		}
 	}
 

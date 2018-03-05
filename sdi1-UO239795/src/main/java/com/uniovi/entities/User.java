@@ -8,8 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -27,6 +25,8 @@ public class User {
 	private String email;
 
 	private String name;
+
+	@Column(name = "surname")
 	private String surName;
 
 	@NotNull
@@ -43,12 +43,11 @@ public class User {
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
 	private Set<Request> receiveRequests = new HashSet<>();
 
-	@ManyToOne
-	@JoinColumn(name = "FRIEND_ID")
-	private User friend;
-
 	@OneToMany(mappedBy = "friend")
-	private Set<User> friends = new HashSet<>();
+	private Set<Friendship> friends = new HashSet<>();
+
+	@OneToMany(mappedBy = "user")
+	private Set<Friendship> iAmFriendOf = new HashSet<>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Post> posts = new HashSet<>();
@@ -143,20 +142,20 @@ public class User {
 		this.receiveRequest = receiveRequest;
 	}
 
-	public User getFriend() {
-		return friend;
-	}
-
-	public void setFriend(User friend) {
-		this.friend = friend;
-	}
-
-	public Set<User> getFriends() {
+	public Set<Friendship> getFriends() {
 		return friends;
 	}
 
-	public void setFriends(Set<User> friends) {
+	public void setFriends(Set<Friendship> friends) {
 		this.friends = friends;
+	}
+
+	public Set<Friendship> getiAmFriendOf() {
+		return iAmFriendOf;
+	}
+
+	public void setiAmFriendOf(Set<Friendship> iAmFriendOf) {
+		this.iAmFriendOf = iAmFriendOf;
 	}
 
 	public Set<Post> getPosts() {

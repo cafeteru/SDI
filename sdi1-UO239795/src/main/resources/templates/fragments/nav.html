@@ -7,7 +7,13 @@
 
     <div class="navbar-collapse collapse" id="navbarColor01" style="">
         <a sec:authorize="isAuthenticated()" class="navbar-brand" href="/user/list" th:text="#{nav.users}">Inicio</a>
-        <a sec:authorize="isAuthenticated()" class="navbar-brand" href="/requests" th:text="#{nav.receive}">Inicio</a>
+        <li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{language.change}">Dropdown</a>
+            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <a class="navbar-brand" href="/requests" th:text="#{nav.receive}">Inicio</a>
+                <div class="dropdown-divider"></div>
+                <a class="navbar-brand" href="/friends" th:text="#{nav.friends}">Inicio</a>
+            </div>
+        </li>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{language.change}">Dropdown</a>
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">

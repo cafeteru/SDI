@@ -1,6 +1,8 @@
 package com.uniovi.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -21,6 +23,7 @@ public class Request {
 	@ManyToOne
 	private User receiver;
 
+	@Enumerated(EnumType.STRING)
 	private ResquestStatus status;
 
 	public Request() {

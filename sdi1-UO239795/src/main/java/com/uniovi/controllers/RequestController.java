@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.uniovi.entities.Friendship;
 import com.uniovi.entities.Request;
 import com.uniovi.entities.User;
+import com.uniovi.services.FriendshipService;
 import com.uniovi.services.RequestsService;
 import com.uniovi.services.UsersService;
 import com.uniovi.services.util.UtilService;
@@ -21,6 +23,9 @@ public class RequestController {
 
 	@Autowired
 	private RequestsService requestsService;
+
+	@Autowired
+	private FriendshipService friendshipService;
 
 	@GetMapping("/request/send/{id}")
 	public String sendRequest(@PathVariable Long id) {
@@ -51,7 +56,7 @@ public class RequestController {
 	}
 
 	/**
-	 * Acepta una solicitud de amistad. Le cambia el estado a acceptada y la
+	 * Acepta una solicitud de amistad. Le cambia el estado a aceptada y la
 	 * guarda en la base de datos
 	 * 
 	 * @param receiver
@@ -73,8 +78,10 @@ public class RequestController {
 	 * @param sender
 	 */
 	private void createFriendship(User receiver, User sender) {
-		receiver.getFriends().add(sender);
-		sender.getFriends().add(receiver);
+		Friendship friendship = new Friendship(receiver, sender);
+		receiver.getFriends().add(friendship);
+		sender.getFriends().add(friendship);
+		friendshipService.add(friendship);
 		usersService.modify(sender);
 		usersService.modify(receiver);
 	}

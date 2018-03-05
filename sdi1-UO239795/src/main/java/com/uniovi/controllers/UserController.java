@@ -113,4 +113,14 @@ public class UserController {
 		model.addAttribute("page", users);
 		return "/requests/receiver";
 	}
+
+	@GetMapping("/friends")
+	public String showFriends(Model model, Pageable pageable) {
+		User user = utilService.getCurrentUser();
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+		users = usersService.findAllFriendsById(pageable, user.getId());
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		return "/users/friends";
+	}
 }

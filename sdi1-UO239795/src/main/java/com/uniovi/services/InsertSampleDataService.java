@@ -22,7 +22,7 @@ public class InsertSampleDataService {
 	private RolesService rolesService;
 
 	private String[] nombres = { "Iván", "Valery", "Ana", "Lorena", "Raúl",
-			" María", "Laura", "Cristina", "Marta", "Sara", "Andrea", "Ana",
+			"María", "Laura", "Cristina", "Marta", "Sara", "Andrea", "Ana",
 			"Alba", "Paula", "Sandra", "Nerea", " David", "Alejandro", "Daniel",
 			"Javier", "Sergio", "Adrián", "Carlos", "Pablo", "Álvaro", "Pablo",
 			"Jorge", "Hugo", "Manuel", "Pedro", "Elena", "Jairo", "Irene",
@@ -55,7 +55,7 @@ public class InsertSampleDataService {
 
 	@PostConstruct
 	public void init() {
-		inicializar(50);
+		inicializar(100);
 	}
 
 	private void inicializar(int limite) {
@@ -65,13 +65,10 @@ public class InsertSampleDataService {
 		user1.setRole(rolesService.getAdmin());
 		usersService.add(user1);
 
-		User user2 = new User("ivangonzalezmahagamage2@gmail.com", "Iván",
+		User user2 = new User("igm1990@hotmail.com", "Iván",
 				"González Mahagamage");
 		user2.setPassword("123456");
 		user2.setRole(rolesService.getAdmin());
-		Request a = new Request(user1, user2);
-		a.block();
-		user2.getReceiveRequests().add(a);
 		usersService.add(user2);
 		rellenarBaseDatos(limite);
 
@@ -106,11 +103,7 @@ public class InsertSampleDataService {
 			Request a = new Request(user1, user);
 			a.block();
 			user.getReceiveRequests().add(a);
-		} else if (i % 2 == 0) {
-			Request a = new Request(user1, user);
-			a.accept();
-			user.getReceiveRequests().add(a);
-		}
+		} 
 		users.add(user);
 	}
 

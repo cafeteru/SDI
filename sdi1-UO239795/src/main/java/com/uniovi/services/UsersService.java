@@ -28,7 +28,7 @@ public class UsersService {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		usersRepository.save(user);
 	}
-	
+
 	public void modify(User user) {
 		usersRepository.save(user);
 	}
@@ -54,6 +54,10 @@ public class UsersService {
 
 	public Page<User> findAllByRequestReceiverId(Pageable pageable, Long id) {
 		return usersRepository.findAllByRequestReceiverId(pageable, id);
+	}
+
+	public Page<User> findAllFriendsById(Pageable pageable, Long id) {
+		return usersRepository.findAllFriendsById(pageable, id);
 	}
 
 }

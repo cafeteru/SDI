@@ -25,4 +25,11 @@ public class RequestsService {
 		return requestRepository.findBySenderIdAndReceiverId(sender, receiver);
 	}
 
+	public Request getById(Long id) {
+		return requestRepository.findOne(id);
+	}
+
+	public void modify(Request request) {
+		requestRepository.save(request);
+	}
 }

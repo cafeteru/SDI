@@ -29,6 +29,10 @@ public class UsersService {
 		usersRepository.save(user);
 	}
 	
+	public void modify(User user) {
+		usersRepository.save(user);
+	}
+
 	public User getUser(Long id) {
 		return usersRepository.findOne(id);
 	}
@@ -46,6 +50,10 @@ public class UsersService {
 		searchText = "%" + searchText + "%";
 		return usersRepository.searchByEmailAndNameAndSurname(pageable,
 				searchText, id);
+	}
+
+	public Page<User> findAllByRequestReceiverId(Pageable pageable, Long id) {
+		return usersRepository.findAllByRequestReceiverId(pageable, id);
 	}
 
 }

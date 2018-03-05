@@ -26,16 +26,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests() // peticiones autorizadas
 				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup",
-						"/login/**")
+						"/login/**", "/admin/login/**")
 				// Permite a todos los usuarios
 				.permitAll().anyRequest().authenticated()
-				// Especifica que usuarios pueden usar esas webs
-				// Orden de más espeficica a más general
-				.antMatchers("/mark/edit/*").hasAuthority("ROLE_PROFESSOR")
-				.antMatchers("/mark/delete/*").hasAuthority("-ROLE_PROFESSOR")
-				.antMatchers("/mark/**")
-				.hasAnyAuthority("ROLE_STUDENT", "ROLE_PROFESSOR", "ROLE_ADMIN")
-				.antMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated().and()
 				// pagina de autentificacion por defecto
 				.formLogin().loginPage("/login").permitAll()

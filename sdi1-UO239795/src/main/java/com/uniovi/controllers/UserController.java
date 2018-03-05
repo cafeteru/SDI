@@ -67,6 +67,11 @@ public class UserController {
 		return "login";
 	}
 
+	@GetMapping("/admin/login")
+	public String adminLogin() {
+		return "adminLogin";
+	}
+
 	@GetMapping(value = "/home")
 	public String home(Model model) {
 		return "home";
@@ -97,5 +102,15 @@ public class UserController {
 			users = usersService.getUsers(pageable, user.getId());
 		}
 		return users;
+	}
+
+	@GetMapping("/requests")
+	public String showReceiverRequests(Model model, Pageable pageable) {
+		User user = utilService.getCurrentUser();
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+		users = usersService.findAllByRequestReceiverId(pageable, user.getId());
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		return "/requests/receiver";
 	}
 }

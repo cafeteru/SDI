@@ -7,17 +7,7 @@
 
     <div class="navbar-collapse collapse" id="navbarColor01" style="">
         <a sec:authorize="isAuthenticated()" class="navbar-brand" href="/user/list" th:text="#{nav.users}">Inicio</a>
-        <ul sec:authorize="isAuthenticated()" class="nav navbar-nav">
-            <li class="nav-item dropdown"><a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{nav.request}">Dropdown</a>
-                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" th:text="#{nav.send}" href="/user/send">Something
-						else here</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:text="#{nav.receive}" href="/user/receive">Separated
-						link</a>
-                </div>
-            </li>
-        </ul>
+        <a sec:authorize="isAuthenticated()" class="navbar-brand" href="/requests" th:text="#{nav.receive}">Inicio</a>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{language.change}">Dropdown</a>
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">
@@ -28,8 +18,16 @@
 						link</a>
                 </div>
             </li>
-            <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" href="signup" th:text="#{nav.signup}">Registrate</a></li>
-            <li sec:authorize="!isAuthenticated()" class="nav-item nav-inline"><a class="nav-link" href="login" th:text="#{nav.login}">Identifícate</a></li>
+            <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" href="/signup" th:text="#{nav.signup}">Registrate</a></li>
+            <li sec:authorize="!isAuthenticated()" class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{nav.login}">Dropdown</a>
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" th:text="#{nav.login.user}" href="/login">Something
+						else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:text="#{nav.login.admin}" href="/admin/login">Separated
+						link</a>
+                </div>
+            </li>
             <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
         </ul>
     </div>

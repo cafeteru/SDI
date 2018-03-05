@@ -55,7 +55,7 @@ public class InsertSampleDataService {
 
 	@PostConstruct
 	public void init() {
-		inicializar(10);
+		inicializar(50);
 	}
 
 	private void inicializar(int limite) {
@@ -101,6 +101,7 @@ public class InsertSampleDataService {
 		int i = integer(0, 20);
 		if (i % 5 == 0) {
 			user.getReceiveRequests().add(new Request(user1, user));
+			user.getReceiveRequests().add(new Request(user, user1));
 		} else if (i % 11 == 0) {
 			Request a = new Request(user1, user);
 			a.block();

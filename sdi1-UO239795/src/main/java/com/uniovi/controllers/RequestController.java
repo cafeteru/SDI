@@ -42,6 +42,7 @@ public class RequestController {
 		createFriendship(receiver, sender);
 		return "redirect:/requests";
 	}
+	
 
 	/**
 	 * Aceptar las solicitudes de ambos usarios, si las hay y además crea la
@@ -84,6 +85,43 @@ public class RequestController {
 		friendshipService.add(friendship);
 		usersService.modify(sender);
 		usersService.modify(receiver);
+	}
+	
+	@GetMapping("/request/blocked/{id}")
+	public String blockedRequest(@PathVariable Long id) {
+		User receiver = utilService.getCurrentUser();
+		User sender = usersService.getUser(id);
+		blockedBoth(receiver, sender);
+		return "redirect:/requests";
+	}
+	
+	/**
+	 * Aceptar las solicitudes de ambos usarios, si las hay y además crea la
+	 * amistad entre los usuarios
+	 * 
+	 * @param receiver
+	 * @param sender
+	 */
+	private void blockedBoth(User receiver, User sender) {
+		blockRequest(receiver, sender);
+		blockRequest(sender, receiver);
+	}
+	
+	
+	/**
+	 * Acepta una solicitud de amistad. Le cambia el estado a aceptada y la
+	 * guarda en la base de datos
+	 * 
+	 * @param receiver
+	 * @param sender
+	 */
+	private void blockRequest(User receiver, User sender) {
+		Request request = requestsService
+				.findBySenderIdAndReceiverId(sender.getId(), receiver.getId());
+		if (request != null) {
+			request.block();
+			requestsService.modify(request);
+		}
 	}
 
 }

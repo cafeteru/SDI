@@ -55,7 +55,7 @@ public class InsertSampleDataService {
 
 	@PostConstruct
 	public void init() {
-		inicializar(100);
+		inicializar(30);
 	}
 
 	private void inicializar(int limite) {

@@ -263,4 +263,12 @@ public class NotaneitorTests {
 		// Ahora nos desconectamos
 		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
 	}
+
+	public boolean isAcceptNextAlert() {
+		return acceptNextAlert;
+	}
+
+	public void setAcceptNextAlert(boolean acceptNextAlert) {
+		this.acceptNextAlert = acceptNextAlert;
+	}
 }

@@ -1,5 +1,7 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +13,9 @@ import com.uniovi.entities.User;
 import com.uniovi.services.FriendshipService;
 import com.uniovi.services.RequestsService;
 import com.uniovi.services.UsersService;
-import com.uniovi.services.util.UtilService;
 
 @Controller
 public class RequestController {
-	@Autowired
-	private UtilService utilService;
 
 	@Autowired
 	private UsersService usersService;
@@ -28,21 +27,20 @@ public class RequestController {
 	private FriendshipService friendshipService;
 
 	@GetMapping("/request/send/{id}")
-	public String sendRequest(@PathVariable Long id) {
-		User user = utilService.getCurrentUser();
+	public String sendRequest(@PathVariable Long id, Principal principal) {
+		User user = usersService.getUserByEmail(principal.getName());
 		requestsService.add(new Request(user, usersService.getUser(id)));
 		return "redirect:/user/list";
 	}
 
 	@GetMapping("/request/accepted/{id}")
-	public String acceptedRequest(@PathVariable Long id) {
-		User receiver = utilService.getCurrentUser();
+	public String acceptedRequest(@PathVariable Long id, Principal principal) {
+		User receiver = usersService.getUserByEmail(principal.getName());
 		User sender = usersService.getUser(id);
 		acceptBoth(receiver, sender);
 		createFriendship(receiver, sender);
 		return "redirect:/requests";
 	}
-	
 
 	/**
 	 * Aceptar las solicitudes de ambos usarios, si las hay y además crea la
@@ -86,15 +84,15 @@ public class RequestController {
 		usersService.modify(sender);
 		usersService.modify(receiver);
 	}
-	
+
 	@GetMapping("/request/blocked/{id}")
-	public String blockedRequest(@PathVariable Long id) {
-		User receiver = utilService.getCurrentUser();
+	public String blockedRequest(@PathVariable Long id, Principal principal) {
+		User receiver = usersService.getUserByEmail(principal.getName());
 		User sender = usersService.getUser(id);
 		blockedBoth(receiver, sender);
 		return "redirect:/requests";
 	}
-	
+
 	/**
 	 * Aceptar las solicitudes de ambos usarios, si las hay y además crea la
 	 * amistad entre los usuarios
@@ -106,8 +104,7 @@ public class RequestController {
 		blockRequest(receiver, sender);
 		blockRequest(sender, receiver);
 	}
-	
-	
+
 	/**
 	 * Acepta una solicitud de amistad. Le cambia el estado a aceptada y la
 	 * guarda en la base de datos

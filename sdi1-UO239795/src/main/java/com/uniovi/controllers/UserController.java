@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,14 +21,10 @@ import com.uniovi.services.RequestsService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
-import com.uniovi.services.util.UtilService;
 import com.uniovi.validators.SignUpFormValidator;
 
 @Controller
 public class UserController {
-	@Autowired
-	private UtilService utilService;
-
 	@Autowired
 	private UsersService usersService;
 
@@ -79,8 +76,9 @@ public class UserController {
 
 	@GetMapping("/user/list")
 	public String getListado(Model model, Pageable pageable,
-			@RequestParam(value = "", required = false) String searchText) {
-		User user = utilService.getCurrentUser();
+			@RequestParam(value = "", required = false) String searchText,
+			Principal principal) {
+		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = getUsers(pageable, searchText, user);
 		List<User> list = users.getContent();
 		for (User u : list) {
@@ -105,8 +103,9 @@ public class UserController {
 	}
 
 	@GetMapping("/requests")
-	public String showReceiverRequests(Model model, Pageable pageable) {
-		User user = utilService.getCurrentUser();
+	public String showReceiverRequests(Model model, Pageable pageable,
+			Principal principal) {
+		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		users = usersService.findAllByRequestReceiverId(pageable, user.getId());
 		model.addAttribute("usersList", users.getContent());
@@ -115,8 +114,9 @@ public class UserController {
 	}
 
 	@GetMapping("/friends")
-	public String showFriends(Model model, Pageable pageable) {
-		User user = utilService.getCurrentUser();
+	public String showFriends(Model model, Pageable pageable,
+			Principal principal) {
+		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		users = usersService.findAllFriendsById(pageable, user.getId());
 		model.addAttribute("usersList", users.getContent());

@@ -6,12 +6,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
-import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 
 @Service
@@ -22,12 +19,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email)
 			throws UsernameNotFoundException {
-		User user = usersRepository.findByEmail(email);
+		com.uniovi.entities.User user = usersRepository.findByEmail(email);
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		org.springframework.security.core.userdetails.User a = new org.springframework.security.core.userdetails.User(
-				user.getEmail(), user.getPassword(), grantedAuthorities);
-		return a;
+		grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
+		return new User(user.getEmail(), user.getPassword(),
+				grantedAuthorities);
 	}
 
 }

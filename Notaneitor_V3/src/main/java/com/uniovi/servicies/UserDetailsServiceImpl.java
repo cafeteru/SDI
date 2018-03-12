@@ -31,8 +31,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		User user = usersRepository.findByDni(dni);
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
-
-		// Este user es de Spring, NO EL NUESTRO
 		return new org.springframework.security.core.userdetails.User(
 				user.getDni(), user.getPassword(), grantedAuthorities);
 	}

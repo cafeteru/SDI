@@ -35,11 +35,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable().authorizeRequests() // peticiones autorizadas
 				// Permite a todos los usuarios
 				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup",
-						"/login/**").permitAll()
+						"/login/**")
+				.permitAll()
 				// Especifica usuario que modificar
-				.antMatchers("/mark/add").hasAuthority("ROLE_PROFESSOR")
-				.antMatchers("/mark/add").hasAuthority("ROLE_ADMIN")
-				.anyRequest().authenticated().and().
+				.antMatchers("/mark/add")
+				.hasAnyRole("ROLE_PROFESSOR", "ROLE_ADMIN").anyRequest()
+				.authenticated().and().
 				// pagina de autentificacion por defecto
 				formLogin().loginPage("/login").permitAll()
 				// Si se loguea bien

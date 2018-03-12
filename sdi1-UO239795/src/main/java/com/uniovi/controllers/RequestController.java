@@ -11,6 +11,7 @@ import com.uniovi.entities.Friendship;
 import com.uniovi.entities.Request;
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendshipService;
+import com.uniovi.services.LogService;
 import com.uniovi.services.RequestsService;
 import com.uniovi.services.UsersService;
 
@@ -26,9 +27,13 @@ public class RequestController {
 	@Autowired
 	private FriendshipService friendshipService;
 
+	private LogService logService = new LogService(this);
+
 	@GetMapping("/request/send/{id}")
 	public String sendRequest(@PathVariable Long id, Principal principal) {
 		User user = usersService.getUserByEmail(principal.getName());
+		logService.info(principal.getName() + " envia una petición al usuario"
+				+ user.getEmail());
 		requestsService.add(new Request(user, usersService.getUser(id)));
 		return "redirect:/user/list";
 	}
@@ -37,6 +42,8 @@ public class RequestController {
 	public String acceptedRequest(@PathVariable Long id, Principal principal) {
 		User receiver = usersService.getUserByEmail(principal.getName());
 		User sender = usersService.getUser(id);
+		logService.info(principal.getName() + " acepto la amistad de "
+				+ sender.getEmail());
 		acceptBoth(receiver, sender);
 		createFriendship(receiver, sender);
 		return "redirect:/requests";

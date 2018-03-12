@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.LogService;
 import com.uniovi.services.RequestsService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
@@ -40,8 +41,11 @@ public class UserController {
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
 
+	private LogService logService = new LogService(this);
+
 	@GetMapping("/signup")
 	public String signUp(Model model) {
+		logService.info("Usuario se intenta registrar");
 		model.addAttribute("user", new User());
 		return "signup";
 	}
@@ -51,6 +55,7 @@ public class UserController {
 			Model model) {
 		signUpFormValidator.validate(user, result);
 		if (result.hasErrors()) {
+			logService.error("Usuario introdujo mal los datos");
 			return "signup";
 		}
 		user.setRole(rolesService.getUser());
@@ -61,16 +66,19 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String login() {
+		logService.info("Usuario se intenta loggear");
 		return "login";
 	}
 
 	@GetMapping("/admin/login")
 	public String adminLogin() {
+		logService.info("Admin se intenta registrar");
 		return "adminLogin";
 	}
 
 	@GetMapping(value = "/home")
-	public String home(Model model) {
+	public String home(Model model, Principal principal) {
+		logService.info(principal.getName() + " se loggeo correctamente");
 		return "home";
 	}
 
@@ -78,6 +86,7 @@ public class UserController {
 	public String getListado(Model model, Pageable pageable,
 			@RequestParam(value = "", required = false) String searchText,
 			Principal principal) {
+		logService.info(principal.getName() + " lista los usuarios");
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = getUsers(pageable, searchText, user);
 		List<User> list = users.getContent();
@@ -105,6 +114,7 @@ public class UserController {
 	@GetMapping("/requests")
 	public String showReceiverRequests(Model model, Pageable pageable,
 			Principal principal) {
+		logService.info(principal.getName() + " lista sus peticiones");
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		users = usersService.findAllByRequestReceiverId(pageable, user.getId());
@@ -116,6 +126,7 @@ public class UserController {
 	@GetMapping("/friends")
 	public String showFriends(Model model, Pageable pageable,
 			Principal principal) {
+		logService.info(principal.getName() + " lista los amistades");
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		users = usersService.findAllFriendsById(pageable, user.getId());

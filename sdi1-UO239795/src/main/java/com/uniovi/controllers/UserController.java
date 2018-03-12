@@ -70,12 +70,6 @@ public class UserController {
 		return "login";
 	}
 
-	@GetMapping("/admin/login")
-	public String adminLogin() {
-		logService.info("Admin se intenta registrar");
-		return "adminLogin";
-	}
-
 	@GetMapping(value = "/home")
 	public String home(Model model, Principal principal) {
 		logService.info(principal.getName() + " se loggeo correctamente");

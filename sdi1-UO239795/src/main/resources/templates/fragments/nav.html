@@ -6,10 +6,32 @@
 	</button>
 
     <div class="navbar-collapse collapse" id="navbarColor01" style="">
-        <a sec:authorize="isAuthenticated()" class="navbar-brand" href="/user/list" th:text="#{nav.users}">Inicio</a>
-        <a sec:authorize="isAuthenticated()" class="navbar-brand" href="/requests" th:text="#{receiver.title}">Inicio</a>
-        <a sec:authorize="isAuthenticated()" class="navbar-brand" href="/friends" th:text="#{nav.friends}">Inicio</a>
-        <a sec:authorize="hasRole('ROLE_ADMIN')" class="navbar-brand" href="/admin/list" th:text="#{nav.admin}">Inicio</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a sec:authorize="isAuthenticated()" class="nav-link" href="/user/list" th:text="#{nav.users}">Inicio</a>
+            </li>
+            <li class="nav-item active"><a sec:authorize="isAuthenticated()" class="nav-link" href="/requests" th:text="#{receiver.title}">Inicio</a>
+            </li>
+            <li class="nav-item active">
+                <a sec:authorize="isAuthenticated()" class="nav-link" href="/friends" th:text="#{nav.friends}">Inicio</a>
+            </li>
+            <li class="nav-item active">
+                <ul class="nav navbar-nav ml-auto">
+                    <li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{nav.post}">Dropdown</a>
+                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <a class="dropdown-item" href="/post/add" th:text="#{nav.post.add}">Inicio</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/postFriends" th:text="#{nav.post.list}">Inicio</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/postFriends" th:text="#{nav.post.friend}">Inicio</a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item active">
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/friends" th:text="#{nav.admin}">Inicio</a>
+            </li>
+        </ul>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{language.change}">Dropdown</a>
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">
@@ -21,15 +43,7 @@
                 </div>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" href="/signup" th:text="#{nav.signup}">Registrate</a></li>
-            <li sec:authorize="!isAuthenticated()" class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{nav.login}">Dropdown</a>
-                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" th:text="#{nav.login.user}" href="/login">Something
-						else here</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:text="#{nav.login.admin}" href="/admin/login">Separated
-						link</a>
-                </div>
-            </li>
+            <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" href="/login" th:text="#{nav.login}">Registrate</a></li>
             <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
         </ul>
     </div>

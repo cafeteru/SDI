@@ -1,6 +1,7 @@
 package com.uniovi.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Post;
@@ -13,6 +14,10 @@ public class PostService {
 
 	public void add(Post post) {
 		postRepository.save(post);
+	}
+
+	public Page<Post> findAll(Pageable pageable, Long id) {
+		return postRepository.findAllByUserId(pageable, id);
 	}
 
 }

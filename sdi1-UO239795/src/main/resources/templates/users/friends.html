@@ -12,6 +12,7 @@
                     <th scope="col" th:text="#{signup.name}">Column heading</th>
                     <th scope="col" th:text="#{signup.surname}">Column heading</th>
                     <th scope="col">Email</th>
+                    <th scope="col" th:text="#{nav.post}">Email</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,11 @@
                     <td th:text="${user.name}">Column content</td>
                     <td th:text="${user.surName}">Column content</td>
                     <td th:text="${user.email}">Column content</td>
+                    <td>
+                        <form th:attr="action=${'/post/friends/' + user.id}">
+                            <input type="submit" class="btn btn-info" th:attr="value=#{post.button.friend}" />
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>

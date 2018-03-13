@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entities.Post;
 import com.uniovi.entities.Request;
 import com.uniovi.entities.User;
 
@@ -63,6 +64,8 @@ public class InsertSampleDataService {
 				"González Mahagamage");
 		user1.setPassword("123456");
 		user1.setRole(rolesService.getAdmin());
+		Post post = new Post(user1, "Prueba1", "Contenido", "");
+		user1.getPosts().add(post);
 		usersService.add(user1);
 
 		User user2 = new User("igm1990@hotmail.com", "Iván",
@@ -103,7 +106,9 @@ public class InsertSampleDataService {
 			Request a = new Request(user1, user);
 			a.block();
 			user.getReceiveRequests().add(a);
-		} 
+		}
+		Post post = new Post(user, "Titulo1", "Contenido", "");
+		user.getPosts().add(post);
 		users.add(user);
 	}
 

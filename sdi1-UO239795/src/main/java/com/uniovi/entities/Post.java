@@ -26,12 +26,12 @@ public class Post {
 
 	}
 
-	public Post(User user, String title, String text, String img, Date date) {
+	public Post(User user, String title, String text, String img) {
 		this.user = user;
 		this.title = title;
 		this.text = text;
 		this.img = img;
-		this.date = date;
+		date = new Date(System.currentTimeMillis());
 	}
 
 	public User getUser() {

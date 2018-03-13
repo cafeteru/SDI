@@ -21,15 +21,13 @@
                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">
                             <a class="dropdown-item" href="/post/add" th:text="#{nav.post.add}">Inicio</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/postFriends" th:text="#{nav.post.list}">Inicio</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/postFriends" th:text="#{nav.post.friend}">Inicio</a>
+                            <a class="dropdown-item" href="/post/list" th:text="#{nav.post.list}">Inicio</a>
                         </div>
                     </li>
                 </ul>
             </li>
             <li class="nav-item active">
-                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/friends" th:text="#{nav.admin}">Inicio</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/admin/list" th:text="#{nav.admin}">Inicio</a>
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">

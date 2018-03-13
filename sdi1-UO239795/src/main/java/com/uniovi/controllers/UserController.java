@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -82,14 +83,14 @@ public class UserController {
 			Principal principal) {
 		logService.info(principal.getName() + " lista los usuarios");
 		User user = usersService.getUserByEmail(principal.getName());
-		Page<User> users = getUsers(pageable, searchText, user);
-		List<User> list = users.getContent();
+		Page<User> page = getUsers(pageable, searchText, user);
+		List<User> list = page.getContent();
 		for (User u : list) {
 			u.setReceiveRequest(requestsService
 					.findBySenderIdAndReceiverId(user.getId(), u.getId()));
 		}
 		model.addAttribute("usersList", list);
-		model.addAttribute("page", users);
+		model.addAttribute("page", page);
 		return "users/list";
 	}
 
@@ -127,5 +128,34 @@ public class UserController {
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		return "/users/friends";
+	}
+
+	@GetMapping("/admin/list")
+	public String listUserAdmin(Model model, Principal principal,
+			Pageable pageable) {
+		String message = "Administrador " + principal.getName()
+				+ " lista los usuarios";
+		configureList(model, principal, pageable, message);
+		return "/users/adminlist";
+	}
+
+	@PostMapping("/user/delete/{id}")
+	public String deleteUser(Model model, Principal principal,
+			Pageable pageable, @PathVariable Long id) {
+		usersService.delete(id);
+		String message = "Administrador " + principal.getName()
+				+ " elimino al usuario con id " + id;
+		configureList(model, principal, pageable, message);
+		return "/users/adminlist";
+	}
+
+	private void configureList(Model model, Principal principal,
+			Pageable pageable, String message) {
+		logService.info(message);
+		User user = usersService.getUserByEmail(principal.getName());
+		Page<User> page = getUsers(pageable, null, user);
+		List<User> list = page.getContent();
+		model.addAttribute("usersList", list);
+		model.addAttribute("page", page);
 	}
 }

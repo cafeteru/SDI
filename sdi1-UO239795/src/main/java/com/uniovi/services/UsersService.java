@@ -60,4 +60,8 @@ public class UsersService {
 		return usersRepository.findAllFriendsById(pageable, id);
 	}
 
+	public void delete(Long id) {
+		usersRepository.delete(id);
+	}
+
 }

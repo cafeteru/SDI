@@ -59,6 +59,8 @@ public class UserController {
 			logService.error("Usuario introdujo mal los datos");
 			return "signup";
 		}
+		logService.info("Usuario se ha registrado correctamente como "
+				+ user.getEmail());
 		user.setRole(rolesService.getUser());
 		usersService.add(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());

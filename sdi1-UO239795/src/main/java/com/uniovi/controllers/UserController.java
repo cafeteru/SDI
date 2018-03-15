@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,9 @@ public class UserController {
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
 
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 	private LogService logService = new LogService(this);
 
 	@GetMapping("/signup")
@@ -73,10 +77,31 @@ public class UserController {
 		return "login";
 	}
 
+	@GetMapping("/admin/login")
+	public String adminLoginGet() {
+		logService.info("Usuario se intenta loggear como admin");
+		return "/adminLogin";
+	}
+
+	@PostMapping("/admin/login")
+	public String adminLoginPost(@Validated User user, Model model) {
+		User user1 = usersService.getUserByEmail(user.getEmail());
+		if (!user1.getRole().equals(rolesService.getAdmin())
+				|| !bCryptPasswordEncoder.matches(user.getPassword(),
+						user1.getPassword())) {
+			logService.info("Usuario " + user.getEmail() + " no es un Admin");
+			return "/adminLogin";
+		}
+		securityService.autoLogin(user.getEmail(), user.getPassword());
+		logService.info(
+				"Usuario " + user.getEmail() + " se ha logueado como Admin");
+		return "redirect:/home";
+	}
+
 	@GetMapping(value = "/home")
 	public String home(Model model, Principal principal) {
 		logService.info(principal.getName() + " se loggeo correctamente");
-		return "home";
+		return "/home";
 	}
 
 	@GetMapping("/user/list")
@@ -93,7 +118,7 @@ public class UserController {
 		}
 		model.addAttribute("usersList", list);
 		model.addAttribute("page", page);
-		return "users/list";
+		return "/users/list";
 	}
 
 	private Page<User> getUsers(Pageable pageable, String searchText,
@@ -125,8 +150,8 @@ public class UserController {
 			Principal principal) {
 		logService.info(principal.getName() + " lista los amistades");
 		User user = usersService.getUserByEmail(principal.getName());
-		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-		users = usersService.findAllFriendsById(pageable, user.getId());
+		Page<User> users = usersService.findAllFriendsById(pageable,
+				user.getId());
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		return "/users/friends";

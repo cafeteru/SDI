@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -47,11 +48,7 @@ public class PostController {
 	public String addPost(@ModelAttribute Post post, Principal principal,
 			@RequestParam("imagen") MultipartFile img) {
 		try {
-			String fileName = img.getOriginalFilename();
-			InputStream is = img.getInputStream();
-			Files.copy(is,
-					Paths.get("src/main/resources/static/imgUser/" + fileName),
-					StandardCopyOption.REPLACE_EXISTING);
+			String fileName = saveImg(img);
 			logService.info(principal.getName()
 					+ " ha realizado una nueva publicación");
 			User user = usersService.getUserByEmail(principal.getName());
@@ -61,8 +58,31 @@ public class PostController {
 			postService.add(post);
 			return "redirect:list";
 		} catch (IOException e) {
-			return "posts/add?error";
+			return "posts/add";
 		}
+	}
+
+	private String saveImg(MultipartFile img) throws IOException {
+		saveImgResource(img);
+		saveImgTarget(img);
+		return img.getOriginalFilename();
+	}
+
+	private void saveImgTarget(MultipartFile img) throws IOException {
+		new File("target/classes/static/imgUser/").mkdirs();
+		saveImgByPath(img, "target/classes/static/imgUser/");
+	}
+
+	private void saveImgByPath(MultipartFile img, String path)
+			throws IOException {
+		String fileName = img.getOriginalFilename();
+		InputStream is = img.getInputStream();
+		Files.copy(is, Paths.get(path + fileName),
+				StandardCopyOption.REPLACE_EXISTING);
+	}
+
+	private void saveImgResource(MultipartFile img) throws IOException {
+		saveImgByPath(img, "src/main/resources/static/imgUser/");
 	}
 
 	@GetMapping("/post/list")

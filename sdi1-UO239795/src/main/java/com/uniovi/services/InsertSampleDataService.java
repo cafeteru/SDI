@@ -59,7 +59,7 @@ public class InsertSampleDataService {
 		inicializar(30);
 	}
 
-	private void inicializar(int limite) {
+	protected void inicializar(int limite) {
 		user1 = new User("ivangonzalezmahagamage@gmail.com", "Iván",
 				"González Mahagamage");
 		user1.setPassword("123456");
@@ -71,13 +71,13 @@ public class InsertSampleDataService {
 		User user2 = new User("igm1990@hotmail.com", "Iván",
 				"González Mahagamage");
 		user2.setPassword("123456");
-		user2.setRole(rolesService.getAdmin());
+		user2.setRole(rolesService.getUser());
 		usersService.add(user2);
 		rellenarBaseDatos(limite);
 
 	}
 
-	private void rellenarBaseDatos(int limite) {
+	protected void rellenarBaseDatos(int limite) {
 		while (users.size() < limite) {
 			createUser();
 		}
@@ -88,7 +88,7 @@ public class InsertSampleDataService {
 		}
 	}
 
-	private void createUser() {
+	protected void createUser() {
 		String name = nombres[integer(0, nombres.length)];
 		String surName1 = apellidos[integer(0, apellidos.length)];
 		String surName2 = apellidos[integer(0, apellidos.length)];
@@ -112,11 +112,11 @@ public class InsertSampleDataService {
 		users.add(user);
 	}
 
-	public Integer integer(int min, int max) {
+	protected Integer integer(int min, int max) {
 		return (int) (new java.util.Random().nextFloat() * (max - min) + min);
 	}
 
-	public String limpiarAcentos(String cadena) {
+	protected String limpiarAcentos(String cadena) {
 		String limpio = null;
 		if (cadena != null) {
 			String valor = cadena;

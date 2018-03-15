@@ -26,15 +26,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests() // peticiones autorizadas
 				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup",
-						"/login/**", "/admin/login/**").permitAll()
+						"/login", "/admin/login/**")
+				.permitAll()
 				// Permite a todos los usuarios
 				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-				.anyRequest().authenticated()				
+				.anyRequest().authenticated()
 				// pagina de autentificacion por defecto
 				.and().formLogin().loginPage("/login").permitAll()
 				// Si se loguea bien
-				.defaultSuccessUrl("/home").and()
-				.logout().permitAll();
+				.defaultSuccessUrl("/home").and().logout().permitAll();
 	}
 
 	@Autowired

@@ -86,10 +86,15 @@ public class UserController {
 	@PostMapping("/admin/login")
 	public String adminLoginPost(@Validated User user, Model model) {
 		User user1 = usersService.getUserByEmail(user.getEmail());
-		if (!user1.getRole().equals(rolesService.getAdmin())
-				|| !bCryptPasswordEncoder.matches(user.getPassword(),
-						user1.getPassword())) {
+		if (!user1.getRole().equals(rolesService.getAdmin())) {
 			logService.info("Usuario " + user.getEmail() + " no es un Admin");
+			model.addAttribute("noAdmin", "noAdmin");
+			return "/adminLogin";
+		}
+		if (!bCryptPasswordEncoder.matches(user.getPassword(),
+				user1.getPassword())) {
+			logService.info("Usuario " + user.getEmail() + " no es un Admin");
+			model.addAttribute("password", "password");
 			return "/adminLogin";
 		}
 		securityService.autoLogin(user.getEmail(), user.getPassword());

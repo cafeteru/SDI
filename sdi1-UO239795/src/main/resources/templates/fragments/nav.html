@@ -41,7 +41,15 @@
                 </div>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" href="/signup" th:text="#{nav.signup}">Registrate</a></li>
-            <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" href="/login" th:text="#{nav.login}">Registrate</a></li>
+            <li sec:authorize="!isAuthenticated()"  class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" th:text="#{nav.login}">Dropdown</a>
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 44px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" th:text="#{nav.login.user}" href="/login">Something
+						else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:text="#{nav.login.admin}" href="/admin/login">Separated
+						link</a>
+                </div>
+            </li>
             <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
         </ul>
     </div>

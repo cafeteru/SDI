@@ -5,7 +5,7 @@
 <body>
     <nav th:replace="fragments/nav" />
     <main class="container">
-        <h1 th:text="#{login.title}">Idéntificate</h1>
+        <h1 th:text="#{admin.login.title}">Idéntificate</h1>
         <form class="form-horizontal" method="post" action="/admin/login">
             <fieldset>
                 <div class="form-group">
@@ -24,16 +24,16 @@
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>
-                    <div th:if="${param.error}" class="alert alert-dismissible alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong th:text="#{login.error}">Oh snap!</strong>
-                    </div>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             </fieldset>
-            <div th:if="${param.logout}" class="alert alert-dismissible alert-success">
+            <div th:if="${noAdmin} != null" class="alert alert-dismissible alert-danger">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong th:text="#{login.logout}">Oh snap!</strong>
+                <strong th:text="#{admin.noadmin.error}">Oh snap!</strong>
+            </div>
+            <div th:if="${password} != null" class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong th:text="#{admin.password.error}">Oh snap!</strong>
             </div>
         </form>
     </main>

@@ -66,7 +66,12 @@ public class TestUtil {
 				ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		assertTrue(resultado != null);
 		List<WebElement> elementos = driver.findElements(By.xpath(xpath));
-
 		return elementos;
+	}
+
+	public void textoPresentePagina(String texto) {
+		List<WebElement> list = driver.findElements(
+				By.xpath("//*[contains(text(),'" + texto + "')]"));
+		assertTrue("Texto " + texto + " no localizado!", list.size() > 0);
 	}
 }

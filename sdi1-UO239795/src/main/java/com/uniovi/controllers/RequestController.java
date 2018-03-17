@@ -45,7 +45,7 @@ public class RequestController {
 		logService.info(principal.getName() + " acepto la amistad de "
 				+ sender.getEmail());
 		acceptBoth(receiver, sender);
-		createFriendship(receiver, sender);
+		createFriendshipBoth(receiver, sender);
 		return "redirect:/requests";
 	}
 
@@ -71,10 +71,11 @@ public class RequestController {
 	private void acceptRequest(User receiver, User sender) {
 		Request request = requestsService
 				.findBySenderIdAndReceiverId(sender.getId(), receiver.getId());
-		if (request != null) {
-			request.accept();
-			requestsService.modify(request);
+		if (request == null) {
+			request = new Request(sender, receiver);
 		}
+		request.accept();
+		requestsService.modify(request);
 	}
 
 	/**
@@ -83,13 +84,18 @@ public class RequestController {
 	 * @param receiver
 	 * @param sender
 	 */
+	private void createFriendshipBoth(User receiver, User sender) {
+		createFriendship(receiver, sender);
+		createFriendship(sender, receiver);
+		usersService.modify(sender);
+		usersService.modify(receiver);
+	}
+
 	private void createFriendship(User receiver, User sender) {
 		Friendship friendship = new Friendship(receiver, sender);
 		receiver.getFriends().add(friendship);
-		sender.getFriends().add(friendship);
+		sender.getiAmFriendOf().add(friendship);
 		friendshipService.add(friendship);
-		usersService.modify(sender);
-		usersService.modify(receiver);
 	}
 
 	@GetMapping("/request/blocked/{id}")
@@ -123,9 +129,10 @@ public class RequestController {
 		Request request = requestsService
 				.findBySenderIdAndReceiverId(sender.getId(), receiver.getId());
 		if (request != null) {
-			request.block();
-			requestsService.modify(request);
+			request = new Request(sender, receiver);
 		}
+		request.block();
+		requestsService.modify(request);
 	}
 
 }

@@ -36,16 +36,15 @@ public class InsertSampleDataService {
 			"Díez", "Domínguez", "Durán", "Esteban", "Fernández", "Ferrer",
 			"Flores", "Fuentes", "Gallardo", "Gallego", "García", "Garrido",
 			"Gil", "Giménez", "Gómez", "González", "Guerrero", "Gutiérrez",
-			"Hernández", "Herrera", "Herrero", "Hidalgo", "Ibáñez", "Iglesias",
-			"Jiménez", "León", "López", "Lorenzo", "Lozano", "Marín", "Márquez",
-			"Martín", "Martínez", "Medina", "Méndez", "Molina", "Montero",
-			"Montoro", "Mora", "Morales", "Moreno", "Moya", "Muñoz", "Navarro",
-			"Nieto", "Núñez", "Ortega", "Ortiz", "Parra", "Pascual", "Pastor",
-			"Peña", "Pérez", "Prieto", "Ramírez", "Ramos", "Rey", "Reyes",
-			"Rodríguez", "Román", "Romero", "Rubio", "Ruiz", "Sáez", "Sánchez",
-			"Santana", "Santiago", "Santos", "Sanz", "Serrano", "Soler", "Soto",
-			"Suárez", "Torres", "Vargas", "Vázquez", "Vega", "Velasco",
-			"Vicente", "Vidal", "Ortín", "Redondo" };
+			"Hernández", "Herrera", "Herrero", "Hidalgo", "Iglesias", "Jiménez",
+			"León", "López", "Lorenzo", "Lozano", "Marín", "Márquez", "Martín",
+			"Martínez", "Medina", "Méndez", "Molina", "Montero", "Montoro",
+			"Mora", "Morales", "Moreno", "Moya", "Navarro", "Nieto", "Ortega",
+			"Ortiz", "Parra", "Pascual", "Pastor", "Pérez", "Prieto", "Ramírez",
+			"Ramos", "Rey", "Reyes", "Rodríguez", "Román", "Romero", "Rubio",
+			"Ruiz", "Sáez", "Sánchez", "Santana", "Santiago", "Santos", "Sanz",
+			"Serrano", "Soler", "Soto", "Suárez", "Torres", "Vargas", "Vázquez",
+			"Vega", "Velasco", "Vicente", "Vidal", "Ortín", "Redondo" };
 
 	private String[] correos = { "gmail.com", "outlook.es", "yahoo.es",
 			"hotmail.com", "telecable.es", "uniovi.es" };
@@ -56,7 +55,7 @@ public class InsertSampleDataService {
 
 	@PostConstruct
 	public void init() {
-		//inicializar(1000);
+		inicializar(50);
 	}
 
 	protected void inicializar(int limite) {

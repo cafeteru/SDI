@@ -41,19 +41,21 @@ public class PostController {
 
 	@PostMapping("/post/add")
 	public String addPost(@ModelAttribute Post post, Principal principal,
-			@RequestParam("imagen") MultipartFile img) {
+			@RequestParam(value = "imagen", required = false) MultipartFile img) {
 		try {
-			String fileName = postService.saveImg(img);
-			logService.info(principal.getName()
-					+ " ha realizado una nueva publicación");
 			User user = usersService.getUserByEmail(principal.getName());
+			if (!img.getOriginalFilename().equals("")) {
+				String fileName = postService.saveImg(img);
+				logService.info(principal.getName()
+						+ " ha realizado una nueva publicación");
+				post.setImg("/imgUser/" + fileName);
+			}
 			post.setUser(user);
-			post.setImg("/imgUser/" + fileName);
 			post.setDate(new Date(System.currentTimeMillis()));
 			postService.add(post);
-			return "redirect:list";
+			return "redirect:/post/list";
 		} catch (IOException e) {
-			return "posts/add";
+			return "redirect:/post/add";
 		}
 	}
 

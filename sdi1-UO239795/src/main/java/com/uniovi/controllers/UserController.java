@@ -86,6 +86,7 @@ public class UserController {
 	@PostMapping("/admin/login")
 	public String adminLoginPost(@Validated User user, Model model) {
 		User user1 = usersService.getUserByEmail(user.getEmail());
+		
 		if (!user1.getRole().equals(rolesService.getAdmin())) {
 			logService.info("Usuario " + user.getEmail() + " no es un Admin");
 			model.addAttribute("noAdmin", "noAdmin");
@@ -136,18 +137,6 @@ public class UserController {
 			users = usersService.getUsers(pageable, user.getId());
 		}
 		return users;
-	}
-
-	@GetMapping("/requests")
-	public String showReceiverRequests(Model model, Pageable pageable,
-			Principal principal) {
-		logService.info(principal.getName() + " lista sus peticiones");
-		User user = usersService.getUserByEmail(principal.getName());
-		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-		users = usersService.findAllByRequestReceiverId(pageable, user.getId());
-		model.addAttribute("usersList", users.getContent());
-		model.addAttribute("page", users);
-		return "/requests/receiver";
 	}
 
 	@GetMapping("/friends")

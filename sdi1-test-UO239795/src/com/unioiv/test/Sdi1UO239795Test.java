@@ -22,7 +22,7 @@ public class Sdi1UO239795Test {
 	private static String email;
 
 	private static String PathFirefox = "../Firefox46.win/FirefoxPortable.exe";
-	private static String URL = "http://localhost:8090";
+	private static String URL = "http://localhost:8090/";
 	private static WebDriver driver = getDriver(PathFirefox);
 
 	public static WebDriver getDriver(String PathFirefox) {
@@ -62,7 +62,7 @@ public class Sdi1UO239795Test {
 	@Test
 	public void Test01_1_RegVal() {
 		email = Random.email();
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Registrarse")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -88,7 +88,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test01_2_RegInval() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Registrarse")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -113,7 +113,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test02_1_Inval() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -136,7 +136,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test02_2_InInVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -154,7 +154,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test03_1_LisUsrVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -180,8 +180,8 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test03_2_LisUsrInVal() {
-		driver.get("http://localhost:8090/?lang=es");
-		driver.get("http://localhost:8090/user/list");
+		driver.get(URL + "?lang=es");
+		driver.get(URL + "user/list");
 		test.waitChangeWeb();
 		test.textoNoPresentePagina("Lista de usuarios");
 		test.textoPresentePagina("Login");
@@ -193,7 +193,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test04_1_BusUsrVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -222,8 +222,8 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test04_2_BusUsrInVal() {
-		driver.get("http://localhost:8090/?lang=es");
-		driver.get("http://localhost:8090/user/list");
+		driver.get(URL + "?lang=es");
+		driver.get(URL + "user/list");
 		test.waitChangeWeb();
 		test.textoNoPresentePagina("Lista de usuarios");
 		test.textoNoPresentePagina("Buscar usuario");
@@ -235,7 +235,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test05_1_InvVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -270,7 +270,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test05_2_InvInVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -301,7 +301,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test06_1_LisInvVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -323,7 +323,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test07_1_AcepInvVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -351,7 +351,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test08_1_ListAmiVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -373,7 +373,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test09_1_PubVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -406,7 +406,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test10_1_LisPubVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -430,7 +430,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test11_1_LisPubAmiVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -456,7 +456,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test11_2_LisPubAmiVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -467,7 +467,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		test.waitChangeWeb();
-		driver.get("http://localhost:8090/post/friends/3");
+		driver.get(URL + "post/friends/3");
 		test.textoPresentePagina("Esta es una zona privada la web");
 		test.textoPresentePagina("Usuario Autenticado como");
 		test.textoPresentePagina(email);
@@ -479,7 +479,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test12_1_PubFot1Val() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -515,7 +515,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test12_2_PubFot2Val() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -548,7 +548,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test13_1_AdInVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Administrador")).click();
 		test.waitChangeWeb();
@@ -572,7 +572,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test13_2_AdInInVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Administrador")).click();
 		test.waitChangeWeb();
@@ -593,7 +593,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test14_1_AdLisUsrVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Administrador")).click();
 		test.waitChangeWeb();
@@ -617,7 +617,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test15_1_AdBorUsrVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Administrador")).click();
 		test.waitChangeWeb();
@@ -649,7 +649,7 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test15_2_AdBorUsrInVal() {
-		driver.get("http://localhost:8090/?lang=es");
+		driver.get(URL + "?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
 		test.waitChangeWeb();
@@ -659,7 +659,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("password")).clear();
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		driver.get("http://localhost:8090/admin/list");
+		driver.get(URL + "admin/list");
 		test.textoPresentePagina("Access is denied");
 	}
 }

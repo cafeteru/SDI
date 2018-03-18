@@ -40,7 +40,8 @@ public class RequestController {
 		logService.info(principal.getName() + " lista sus peticiones");
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-		users = usersService.findAllByRequestReceiverId(pageable, user.getId());
+		Long id = user.getId();
+		users = usersService.findAllByRequestReceiverId(pageable, id);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		return "/requests/receiver";

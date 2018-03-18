@@ -58,9 +58,9 @@ public class PostService {
 	}
 
 	/**
-	 * Guarda en una imagen en la carpeta target, para que así se visualice sin
-	 * recargar la aplicación. Pero es transient, no se guarda cuando se acaba
-	 * la ejecución.
+	 * Guarda en una imagen en la carpeta target, para que así se visualice 
+	 * sin recargar la aplicación. Pero es transient, no se guarda cuando se 
+	 * acaba la ejecución.
 	 * 
 	 * @param img
 	 * @throws IOException
@@ -71,9 +71,9 @@ public class PostService {
 	}
 
 	/**
-	 * Guarda en una imagen en la carpeta resource, aquí al guardarla, no se ve
-	 * hasta que no se recarga la aplicación pero si es persistente. No se borra
-	 * cuando se reinicia la aplicación
+	 * Guarda en una imagen en la carpeta resource, aquí al guardarla, no se 
+	 * ve hasta que no se recarga la aplicación pero si es persistente. 
+	 * No se borra cuando se reinicia la aplicación
 	 * 
 	 * @param img
 	 * @throws IOException

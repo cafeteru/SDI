@@ -24,27 +24,27 @@ public class InsertSampleDataService {
 
 	private String[] nombres = { "Iván", "Valery", "Ana", "Lorena", "Raúl",
 			"María", "Laura", "Cristina", "Marta", "Sara", "Andrea", "Ana",
-			"Alba", "Paula", "Sandra", "Nerea", " David", "Alejandro", "Daniel",
-			"Javier", "Sergio", "Adrián", "Carlos", "Pablo", "Álvaro", "Pablo",
-			"Jorge", "Hugo", "Manuel", "Pedro", "Elena", "Jairo", "Irene",
-			"Iris", "Iria", "Miriam", "Miguel", "Luís" };
+			"Alba", "Paula", "Sandra", "Nerea", " David", "Alejandro",
+			"Daniel", "Javier", "Sergio", "Adrián", "Carlos", "Pablo",
+			"Álvaro", "Pablo", "Jorge", "Hugo", "Manuel", "Pedro", "Elena",
+			"Jairo", "Irene", "Iris", "Iria", "Miriam", "Miguel", "Luís" };
 
 	private String[] apellidos = { "Aguilar", "Alonso", "Álvarez", "Arias",
 			"Benítez", "Blanco", "Blesa", "Bravo", "Caballero", "Cabrera",
 			"Calvo", "Cambil", "Campos", "Cano", "Carmona", "Carrasco",
-			"Castillo", "Castro", "Cortés", "Crespo", "Cruz", "Delgado", "Díaz",
-			"Díez", "Domínguez", "Durán", "Esteban", "Fernández", "Ferrer",
-			"Flores", "Fuentes", "Gallardo", "Gallego", "García", "Garrido",
-			"Gil", "Giménez", "Gómez", "González", "Guerrero", "Gutiérrez",
-			"Hernández", "Herrera", "Herrero", "Hidalgo", "Iglesias", "Jiménez",
-			"León", "López", "Lorenzo", "Lozano", "Marín", "Márquez", "Martín",
-			"Martínez", "Medina", "Méndez", "Molina", "Montero", "Montoro",
-			"Mora", "Morales", "Moreno", "Moya", "Navarro", "Nieto", "Ortega",
-			"Ortiz", "Parra", "Pascual", "Pastor", "Pérez", "Prieto", "Ramírez",
-			"Ramos", "Rey", "Reyes", "Rodríguez", "Román", "Romero", "Rubio",
-			"Ruiz", "Sáez", "Sánchez", "Santana", "Santiago", "Santos", "Sanz",
-			"Serrano", "Soler", "Soto", "Suárez", "Torres", "Vargas", "Vázquez",
-			"Vega", "Velasco", "Vicente", "Vidal", "Ortín", "Redondo" };
+			"Castillo", "Castro", "Cortés", "Crespo", "Cruz", "Delgado",
+			"Díaz", "Díez", "Domínguez", "Durán", "Esteban", "Fernández",
+			"Ferrer", "Flores", "Fuentes", "Gallardo", "Gallego", "García",
+			"Garrido", "Gil", "Giménez", "Gómez", "González", "Guerrero",
+			"Gutiérrez", "Hernández", "Herrera", "Herrero", "Hidalgo",
+			"Iglesias", "Jiménez", "León", "López", "Lorenzo", "Lozano",
+			"Marín", "Márquez", "Martín", "Martínez", "Medina", "Méndez",
+			"Molina", "Montero", "Montoro", "Mora", "Morales", "Moreno",
+			"Moya", "Navarro", "Nieto", "Ortega", "Ortiz", "Parra", "Pascual",
+			"Pastor", "Pérez", "Prieto", "Ramírez", "Ramos", "Rey", "Reyes",
+			"Rodríguez", "Román", "Romero", "Rubio", "Ruiz", "Sáez", "Soler",
+			"Santana", "Santiago", "Santos", "Sanz", "Serrano", "Sánchez",
+			"Vidal", "Ortín", "Velasco" };
 
 	private String[] correos = { "gmail.com", "outlook.es", "yahoo.es",
 			"hotmail.com", "telecable.es", "uniovi.es" };
@@ -55,7 +55,7 @@ public class InsertSampleDataService {
 
 	@PostConstruct
 	public void init() {
-//		inicializar(50);
+		// inicializar(50);
 	}
 
 	protected void inicializar(int limite) {
@@ -125,9 +125,10 @@ public class InsertSampleDataService {
 			limpio = Normalizer.normalize(valor, Normalizer.Form.NFD);
 			// Quitar caracteres no ASCII excepto la enie, interrogacion que
 			// abre, exclamacion que abre, grados, U con dieresis.
-			limpio = limpio
-					.replaceAll("[^\\p{ASCII}(N\u0303)(n\u0303)(\u00A1)(\u00BF)"
-							+ "(\u00B0)(U\u0308)(u\u0308)]", "");
+			limpio = limpio.replaceAll(
+					"[^\\p{ASCII}(N\u0303)(n\u0303)(\u00A1)(\u00BF)"
+							+ "(\u00B0)(U\u0308)(u\u0308)]",
+					"");
 			// Regresar a la forma compuesta, para poder comparar la enie con la
 			// tabla de valores
 			limpio = Normalizer.normalize(limpio, Normalizer.Form.NFC);

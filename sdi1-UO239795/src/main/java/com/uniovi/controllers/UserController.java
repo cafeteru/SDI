@@ -158,8 +158,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user/delete/{id}")
-	public String deleteUser(Model model, Principal principal,
-			Pageable pageable, @PathVariable Long id) {
+	public String deleteUser(Principal principal, @PathVariable Long id) {
 		usersService.delete(id);
 		logService.info("Administrador " + principal.getName()
 				+ " elimino al usuario con id " + id);

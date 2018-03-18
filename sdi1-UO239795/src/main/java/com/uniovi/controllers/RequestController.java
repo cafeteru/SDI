@@ -66,6 +66,14 @@ public class RequestController {
 		return "redirect:/requests";
 	}
 
+	@GetMapping("/request/blocked/{id}")
+	public String blockedRequest(@PathVariable Long id, Principal principal) {
+		User receiver = usersService.getUserByEmail(principal.getName());
+		User sender = usersService.getUser(id);
+		blockedBoth(receiver, sender);
+		return "redirect:/requests";
+	}
+
 	/**
 	 * Aceptar las solicitudes de ambos usarios, si las hay y además crea la
 	 * amistad entre los usuarios
@@ -113,14 +121,6 @@ public class RequestController {
 		receiver.getFriends().add(friendship);
 		sender.getiAmFriendOf().add(friendship);
 		friendshipService.add(friendship);
-	}
-
-	@GetMapping("/request/blocked/{id}")
-	public String blockedRequest(@PathVariable Long id, Principal principal) {
-		User receiver = usersService.getUserByEmail(principal.getName());
-		User sender = usersService.getUser(id);
-		blockedBoth(receiver, sender);
-		return "redirect:/requests";
 	}
 
 	/**

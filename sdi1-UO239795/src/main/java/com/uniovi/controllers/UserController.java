@@ -56,7 +56,7 @@ public class UserController {
 	}
 
 	@PostMapping("/signup")
-	public String setUser(@Validated User user, BindingResult result,
+	public String signupPost(@Validated User user, BindingResult result,
 			Model model) {
 		signUpFormValidator.validate(user, result);
 		if (result.hasErrors()) {
@@ -78,7 +78,7 @@ public class UserController {
 	}
 
 	@GetMapping("/user/list")
-	public String getListado(Model model, Pageable pageable,
+	public String listUsers(Model model, Pageable pageable,
 			@RequestParam(value = "", required = false) String searchText,
 			Principal principal) {
 		logService.info(principal.getName() + " lista los usuarios");
@@ -139,7 +139,7 @@ public class UserController {
 		return "redirect:/home";
 	}
 
-	@GetMapping(value = "/home")
+	@GetMapping("/home")
 	public String home(Model model, Principal principal) {
 		logService.info(principal.getName() + " se loggeo correctamente");
 		return "/home";
@@ -164,6 +164,18 @@ public class UserController {
 		logService.info("Administrador " + principal.getName()
 				+ " elimino al usuario con id " + id);
 		return "redirect:/admin/list";
+	}
+
+	@GetMapping("/friends")
+	public String showFriends(Model model, Pageable pageable,
+			Principal principal) {
+		logService.info(principal.getName() + " lista los amistades");
+		User user = usersService.getUserByEmail(principal.getName());
+		Page<User> users = usersService.findAllFriendsById(pageable,
+				user.getId());
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		return "/users/friends";
 	}
 
 }

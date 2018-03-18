@@ -77,6 +77,37 @@ public class UserController {
 		return "login";
 	}
 
+	@GetMapping("/user/list")
+	public String getListado(Model model, Pageable pageable,
+			@RequestParam(value = "", required = false) String searchText,
+			Principal principal) {
+		logService.info(principal.getName() + " lista los usuarios");
+		User user = usersService.getUserByEmail(principal.getName());
+		Page<User> page = getUsers(pageable, searchText, user);
+		List<User> list = page.getContent();
+		for (User u : list) {
+			u.setReceiveRequest(requestsService
+					.findBySenderIdAndReceiverId(user.getId(), u.getId()));
+		}
+		model.addAttribute("usersList", list);
+		model.addAttribute("page", page);
+		return "/users/list";
+	}
+
+	@GetMapping("/admin/list")
+	public String listUserAdmin(Model model, Principal principal,
+			Pageable pageable,
+			@RequestParam(value = "", required = false) String searchText) {
+		logService.info(
+				"Administrador " + principal.getName() + " lista los usuarios");
+		User user = usersService.getUserByEmail(principal.getName());
+		Page<User> page = getUsers(pageable, searchText, user);
+		List<User> list = page.getContent();
+		model.addAttribute("usersList", list);
+		model.addAttribute("page", page);
+		return "/users/adminlist";
+	}
+
 	@GetMapping("/admin/login")
 	public String adminLoginGet() {
 		logService.info("Usuario se intenta loggear como admin");
@@ -86,7 +117,11 @@ public class UserController {
 	@PostMapping("/admin/login")
 	public String adminLoginPost(@Validated User user, Model model) {
 		User user1 = usersService.getUserByEmail(user.getEmail());
-		
+		if (user1 == null) {
+			logService.info("Usuario " + user.getEmail() + " no existe");
+			model.addAttribute("noExist", "noExist");
+			return "/adminLogin";
+		}
 		if (!user1.getRole().equals(rolesService.getAdmin())) {
 			logService.info("Usuario " + user.getEmail() + " no es un Admin");
 			model.addAttribute("noAdmin", "noAdmin");
@@ -110,23 +145,6 @@ public class UserController {
 		return "/home";
 	}
 
-	@GetMapping("/user/list")
-	public String getListado(Model model, Pageable pageable,
-			@RequestParam(value = "", required = false) String searchText,
-			Principal principal) {
-		logService.info(principal.getName() + " lista los usuarios");
-		User user = usersService.getUserByEmail(principal.getName());
-		Page<User> page = getUsers(pageable, searchText, user);
-		List<User> list = page.getContent();
-		for (User u : list) {
-			u.setReceiveRequest(requestsService
-					.findBySenderIdAndReceiverId(user.getId(), u.getId()));
-		}
-		model.addAttribute("usersList", list);
-		model.addAttribute("page", page);
-		return "/users/list";
-	}
-
 	private Page<User> getUsers(Pageable pageable, String searchText,
 			User user) {
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
@@ -139,44 +157,13 @@ public class UserController {
 		return users;
 	}
 
-	@GetMapping("/friends")
-	public String showFriends(Model model, Pageable pageable,
-			Principal principal) {
-		logService.info(principal.getName() + " lista los amistades");
-		User user = usersService.getUserByEmail(principal.getName());
-		Page<User> users = usersService.findAllFriendsById(pageable,
-				user.getId());
-		model.addAttribute("usersList", users.getContent());
-		model.addAttribute("page", users);
-		return "/users/friends";
-	}
-
-	@GetMapping("/admin/list")
-	public String listUserAdmin(Model model, Principal principal,
-			Pageable pageable) {
-		String message = "Administrador " + principal.getName()
-				+ " lista los usuarios";
-		configureList(model, principal, pageable, message);
-		return "/users/adminlist";
-	}
-
 	@PostMapping("/user/delete/{id}")
 	public String deleteUser(Model model, Principal principal,
 			Pageable pageable, @PathVariable Long id) {
 		usersService.delete(id);
-		String message = "Administrador " + principal.getName()
-				+ " elimino al usuario con id " + id;
-		configureList(model, principal, pageable, message);
-		return "/users/adminlist";
+		logService.info("Administrador " + principal.getName()
+				+ " elimino al usuario con id " + id);
+		return "redirect:/admin/list";
 	}
 
-	private void configureList(Model model, Principal principal,
-			Pageable pageable, String message) {
-		logService.info(message);
-		User user = usersService.getUserByEmail(principal.getName());
-		Page<User> page = getUsers(pageable, null, user);
-		List<User> list = page.getContent();
-		model.addAttribute("usersList", list);
-		model.addAttribute("page", page);
-	}
 }

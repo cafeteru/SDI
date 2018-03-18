@@ -35,6 +35,10 @@
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong th:text="#{admin.password.error}">Oh snap!</strong>
             </div>
+            <div th:if="${noExist} != null" class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong th:text="#{admin.noexist.error}">Oh snap!</strong>
+            </div>
         </form>
     </main>
     <footer th:replace="fragments/footer" />

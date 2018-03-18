@@ -5,7 +5,7 @@
 <body>
     <nav th:replace="fragments/nav" />
     <main class="container" style="text-align: center">
-        <h1><span th:text="#{post.list.title}"></span> de <span th:text="${friend}">Amigo</span></h1>
+        <h1><span th:text="#{post.list.title}"></span><span th:text="${friend}">Amigo</span></h1>
         <div class="jumbotron" th:each="post:${list}">
             <h1 class="display-3" th:text="${post.title}">Hello, world!</h1>
             <hr class="my-4" />

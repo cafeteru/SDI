@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;;
 public class SecurityService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private UserDetailsService userDetailsService;
 	private static final Logger logger = LoggerFactory

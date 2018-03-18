@@ -19,8 +19,9 @@ import com.unioiv.test.util.TestUtil;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Sdi1UO239795Test {
 
-	private static String PathFirefox = "C:\\Users\\igm1990\\Desktop\\SDI\\"
-			+ "Firefox46.win\\FirefoxPortable.exe";
+	private static String email;
+
+	private static String PathFirefox = "../Firefox46.win/FirefoxPortable.exe";
 	private static String URL = "http://localhost:8090";
 	private static WebDriver driver = getDriver(PathFirefox);
 
@@ -60,10 +61,10 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test01_1_RegVal() {
-		String email = Random.email();
-		driver.get("http://localhost:8090/");
+		email = Random.email();
+		driver.get("http://localhost:8090/?lang=es");
 		driver.findElement(By.linkText("Registrarse")).click();
-		test.waitSeconds(driver, 2);
+		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
 		driver.findElement(By.name("email")).clear();
 		driver.findElement(By.name("email")).sendKeys(email);
@@ -87,9 +88,9 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test01_2_RegInval() {
-		driver.get("http://localhost:8090/");
+		driver.get("http://localhost:8090/?lang=es");
 		driver.findElement(By.linkText("Registrarse")).click();
-		test.waitSeconds(driver, 2);
+		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
 		driver.findElement(By.name("email")).clear();
 		driver.findElement(By.name("email")).sendKeys(Random.email());
@@ -112,10 +113,10 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test02_1_Inval() {
-		driver.get("http://localhost:8090/");
+		driver.get("http://localhost:8090/?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
-		test.waitSeconds(driver, 2);
+		test.waitChangeWeb();
 		driver.findElement(By.name("username")).click();
 		driver.findElement(By.name("username")).clear();
 		driver.findElement(By.name("username"))
@@ -125,6 +126,8 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		test.textoPresentePagina("Usuario Autenticado como");
 		test.textoPresentePagina("ivangonzalezmahagamage@gmail.com");
+		test.textoPresentePagina("Logout");
+		test.textoNoPresentePagina("Login");
 	}
 
 	/**
@@ -133,10 +136,10 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test02_2_InInVal() {
-		driver.get("http://localhost:8090/");
+		driver.get("http://localhost:8090/?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
-		test.waitSeconds(driver, 2);
+		test.waitChangeWeb();
 		driver.findElement(By.name("username")).click();
 		driver.findElement(By.name("username")).clear();
 		driver.findElement(By.name("username")).sendKeys("noExisto@gmail.com");
@@ -151,10 +154,10 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test03_1_LisUsrVal() {
-		driver.get("http://localhost:8090/");
+		driver.get("http://localhost:8090/?lang=es");
 		driver.findElement(By.linkText("Identifícate")).click();
 		driver.findElement(By.linkText("Usuario")).click();
-		test.waitSeconds(driver, 2);
+		test.waitChangeWeb();
 		driver.findElement(By.name("username")).click();
 		driver.findElement(By.name("username")).clear();
 		driver.findElement(By.name("username"))
@@ -162,9 +165,11 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("password")).clear();
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		test.waitSeconds(driver, 2);
+		test.waitChangeWeb();
 		test.textoPresentePagina("Usuario Autenticado como");
 		driver.findElement(By.linkText("Usuarios")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Buscar usuario");
 		test.textoPresentePagina("Lista de usuarios");
 	}
 
@@ -175,7 +180,11 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test03_2_LisUsrInVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.get("http://localhost:8090/user/list");
+		test.waitChangeWeb();
+		test.textoNoPresentePagina("Lista de usuarios");
+		test.textoPresentePagina("Login");
 	}
 
 	/**
@@ -184,7 +193,27 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test04_1_BusUsrVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username"))
+				.sendKeys("ivangonzalezmahagamage@gmail.com");
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Usuario Autenticado como");
+		driver.findElement(By.linkText("Usuarios")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("searchText")).click();
+		driver.findElement(By.name("searchText")).clear();
+		driver.findElement(By.name("searchText")).sendKeys(email);
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina(email);
 	}
 
 	/**
@@ -193,7 +222,12 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test04_2_BusUsrInVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.get("http://localhost:8090/user/list");
+		test.waitChangeWeb();
+		test.textoNoPresentePagina("Lista de usuarios");
+		test.textoNoPresentePagina("Buscar usuario");
+		test.textoPresentePagina("Login");
 	}
 
 	/**
@@ -201,7 +235,31 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test05_1_InvVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username"))
+				.sendKeys("ivangonzalezmahagamage@gmail.com");
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Usuario Autenticado como");
+		driver.findElement(By.linkText("Usuarios")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("searchText")).click();
+		driver.findElement(By.name("searchText")).clear();
+		driver.findElement(By.name("searchText")).sendKeys(email);
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("searchText")).sendKeys(email);
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		driver.findElement(By.xpath("//input[@value='Enviar solicitud']"))
+				.click();
+		test.textoNoPresentePagina(email);
 	}
 
 	/**
@@ -212,7 +270,29 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test05_2_InvInVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username"))
+				.sendKeys("ivangonzalezmahagamage@gmail.com");
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Usuario Autenticado como");
+		driver.findElement(By.linkText("Usuarios")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("searchText")).click();
+		driver.findElement(By.name("searchText")).clear();
+		driver.findElement(By.name("searchText")).sendKeys(email);
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("searchText")).sendKeys(email);
+		test.textoPresentePagina(email);
+		test.textoPresentePagina("Solicitud enviada");
 	}
 
 	/**
@@ -221,7 +301,21 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test06_1_LisInvVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys(email);
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.linkText("Peticiones")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Iván");
+		test.textoPresentePagina("González Mahagamage");
 	}
 
 	/**
@@ -229,7 +323,26 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test07_1_AcepInvVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys(email);
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.linkText("Peticiones")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Iván");
+		test.textoPresentePagina("González Mahagamage");
+		driver.findElement(By.xpath("//input[@value='Aceptar invitación']"))
+				.click();
+		test.waitChangeWeb();
+		test.textoNoPresentePagina("Aceptar Petición");
+		test.textoNoPresentePagina("Bloquear");
 	}
 
 	/**
@@ -238,7 +351,21 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test08_1_ListAmiVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys(email);
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.linkText("Amigos")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Iván");
+		test.textoPresentePagina("González Mahagamage");
 	}
 
 	/**
@@ -246,7 +373,32 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test09_1_PubVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys(email);
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.linkText("Publicaciones")).click();
+		driver.findElement(By.linkText("Añadir publicación")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("title")).click();
+		driver.findElement(By.name("title")).clear();
+		driver.findElement(By.name("title")).sendKeys("Prueba Post");
+		driver.findElement(By.name("text")).click();
+		driver.findElement(By.name("text")).clear();
+		driver.findElement(By.name("text"))
+				.sendKeys("Prueba de contenido de post");
+		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Lista de publicaciones");
+		test.textoPresentePagina("Prueba Post");
+		test.textoPresentePagina("Prueba de contenido de post");
 	}
 
 	/**
@@ -254,7 +406,23 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test10_1_LisPubVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys(email);
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.linkText("Publicaciones")).click();
+		driver.findElement(By.linkText("Listar mis publicaciones")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Lista de publicaciones de");
+		test.textoPresentePagina("Prueba Post");
+		test.textoPresentePagina("Prueba de contenido de post");
 	}
 
 	/**
@@ -262,7 +430,24 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test11_1_LisPubAmiVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys(email);
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.linkText("Amigos")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.xpath("//input[@value='Ver publilcaciones']"))
+				.click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Lista de publicaciones de");
+		test.textoPresentePagina("Iván González Mahagamage");
 	}
 
 	/**
@@ -271,6 +456,21 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test11_2_LisPubAmiVal() {
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys(email);
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.get("http://localhost:8090/post/friends/3");
+		test.textoPresentePagina("Esta es una zona privada la web");
+		test.textoPresentePagina("Usuario Autenticado como");
+		test.textoPresentePagina(email);
 
 	}
 
@@ -279,7 +479,35 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test12_1_PubFot1Val() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys(email);
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.linkText("Publicaciones")).click();
+		driver.findElement(By.linkText("Añadir publicación")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("title")).click();
+		driver.findElement(By.name("title")).clear();
+		driver.findElement(By.name("title")).sendKeys("Prueba Post con foto");
+		driver.findElement(By.name("text")).click();
+		driver.findElement(By.name("text")).clear();
+		String aux = System.getProperty("user.dir") + "\\imagenDePrueba.jpg";
+		aux = aux.replace("\\", "/");
+		aux = "file:///" + aux;
+		driver.findElement(By.name("text")).sendKeys(aux);
+		driver.findElement(By.name("imgn")).sendKeys(aux);
+		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Lista de publicaciones");
+		test.textoPresentePagina("Prueba Post con foto");
+		test.textoPresentePagina(aux);
 	}
 
 	/**
@@ -287,7 +515,32 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test12_2_PubFot2Val() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys(email);
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.linkText("Publicaciones")).click();
+		driver.findElement(By.linkText("Añadir publicación")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("title")).click();
+		driver.findElement(By.name("title")).clear();
+		driver.findElement(By.name("title")).sendKeys("Prueba Post sin foto");
+		driver.findElement(By.name("text")).click();
+		driver.findElement(By.name("text")).clear();
+		driver.findElement(By.name("text"))
+				.sendKeys("Prueba de contenido de post sin foto");
+		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Lista de publicaciones");
+		test.textoPresentePagina("Prueba Post sin foto");
+		test.textoPresentePagina("Prueba de contenido de post sin foto");
 	}
 
 	/**
@@ -295,7 +548,22 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test13_1_AdInVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Administrador")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Login de administrador");
+		driver.findElement(By.name("email")).click();
+		driver.findElement(By.name("email")).clear();
+		driver.findElement(By.name("email"))
+				.sendKeys("ivangonzalezmahagamage@gmail.com");
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.textoPresentePagina("Usuario Autenticado como");
+		test.textoPresentePagina("ivangonzalezmahagamage@gmail.com");
+		test.textoPresentePagina("Logout");
+		test.textoNoPresentePagina("Login de administrador");
 	}
 
 	/**
@@ -304,7 +572,19 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test13_2_AdInInVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Administrador")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("email")).click();
+		driver.findElement(By.name("email")).clear();
+		driver.findElement(By.name("email")).sendKeys("igm1990@hotmail.com");
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Login de administrador");
+		driver.findElement(By.xpath("(//button[@type='button'])[2]")).click();
 	}
 
 	/**
@@ -313,7 +593,22 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test14_1_AdLisUsrVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Administrador")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Login de administrador");
+		driver.findElement(By.name("email")).click();
+		driver.findElement(By.name("email")).clear();
+		driver.findElement(By.name("email"))
+				.sendKeys("ivangonzalezmahagamage@gmail.com");
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.linkText("Administrar usuarios")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Administrador: Listado de usuarios");
 	}
 
 	/**
@@ -322,7 +617,29 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test15_1_AdBorUsrVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Administrador")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Login de administrador");
+		driver.findElement(By.name("email")).click();
+		driver.findElement(By.name("email")).clear();
+		driver.findElement(By.name("email"))
+				.sendKeys("ivangonzalezmahagamage@gmail.com");
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.linkText("Administrar usuarios")).click();
+		test.waitChangeWeb();
+		test.textoPresentePagina("Administrador: Listado de usuarios");
+		driver.findElement(By.name("searchText")).click();
+		driver.findElement(By.name("searchText")).clear();
+		driver.findElement(By.name("searchText")).sendKeys(email);
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		driver.findElement(By.xpath("//input[@value='Eliminar']"));
 	}
 
 	/**
@@ -332,6 +649,17 @@ public class Sdi1UO239795Test {
 	 */
 	@Test
 	public void Test15_2_AdBorUsrInVal() {
-
+		driver.get("http://localhost:8090/?lang=es");
+		driver.findElement(By.linkText("Identifícate")).click();
+		driver.findElement(By.linkText("Usuario")).click();
+		test.waitChangeWeb();
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).clear();
+		driver.findElement(By.name("username")).sendKeys("igm1990@hotmail.com");
+		driver.findElement(By.name("password")).clear();
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		driver.get("http://localhost:8090/admin/list");
+		test.textoPresentePagina("Access is denied");
 	}
 }

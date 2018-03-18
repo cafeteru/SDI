@@ -14,8 +14,8 @@ public interface UsersRepository extends JpaRepository<User, Long> {
 			String seachtext, Long id);
 
 	Page<User> findAllList(Pageable pageable, Long id);
-	
+
 	Page<User> findAllByRequestReceiverId(Pageable pageable, Long id);
-	
+
 	Page<User> findAllFriendsById(Pageable pageable, Long id);
 }

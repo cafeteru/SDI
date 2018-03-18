@@ -1,6 +1,5 @@
 package com.uniovi.services;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -15,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.uniovi.entities.Post;
 import com.uniovi.repositories.PostRepository;
+import com.uniovi.services.util.CreateFolder;
 
 @Service
 public class PostService {
@@ -66,7 +66,7 @@ public class PostService {
 	 * @throws IOException
 	 */
 	private void saveImgTarget(MultipartFile img) throws IOException {
-		createFolder("target/classes/static/imgUser/");
+		CreateFolder.createFolder("target/classes/static/imgUser/");
 		saveImgByPath(img, "target/classes/static/imgUser/");
 	}
 
@@ -79,20 +79,8 @@ public class PostService {
 	 * @throws IOException
 	 */
 	private void saveImgResource(MultipartFile img) throws IOException {
-		createFolder("src/main/resources/static/imgUser");
+		CreateFolder.createFolder("src/main/resources/static/imgUser");
 		saveImgByPath(img, "src/main/resources/static/imgUser/");
-	}
-
-	/**
-	 * Crea una carpeta por código si esta no existe previamente.
-	 * 
-	 * @param url
-	 */
-	public void createFolder(String url) {
-		File file = new File(url);
-		if (!file.exists()) {
-			file.mkdir();
-		}
 	}
 
 }

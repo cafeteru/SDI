@@ -19,7 +19,7 @@ public class TestUtil {
 		this.driver = driver;
 	}
 
-	public void waitSeconds(WebDriver driver, int segundos) {
+	public void waitSeconds(int segundos) {
 		synchronized (driver) {
 			try {
 				driver.wait(segundos * 1000);
@@ -27,6 +27,10 @@ public class TestUtil {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void waitChangeWeb() {
+		waitSeconds(1);
 	}
 
 	public String closeAlertAndGetItsText() {
@@ -73,5 +77,11 @@ public class TestUtil {
 		List<WebElement> list = driver.findElements(
 				By.xpath("//*[contains(text(),'" + texto + "')]"));
 		assertTrue("Texto " + texto + " no localizado!", list.size() > 0);
+	}
+
+	public void textoNoPresentePagina(String texto) {
+		List<WebElement> list = driver.findElements(
+				By.xpath("//*[contains(text(),'" + texto + "')]"));
+		assertTrue("Texto " + texto + " aun presente !", list.size() == 0);
 	}
 }

@@ -498,16 +498,16 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("title")).sendKeys("Prueba Post con foto");
 		driver.findElement(By.name("text")).click();
 		driver.findElement(By.name("text")).clear();
-		String aux = System.getProperty("user.dir") + "\\imagenDePrueba.jpg";
-		aux = aux.replace("\\", "/");
-		aux = "file:///" + aux;
-		driver.findElement(By.name("text")).sendKeys(aux);
-		driver.findElement(By.name("imgn")).sendKeys(aux);
+		String imagenDePrueba = System.getProperty("user.dir") + "\\imagenDePrueba.jpg";
+		imagenDePrueba = imagenDePrueba.replace("\\", "/");
+		imagenDePrueba = "file:///" + imagenDePrueba;
+		driver.findElement(By.name("text")).sendKeys(imagenDePrueba);
+		driver.findElement(By.name("imgn")).sendKeys(imagenDePrueba);
 		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
 		test.waitChangeWeb();
 		test.textoPresentePagina("Lista de publicaciones");
 		test.textoPresentePagina("Prueba Post con foto");
-		test.textoPresentePagina(aux);
+		test.textoPresentePagina(imagenDePrueba);
 	}
 
 	/**

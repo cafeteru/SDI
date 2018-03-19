@@ -23,14 +23,6 @@ public class UsersService {
 		usersRepository.save(user);
 	}
 
-	public void modify(User user) {
-		usersRepository.save(user);
-	}
-
-	public User getUser(Long id) {
-		return usersRepository.findOne(id);
-	}
-
 	public User getUserByEmail(String email) {
 		return usersRepository.findByEmail(email);
 	}
@@ -44,6 +36,14 @@ public class UsersService {
 		searchText = "%" + searchText + "%";
 		return usersRepository.searchByEmailAndNameAndSurname(pageable,
 				searchText, id);
+	}
+
+	public void modify(User user) {
+		usersRepository.save(user);
+	}
+
+	public User getUser(Long id) {
+		return usersRepository.findOne(id);
 	}
 
 	public Page<User> findAllByRequestReceiverId(Pageable pageable, Long id) {

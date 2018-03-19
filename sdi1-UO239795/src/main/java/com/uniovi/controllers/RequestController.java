@@ -146,7 +146,7 @@ public class RequestController {
 	private void blockRequest(User receiver, User sender) {
 		Request request = requestsService
 				.findBySenderIdAndReceiverId(sender.getId(), receiver.getId());
-		if (request != null) {
+		if (request == null) {
 			request = new Request(sender, receiver);
 		}
 		request.block();

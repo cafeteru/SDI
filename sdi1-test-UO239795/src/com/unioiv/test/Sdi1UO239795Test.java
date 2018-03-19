@@ -51,8 +51,9 @@ public class Sdi1UO239795Test {
 	}
 
 	// Al finalizar la última prueba
+	// Cerramos el navegador al finalizar las pruebas
 	@AfterClass
-	static public void end() { // Cerramos el navegador al finalizar las pruebas
+	static public void end() { 
 		driver.quit();
 	}
 
@@ -83,8 +84,8 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Registro de Usuario con datos inválidos (repetición de contraseña
-	 * invalida).
+	 * Registro de Usuario con datos inválidos 
+	 * (repetición de contraseña invalida).
 	 */
 	@Test
 	public void Test01_2_RegInval() {
@@ -131,8 +132,8 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Inicio de sesión con datos inválidos (usuario no existente en la
-	 * aplicación).
+	 * Inicio de sesión con datos inválidos 
+	 * (usuario no existente en la aplicación).
 	 */
 	@Test
 	public void Test02_2_InInVal() {
@@ -174,9 +175,10 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Intento de acceso con URL desde un usuario no identificado al listado de
-	 * usuarios desde un usuario en sesión. Debe producirse un acceso no
-	 * permitido a vistas privadas.
+	 * Intento de acceso con URL desde un usuario no identificado al 
+	 * listado de usuarios desde un usuario en sesión. 
+	 * Debe producirse un acceso no permitido a
+	 * vistas privadas.
 	 */
 	@Test
 	public void Test03_2_LisUsrInVal() {
@@ -188,8 +190,8 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Realizar una búsqueda valida en el listado de usuarios desde un usuario
-	 * en sesión.
+	 * Realizar una búsqueda valida en el listado de usuarios desde 
+	 * un usuario en sesión.
 	 */
 	@Test
 	public void Test04_1_BusUsrVal() {
@@ -263,10 +265,10 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Enviar una invitación de amistad a un usuario al que ya le habíamos
-	 * invitado la invitación previamente. No debería dejarnos enviar la
-	 * invitación, se podría ocultar el botón de enviar invitación o notificar
-	 * que ya había sido enviada previamente.
+	 * Enviar una invitación de amistad a un usuario al que ya le habíamos 
+	 * invitado la invitación previamente. No debería dejarnos enviar 
+	 * la invitación, se podría ocultar el botón de enviar invitación o
+	 * notificar que ya había sido enviada previamente.
 	 */
 	@Test
 	public void Test05_2_InvInVal() {
@@ -296,8 +298,9 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Listar las invitaciones recibidas por un usuario, realizar la
-	 * comprobación con una lista que al menos tenga una invitación recibida.
+	 * Listar las invitaciones recibidas por un usuario, realizar 
+	 * la comprobación con una lista que al menos tenga una 
+	 * invitación recibida.
 	 */
 	@Test
 	public void Test06_1_LisInvVal() {
@@ -346,8 +349,8 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Listar los amigos de un usuario, realizar la comprobación con una lista
-	 * que al menos tenga un amigo.
+	 * Listar los amigos de un usuario, realizar la comprobación con una 
+	 * lista que al menos tenga un amigo.
 	 */
 	@Test
 	public void Test08_1_ListAmiVal() {
@@ -451,8 +454,9 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Utilizando un acceso vía URL tratar de listar las publicaciones de un
-	 * usuario que no sea amigo del usuario identificado en sesión.
+	 * Utilizando un acceso vía URL tratar de listar 
+	 * las publicaciones de un usuario
+	 * que no sea amigo del usuario identificado en sesión.
 	 */
 	@Test
 	public void Test11_2_LisPubAmiVal() {
@@ -498,9 +502,10 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("title")).sendKeys("Prueba Post con foto");
 		driver.findElement(By.name("text")).click();
 		driver.findElement(By.name("text")).clear();
-		String imagenDePrueba = System.getProperty("user.dir") + "\\imagenDePrueba.jpg";
+		String imagenDePrueba = "file:///";
+		imagenDePrueba += System.getProperty("user.dir");
+		imagenDePrueba += "\\imagenDePrueba.jpg";
 		imagenDePrueba = imagenDePrueba.replace("\\", "/");
-		imagenDePrueba = "file:///" + imagenDePrueba;
 		driver.findElement(By.name("text")).sendKeys(imagenDePrueba);
 		driver.findElement(By.name("imgn")).sendKeys(imagenDePrueba);
 		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
@@ -567,8 +572,8 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Inicio de sesión como administrador con datos inválidos (usar los datos
-	 * de un usuario que no tenga perfil administrador).
+	 * Inicio de sesión como administrador con datos inválidos (usar los datos de un
+	 * usuario que no tenga perfil administrador).
 	 */
 	@Test
 	public void Test13_2_AdInInVal() {
@@ -588,8 +593,8 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Desde un usuario identificado en sesión como administrador listar a todos
-	 * los usuarios de la aplicación.
+	 * Desde un usuario identificado en sesión como administrador 
+	 * listar a todos los usuarios de la aplicación.
 	 */
 	@Test
 	public void Test14_1_AdLisUsrVal() {
@@ -644,8 +649,8 @@ public class Sdi1UO239795Test {
 
 	/**
 	 * Intento de acceso vía URL al borrado de un usuario existente en la
-	 * aplicación. Debe utilizarse un usuario identificado en sesión pero que no
-	 * tenga perfil de administrador.
+	 * aplicación. Debe utilizarse un usuario identificado en sesión 
+	 * pero que no tenga perfil de administrador.
 	 */
 	@Test
 	public void Test15_2_AdBorUsrInVal() {
@@ -655,7 +660,8 @@ public class Sdi1UO239795Test {
 		test.waitChangeWeb();
 		driver.findElement(By.name("username")).click();
 		driver.findElement(By.name("username")).clear();
-		driver.findElement(By.name("username")).sendKeys("igm1990@hotmail.com");
+		driver.findElement(By.name("username"))
+				.sendKeys("igm1990@hotmail.com");
 		driver.findElement(By.name("password")).clear();
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();

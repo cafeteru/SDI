@@ -168,7 +168,7 @@ public class UserController {
 	@GetMapping("/friends")
 	public String showFriends(Model model, Pageable pageable,
 			Principal principal) {
-		logService.info(principal.getName() + " lista los amistades");
+		logService.info(principal.getName() + " lista sus amistades");
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = usersService.findAllFriendsById(pageable,
 				user.getId());

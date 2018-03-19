@@ -423,7 +423,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.linkText("Publicaciones")).click();
 		driver.findElement(By.linkText("Listar mis publicaciones")).click();
 		test.waitChangeWeb();
-		test.textoPresentePagina("Lista de publicaciones de");
+		test.textoPresentePagina("Lista de publicaciones");
 		test.textoPresentePagina("Prueba Post");
 		test.textoPresentePagina("Prueba de contenido de post");
 	}
@@ -572,8 +572,8 @@ public class Sdi1UO239795Test {
 	}
 
 	/**
-	 * Inicio de sesión como administrador con datos inválidos (usar los datos de un
-	 * usuario que no tenga perfil administrador).
+	 * Inicio de sesión como administrador con datos inválidos (usar los 
+	 * datos de un usuario que no tenga perfil administrador).
 	 */
 	@Test
 	public void Test13_2_AdInInVal() {

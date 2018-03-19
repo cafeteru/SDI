@@ -8,8 +8,6 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TestUtil {
 	private boolean acceptNextAlert = true;
@@ -30,7 +28,7 @@ public class TestUtil {
 	}
 
 	public void waitChangeWeb() {
-		waitSeconds(1);
+		waitSeconds(2);
 	}
 
 	public String closeAlertAndGetItsText() {
@@ -46,31 +44,6 @@ public class TestUtil {
 		} finally {
 			acceptNextAlert = true;
 		}
-	}
-
-	public List<WebElement> EsperaCargaPagina(String criterio, String text,
-			int timeout) {
-		String busqueda;
-		if (criterio.equals("id"))
-			busqueda = "//*[contains(@id,'" + text + "')]";
-		else if (criterio.equals("class"))
-			busqueda = "//*[contains(@class,'" + text + "')]";
-		else if (criterio.equals("text"))
-			busqueda = "//*[contains(text(),'" + text + "')]";
-		else if (criterio.equals("free"))
-			busqueda = text;
-		else
-			busqueda = "//*[contains(" + criterio + ",'" + text + "')]";
-
-		return EsperaCargaPaginaxpath(busqueda, timeout);
-	}
-
-	public List<WebElement> EsperaCargaPaginaxpath(String xpath, int timeout) {
-		WebElement resultado = (new WebDriverWait(driver, timeout)).until(
-				ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
-		assertTrue(resultado != null);
-		List<WebElement> elementos = driver.findElements(By.xpath(xpath));
-		return elementos;
 	}
 
 	public void textoPresentePagina(String texto) {

@@ -99,7 +99,8 @@ public class UserController {
 			Pageable pageable,
 			@RequestParam(value = "", required = false) String searchText) {
 		logService.info(
-				"Administrador " + principal.getName() + " lista los usuarios");
+				"Administrador " + principal.getName() + " "
+						+ "lista los usuarios");
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> page = getUsers(pageable, searchText, user);
 		List<User> list = page.getContent();

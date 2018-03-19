@@ -21,7 +21,7 @@
                     <td th:text="${user.surName}">Column content</td>
                     <td th:text="${user.email}">Column content</td>
                     <td>
-                        <form method="post" th:if="${user.receiveRequest} == null" th:attr="action=${'/user/delete/' + user.id}">
+                        <form method="post" th:attr="action=${'/user/delete/' + user.id}">
                             <input type="submit" class="btn btn-danger" th:attr="value=#{delete.button}" />
                         </form>
                     </td>

@@ -1,4 +1,4 @@
-package com.unioiv.test.util;
+package com.uniovi.test.util;
 
 public class Random {
 	public static Integer integer(int min, int max) {

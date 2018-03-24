@@ -1,4 +1,4 @@
-package com.unioiv.test;
+package com.uniovi.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,8 +13,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import com.unioiv.test.util.Random;
-import com.unioiv.test.util.TestUtil;
+import com.uniovi.test.util.Random;
+import com.uniovi.test.util.TestUtil;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Sdi1UO239795Test {

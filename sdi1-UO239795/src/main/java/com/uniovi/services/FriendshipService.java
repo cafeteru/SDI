@@ -1,11 +1,10 @@
 package com.uniovi.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.uniovi.entities.Friendship;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.FriendshipRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class FriendshipService {

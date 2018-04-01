@@ -3,8 +3,6 @@
 
 # Log file
 *.log
-*.mp3
-*.png
 
 /.metadata/
 /RemoteSystemsTempFiles/

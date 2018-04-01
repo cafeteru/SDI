@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="fragments/head" />
+
+<body>
+    <nav th:replace="fragments/nav" />
+    <main class="container">
+        <h1 th:text="#{post.add.title}">Esta es una zona privada la web</h1>
+        <form method="post" action="/post/add" enctype="multipart/form-data" th:object="${post}">
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" th:text="#{post.add.title.new}" for="title">Titulo</label>
+                    <input class="form-control" type="text" name="title" required="required" th:attr="title=#{post.title.title}, value=${post.title}" />
+                    <div th:if="${#fields.hasErrors('title')}" class="alert alert-dismissible alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong th:errors="*{title}">Oh snap!</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" th:text="#{post.add.text}" for="text">Contenido</label>
+                    <textarea class="form-control" rows="3" cols="20" name="text" required="required" th:attr="title=#{post.text.title}, value=${post.text}"></textarea>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-outline-primary" type="file" name="imgn" accept=".jpeg, .png, .jpg" />
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-info" type="submit" th:attr="value=#{post.button}" />
+                </div>
+            </fieldset>
+        </form>
+    </main>
+    <footer th:replace="fragments/footer" />
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<div class="text-center">
+	<ul class="pagination pagination-centered">
+		<!-- Primera -->
+		<li class="page-item">
+			<a id="first" class="page-link" th:href="@{'?page=0'}" th:text="#{pagination.first}">Primera</a>
+		</li>
+		<!-- Anterior (si la hay ) -->
+		<li class="page-item" th:if='${page.getNumber()-1 &gt;= 0}'>
+			<a id="before" class="page-link" th:href="@{'?page='+${page.getNumber()-1} }" th:text="${page.getNumber()}"></a>
+		</li>
+		<!-- Actual -->
+		<li class="page-item active">
+			<a id="now" class="page-link" th:href="@{'?page='+${page.getNumber()} }" th:text="${page.getNumber()+1}"></a>
+		</li>
+		<!-- Siguiente (si la hay) -->
+		<li class="page-item" th:if='${page.getNumber()+1 &lt;= page.getTotalPages()-1}'>
+			<a id="next" class="page-link" th:href="@{'?page='+${page.getNumber()+1} }" th:text="${page.getNumber()+2}"></a>
+		</li>
+		<!-- Última -->
+		<li class="page-item">
+			<a id="last" class="page-link" th:href="@{'?page='+${page.getTotalPages()-1}}" th:text="#{pagination.last}">Última</a>
+		</li>
+	</ul>
+</div>
+<script src="/script/pagination.js"></script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	var limit = /*[[${page.getTotalPages() - 1}]]*/ 1;
+	var pag = new Pagination(limit);
+	/*]]>*/
+</script>

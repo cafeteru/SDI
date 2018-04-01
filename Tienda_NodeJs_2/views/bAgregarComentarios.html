@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titulo %} Añadir comentario {% endblock %}
+{% block contenido_principal %}
+<h1>Añadir comentario</h1>
+<form method="post" action="/comentario/agregar">
+    <fieldset>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="texto">Texto</label>
+            <textarea class="form-control" rows="3" cols="20" name="texto" required="required"></textarea>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-info" type="submit" value="Enviar Comentario"/>
+        </div>
+    </fieldset>
+</form>
+
+{% endblock %}

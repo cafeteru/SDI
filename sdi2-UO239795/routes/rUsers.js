@@ -30,8 +30,13 @@ module.exports = function (app, swig, usersRepository) {
                         return;
                     }
                 });
-            } else {
-                res.redirect("/signup?email=Este correo ya esta registrado.");
+            } else {npm install express --save
+                npm install mongodb@2.2.33 --save // Base de datos
+                npm install moment --save  // Librería para fechas
+                npm install express-session --save // Para crear el objeto session
+                npm install express-fileupload --save // Subir archivos
+                npm install body-parser --save // Para poder acceder a los parámetros POST
+                npm install swig --save // motor de plantillasignup?email=Este correo ya esta registrado.");
                 return;
             }
         });

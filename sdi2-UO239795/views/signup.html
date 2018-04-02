@@ -1,61 +1,46 @@
-<!DOCTYPE html>
-<html lang="es">
-<head th:replace="fragments/head" />
-
-<body>
-    <script src="/script/checkForm.js"></script>
-    <nav th:replace="fragments/nav" />
-    <main>
-        <h1 th:text="#{signup.register}">Registrar</h1>
-        <form method="post" action="/signup" th:object="${user}">
-            <fieldset>
-                <div class="form-group">
-                    <label>Email:</label>
-                    <input class="form-control" type="email" name="email" placeholder="uo239795@uniovi.es" required="required" onkeyup="check.checkInputs()" th:attr="title=#{signup.email.title}, value=${user.email}" />
-                    <div th:if="${#fields.hasErrors('email')}" class="alert alert-dismissible alert-danger" autofocus="autofocus">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong th:errors="*{email}">Oh snap!</strong>
-                    </div>
-                    <div class="form-group">
-                        <label th:text="#{signup.name}">Nombre:</label>
-                        <input class="form-control" type="text" name="name" placeholder="Iván" required="required" onkeyup="check.checkInputs()" th:attr="title=#{signup.name.title}, value=${user.name}" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,}" />
-                        <div th:if="${#fields.hasErrors('name')}" class="alert alert-dismissible alert-danger">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong th:errors="*{name}">Oh snap!</strong>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label th:text="#{signup.surname}">Apellidos:</label>
-                        <input class="form-control" type="text" name="surName" placeholder="González Mahagamage" required="required" onkeyup="check.checkInputs()" th:attr="title=#{signup.surname.title}, value=${user.surName}" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ ]{2,}" />
-                        <div th:if="${#fields.hasErrors('surName')}" class="alert alert-dismissible alert-danger">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong th:errors="*{surName}">Oh snap!</strong>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label th:text="#{signup.password}">Contraseña:</label>
-                        <input class="form-control" type="password" name="password" th:attr="placeholder=#{signup.password.placeholder}, title=#{signup.password.placeholder}" pattern=".{5,}" required="required" onkeyup="check.checkInputs()" />
-                        <div th:if="${#fields.hasErrors('password')}" class="alert alert-dismissible alert-danger">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong th:errors="*{password}">Oh snap!</strong>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label th:text="#{signup.repassword}">Repetir Contraseña:</label>
-                        <input class="form-control" type="password" name="passwordConfirm" required="required" th:attr="placeholder=#{signup.passwordConfirm.placeholder}, title=#{signup.passwordConfirm.placeholder}" pattern=".{5,}" onkeyup="check.checkInputs()" />
-                        <div th:if="${#fields.hasErrors('passwordConfirm')}" class="alert alert-dismissible alert-danger">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong th:errors="*{passwordConfirm}">Oh snap!</strong>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input class="btn btn-success" type="submit" th:value="#{signup.button}" onclick="check.checkPasswords()" disabled="disabled" />
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </main>
-    <footer th:replace="fragments/footer" />
-</body>
-
-</html>
+{% extends "templates/templateLogin.html" %}
+{% block titulo %} Registro - UO239795 {% endblock %}
+{% block main %}
+<script src="/script/checkForm.js"></script>
+<h1>Registrar</h1>
+<form method="post" action="/signup">
+    <fieldset>
+        <div id="email" class="form-group">
+            <label>Email:</label>
+            <input class="form-control" type="email" name="email" placeholder="uo239795@uniovi.es"
+                   required="required" onkeyup="check.checkInputs()"
+                   title="Introduzca un email valido"/>
+        </div>
+        <div id="name" class="form-group">
+            <label>Nombre:</label>
+            <input class="form-control" type="text" name="name" placeholder="Iván" required="required"
+                   onkeyup="check.checkInputs()" title="Introduzca su nombre"
+                   pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,}"/>
+        </div>
+        <div id="surName" class="form-group">
+            <label>Apellidos:</label>
+            <input class="form-control" type="text" name="surName" placeholder="González Mahagamage"
+                   required="required" onkeyup="check.checkInputs()"
+                   title="Introduzca su apellido"
+                   pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ ]{2,}"/>
+        </div>
+        <div id="password" class="form-group">
+            <label>Contraseña:</label>
+            <input class="form-control" type="password" name="password"
+                   placeholder="Introduzca su contraseña" title="Introduzca su contraseña"
+                   pattern=".{5,}" required="required" onkeyup="check.checkInputs()"/>
+        </div>
+        <div id="passwordConfirm" class="form-group">
+            <label>Repetir Contraseña:</label>
+            <input class="form-control" type="password" name="passwordConfirm" required="required"
+                   placeholder="Reintroduzca su contraseña" title="Reintroduzca su contraseña"
+                   pattern=".{5,}" onkeyup="check.checkInputs()"/>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-success" type="submit" value="Enviar"
+                   onclick="check.checkPasswords()" disabled="disabled"/>
+        </div>
+    </fieldset>
+</form>
+<script src="/script/showMessageError.js"></script>
+{% endblock %}

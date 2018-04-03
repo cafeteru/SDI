@@ -1,3 +1,3 @@
-module.exports = function(app, swig) {
+module.exports = function(app, swig, friendshipsRepository) {
 
 };

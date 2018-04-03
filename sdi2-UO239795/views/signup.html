@@ -42,5 +42,13 @@
         </div>
     </fieldset>
 </form>
-<script src="/script/showMessageError.js"></script>
+<script src="/script/showMessage.js"></script>
+<script>
+    message.showErrors("email");
+    message.showErrors("name");
+    message.showErrors("surName");
+    message.showErrors("password");
+    message.showErrors("passwordConfirm");
+    message.showErrors("coincidence");
+</script>
 {% endblock %}

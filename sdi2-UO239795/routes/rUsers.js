@@ -17,27 +17,23 @@ module.exports = function (app, swig, usersRepository) {
             name: req.body.name,
             surName: req.body.surName,
             password: password
-        }
+        };
         var findByEmail = {email: req.body.email};
         usersRepository.getUsers(findByEmail, function (users) {
             if (users == null || users.length == 0) {
                 usersRepository.addUser(user, function (id) {
                     if (id == null) {
                         res.redirect("/signup");
-                        return;
                     } else {
-                        res.redirect("/login");
-                        return;
+                        var textSearch = {
+                            email: req.body.email,
+                            password: password
+                        };
+                        autoLogin(textSearch, req, res);
                     }
                 });
-            } else {npm install express --save
-                npm install mongodb@2.2.33 --save // Base de datos
-                npm install moment --save  // Librería para fechas
-                npm install express-session --save // Para crear el objeto session
-                npm install express-fileupload --save // Subir archivos
-                npm install body-parser --save // Para poder acceder a los parámetros POST
-                npm install swig --save // motor de plantillasignup?email=Este correo ya esta registrado.");
-                return;
+            } else {
+                res.redirect("/signup?email=Este correo ya esta registrado.");
             }
         });
     });
@@ -69,4 +65,43 @@ module.exports = function (app, swig, usersRepository) {
         }
         return url.substr(1, url.length);
     }
+
+    app.get("/login", function (req, res) {
+        var respuesta = swig.renderFile('views/login.html', {});
+        res.send(respuesta);
+    });
+
+    app.post("/login", function (req, res) {
+        var password = app.get("crypto").createHmac('sha256', app.get('key'))
+            .update(req.body.password).digest('hex');
+        var textSearch = {
+            email: req.body.email,
+            password: password
+        };
+        autoLogin(textSearch, req, res);
+    });
+
+    function autoLogin(textSearch, req, res) {
+        usersRepository.getUsers(textSearch, function (users) {
+            if (users == null || users.length == 0) {
+                req.session.user = null;
+                res.redirect("/login?error=Email o password incorrecto");
+            } else {
+                req.session.user = users[0].email;
+                res.redirect("/home");
+            }
+        });
+    }
+
+    app.get("/home", function (req, res) {
+        var respuesta = swig.renderFile('views/home.html', {
+            user : req.session.user
+        });
+        res.send(respuesta);
+    });
+
+    app.get('/logout', function (req, res) {
+        req.session.user = null;
+        res.redirect("/login?logout=Ha cerrado la sesión correctamente");
+    });
 };

@@ -2,14 +2,42 @@
 var express = require('express');
 var app = express();
 
+// Objeto sessión para guardar al usuario actual
+var expressSession = require('express-session');
+app.use(expressSession({
+    secret: 'abcdefg',
+    resave: true,
+    saveUninitialized: true
+}));
+
 // Motor de plantillas
 var swig = require('swig');
 
 // Base de datos
 var mongo = require('mongodb');
+
 // Objeto para manejar base de datos
 var usersRepository = require("./modules/usersRepository.js");
 usersRepository.init(app, mongo);
+var requestsRepository = require("./modules/requestsRepository.js");
+requestsRepository.init(app, mongo);
+var friendshipsRepository = require("./modules/friendshipsRepository.js");
+friendshipsRepository.init(app, mongo);
+
+// routerUserSession
+var routerUserSession = express.Router();
+routerUserSession.use(function (req, res, next) {
+    console.log("routerUserSession")
+    if (req.session.user) { // dejamos correr la petición
+        next();
+    } else {
+        console.log("va a : " + req.session.baseUrl);
+        res.redirect("/login");
+    }
+});
+//Aplicar routerUsuarioSession
+app.use("/home", routerUserSession);
+
 
 // Leer los cuerpos POST
 var bodyParser = require('body-parser');
@@ -30,8 +58,8 @@ app.set('crypto', crypto);
 
 // Controladores
 require("./routes/rUsers.js")(app, swig, usersRepository);
-require("./routes/rRequests.js")(app, swig);
-require("./routes/rFriendship.js")(app, swig);
+require("./routes/rRequests.js")(app, swig, requestsRepository);
+require("./routes/rFriendship.js")(app, swig, friendshipsRepository);
 
 app.get('/', function (req, res) {
     var respuesta = swig.renderFile('views/index.html', {});

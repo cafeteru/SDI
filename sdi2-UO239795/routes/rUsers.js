@@ -95,7 +95,7 @@ module.exports = function (app, swig, usersRepository) {
 
     app.get("/home", function (req, res) {
         var respuesta = swig.renderFile('views/home.html', {
-            user : req.session.user
+            user: req.session.user
         });
         res.send(respuesta);
     });
@@ -103,5 +103,39 @@ module.exports = function (app, swig, usersRepository) {
     app.get('/logout', function (req, res) {
         req.session.user = null;
         res.redirect("/login?logout=Ha cerrado la sesión correctamente");
+    });
+
+    app.get("/list", function (req, res) {
+        var textSearch = { email: {$ne: req.session.user}};
+        if (req.query.busqueda != null) {
+            textSearch = {
+                email: {
+                    $ne: req.session.user,
+                    $regex: ".*" + req.query.search + ".*"
+                },
+            };
+        }
+
+        var pg = parseInt(req.query.pg);
+        if (req.query.pg == null) {
+            pg = 1;
+        }
+
+        usersRepository.getUsersPg(textSearch, pg, function (users, total) {
+            if (users == null) {
+                res.send("Error al listar ");
+            } else {
+                var pgLast = total / 5;
+                if (total % 5 > 0) {
+                    pgLast = pgLast + 1;
+                }
+                var respuesta = swig.renderFile('views/users/list.html', {
+                    users: users,
+                    pgActual: pg,
+                    pgLast: pgLast
+                });
+                res.send(respuesta);
+            }
+        });
     });
 };

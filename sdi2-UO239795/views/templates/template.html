@@ -12,10 +12,12 @@
     <script src="/script/bootstrap.min.js"></script>
 </head>
 <body>
-<main>
-    {% block nav %}
-    {% endblock %}
+{% block nav %}
+{% endblock %}
+<main class="container">
     {% block main %}
+    {% endblock %}
+    {% block pagination %}
     {% endblock %}
 </main>
 <footer>

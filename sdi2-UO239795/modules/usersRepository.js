@@ -38,6 +38,24 @@ module.exports = {
                 });
             }
         });
+    },
+    getUsersPg: function (textSearch, pg, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('users');
+                collection.count(function (err, count) {
+                    collection.find(textSearch).skip((pg - 1) * 5).limit(5).toArray(function (err, users) {
+                        if (err) {
+                            funcionCallback(null);
+                        } else {
+                            funcionCallback(users, count);
+                        }
+                        db.close();
+                    });
+                });
+            }
+        });
     }
-
 };

@@ -1,8 +1,16 @@
-h1 {
+main {
     text-align: center;
 }
 
-form {
+main form{
+    text-align: left;
+}
+
+main button{
+    text-align: center;
+}
+
+form, table {
     padding: 2.5% 20%;
 }
 

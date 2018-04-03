@@ -31,12 +31,13 @@ routerUserSession.use(function (req, res, next) {
     if (req.session.user) { // dejamos correr la petición
         next();
     } else {
-        console.log("va a : " + req.session.baseUrl);
+        console.log("va a : " + req.baseUrl);
         res.redirect("/login");
     }
 });
 //Aplicar routerUsuarioSession
 app.use("/home", routerUserSession);
+app.use("/list", routerUserSession);
 
 
 // Leer los cuerpos POST

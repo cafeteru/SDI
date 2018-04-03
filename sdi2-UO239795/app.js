@@ -27,11 +27,9 @@ friendshipsRepository.init(app, mongo);
 // routerUserSession
 var routerUserSession = express.Router();
 routerUserSession.use(function (req, res, next) {
-    console.log("routerUserSession")
     if (req.session.user) { // dejamos correr la petición
         next();
     } else {
-        console.log("va a : " + req.baseUrl);
         res.redirect("/login");
     }
 });

@@ -106,13 +106,21 @@ module.exports = function (app, swig, usersRepository) {
     });
 
     app.get("/list", function (req, res) {
-        var textSearch = { email: {$ne: req.session.user}};
-        if (req.query.busqueda != null) {
+        var textSearch = {email: {$ne: req.session.user}};
+        if (req.query.searchText != null) {
+            var searchText = req.query.searchText.toLowerCase();
             textSearch = {
-                email: {
-                    $ne: req.session.user,
-                    $regex: ".*" + req.query.search + ".*"
-                },
+                $and: [
+                    {email: {$ne: req.session.user}},
+                    {
+                        $or:
+                            [
+                                {email: {$regex: ".*" + searchText + ".*"}},
+                                {name: {$regex: ".*" + searchText + ".*"}},
+                                {surName: {$regex: ".*" + searchText + ".*"}}
+                            ]
+                    }
+                ]
             };
         }
 

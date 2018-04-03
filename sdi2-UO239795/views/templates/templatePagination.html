@@ -1,0 +1,16 @@
+{% extends "templateLogout.html" %}
+{% block pagination %}
+<div class="text-center">
+    <ul class="pagination pagination-centered">
+        <li class="page-item"><a class="page-link" href="?pg=1">Primera</a></li>
+        {% if pgActual-1 >= 1 %}
+        <li class="page-item"><a class="page-link" href="?pg={{ pgActual -1 }}">{{ pgActual -1 }}</a></li>
+        {% endif %}
+        <li class="page-item active"><a class="page-link" href="?pg={{ pgActual }}">{{ pgActual }}</a></li>
+        {% if pgActual+1 <= pgLast %}
+        <li class="page-item"><a class="page-link" href="?pg={{ pgActual+1 }}">{{ pgActual+1 }}</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="?pg={{ pgLast }}">Última</a></li>
+    </ul>
+</div>
+{% endblock %}

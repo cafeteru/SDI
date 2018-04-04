@@ -24,26 +24,20 @@
             </form>
             {% endif %}
 
-            {% if user.request !== undefined %}
-            <span th:if="${user.receiveRequest} != null and ${#strings.toString(user.receiveRequest.status)} == 'ACCEPTED'"
-                  class="text-success" th:text="#{list.send.accepted}">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</span>
+            {% if user.request !== undefined && user.request.status == "ACCEPTED"%}
+            <span class="text-success">Aceptada</span>
             {% endif %}
 
-            {% if user.request !== undefined %}
-            <span th:if="${user.receiveRequest} != null and ${#strings.toString(user.receiveRequest.status)} == 'SENT'"
-                  type="button" class="text-info" th:text="#{list.send.info}" disabled="disable">Success</span>
-            {% endif %}
-
-            {% if user.request !== undefined %}
-            <span th:if="${user.receiveRequest} != null and ${#strings.toString(user.receiveRequest.status)} == 'BLOCKED'"
-                  type="button" class="text-danger" th:text="#{list.send.blocked}" disabled="disable">Success</span>
+            {% if user.request !== undefined && user.request.status == "SENT"%}
+            <span type="button" class="text-info" disabled="disable">Enviada</span>
             {% endif %}
         </td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
-
+<div id="error"></div>
+<div id="success"></div>
 <h2>Buscar usuario</h2>
 <form class="navbar-form" action="/list">
     <div class="form-group">
@@ -52,4 +46,9 @@
     </div>
     <button type="submit" class="btn btn-primary">Buscar</button>
 </form>
+<script src="/script/showMessage.js"></script>
+<script>
+    message.showErrors("error");
+    message.showInfo("success");
+</script>
 {% endblock %}

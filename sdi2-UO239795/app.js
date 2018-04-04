@@ -36,6 +36,7 @@ routerUserSession.use(function (req, res, next) {
 //Aplicar routerUsuarioSession
 app.use("/home", routerUserSession);
 app.use("/list", routerUserSession);
+app.use("/send", routerUserSession);
 
 
 // Leer los cuerpos POST

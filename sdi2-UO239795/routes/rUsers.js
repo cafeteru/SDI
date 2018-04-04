@@ -21,7 +21,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
         };
         var findByEmail = {email: req.body.email};
         usersRepository.getUsers(findByEmail, function (users) {
-            if (users == null || users.length == 0) {
+            if (users == null || users.length === 0) {
                 usersRepository.addUser(user, function (id) {
                     if (id == null) {
                         res.redirect("/signup");
@@ -84,7 +84,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
 
     function autoLogin(textSearch, req, res) {
         usersRepository.getUsers(textSearch, function (users) {
-            if (users == null || users.length == 0) {
+            if (users == null || users.length === 0) {
                 req.session.user = null;
                 res.redirect("/login?error=Email o password incorrecto");
             } else {
@@ -141,25 +141,25 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                     email: req.session.user
                 }
                 usersRepository.getUsers(email, function (user) {
-                   /* for (var i = 0; i < users.length; i++) {
-                        var requestSearch = {
-                            sender: user[0]._id.toString(),
-                            receiver: users[i]._id.toString(),
-                        };
-
-                        requestsRepository.getRequest(requestSearch, function (requestReceiver) {
-                            if (requestReceiver.length > 0)
-                                users[i].request = requestReceiver[0];
-                            else
-                                users[i].request = null;
+                    var request = {
+                        sender: user[0]._id.toString()
+                    };
+                    requestsRepository.getRequests(request, function (requests) {
+                        for (var i = 0; i < users.length; i++) {
+                            for (var j = 0; i < requests.length; j++) {
+                                if(requests[j].receiver === users[i]._id.toString()){
+                                    users[i].request = requests[j];
+                                    break;
+                                }
+                            }
+                        }
+                        var respuesta = swig.renderFile('views/users/list.html', {
+                            users: users,
+                            pgActual: pg,
+                            pgLast: pgLast
                         });
-                    }*/
-                    var respuesta = swig.renderFile('views/users/list.html', {
-                        users: users,
-                        pgActual: pg,
-                        pgLast: pgLast
+                        res.send(respuesta);
                     });
-                    res.send(respuesta);
                 });
             }
         });

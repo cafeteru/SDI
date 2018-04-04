@@ -5,5 +5,38 @@ module.exports = {
         this.mongo = mongo;
         this.app = app;
     },
-
+    getRequest: function (request, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('requests');
+                collection.find(request).toArray(function (err, requests) {
+                    if (err) {
+                        funcionCallback(null);
+                    } else {
+                        funcionCallback(requests);
+                    }
+                    db.close();
+                });
+            }
+        });
+    },
+    addRequest: function (request, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('requests');
+                collection.insert(request, function (err, result) {
+                    if (err) {
+                        funcionCallback(null);
+                    } else {
+                        funcionCallback(result.ops[0]._id);
+                    }
+                    db.close();
+                });
+            }
+        });
+    }
 };

@@ -18,15 +18,26 @@
         <td>{{ user.surName }}</td>
         <td>{{ user.email }}</td>
         <td>
-            <form th:if="${user.receiveRequest} == null" th:attr="action=${'/request/send/' + user.id}">
-                <input type="submit" class="btn btn-success" th:attr="value=#{list.send}"/>
+            {% if user.request === undefined %}
+            <form method="post" action="/send/{{ user._id.toString() }}">
+                <input type="submit" class="btn btn-success" value="Enviar petición"/>
             </form>
+            {% endif %}
+
+            {% if user.request !== undefined %}
             <span th:if="${user.receiveRequest} != null and ${#strings.toString(user.receiveRequest.status)} == 'ACCEPTED'"
                   class="text-success" th:text="#{list.send.accepted}">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</span>
+            {% endif %}
+
+            {% if user.request !== undefined %}
             <span th:if="${user.receiveRequest} != null and ${#strings.toString(user.receiveRequest.status)} == 'SENT'"
                   type="button" class="text-info" th:text="#{list.send.info}" disabled="disable">Success</span>
+            {% endif %}
+
+            {% if user.request !== undefined %}
             <span th:if="${user.receiveRequest} != null and ${#strings.toString(user.receiveRequest.status)} == 'BLOCKED'"
                   type="button" class="text-danger" th:text="#{list.send.blocked}" disabled="disable">Success</span>
+            {% endif %}
         </td>
     </tr>
     {% endfor %}

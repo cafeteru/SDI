@@ -1,4 +1,4 @@
-module.exports = function (app, swig, usersRepository) {
+module.exports = function (app, swig, usersRepository, requestsRepository) {
     app.get("/signup", function (req, res) {
         var respuesta = swig.renderFile('views/signup.html', {});
         res.send(respuesta);
@@ -16,7 +16,8 @@ module.exports = function (app, swig, usersRepository) {
             email: req.body.email,
             name: req.body.name,
             surName: req.body.surName,
-            password: password
+            password: password,
+            request: undefined
         };
         var findByEmail = {email: req.body.email};
         usersRepository.getUsers(findByEmail, function (users) {
@@ -128,7 +129,6 @@ module.exports = function (app, swig, usersRepository) {
         if (req.query.pg == null) {
             pg = 1;
         }
-
         usersRepository.getUsersPg(textSearch, pg, function (users, total) {
             if (users == null) {
                 res.send("Error al listar ");
@@ -137,12 +137,30 @@ module.exports = function (app, swig, usersRepository) {
                 if (total % 5 > 0) {
                     pgLast = pgLast + 1;
                 }
-                var respuesta = swig.renderFile('views/users/list.html', {
-                    users: users,
-                    pgActual: pg,
-                    pgLast: pgLast
+                var email = {
+                    email: req.session.user
+                }
+                usersRepository.getUsers(email, function (user) {
+                   /* for (var i = 0; i < users.length; i++) {
+                        var requestSearch = {
+                            sender: user[0]._id.toString(),
+                            receiver: users[i]._id.toString(),
+                        };
+
+                        requestsRepository.getRequest(requestSearch, function (requestReceiver) {
+                            if (requestReceiver.length > 0)
+                                users[i].request = requestReceiver[0];
+                            else
+                                users[i].request = null;
+                        });
+                    }*/
+                    var respuesta = swig.renderFile('views/users/list.html', {
+                        users: users,
+                        pgActual: pg,
+                        pgLast: pgLast
+                    });
+                    res.send(respuesta);
                 });
-                res.send(respuesta);
             }
         });
     });

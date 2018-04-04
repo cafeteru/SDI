@@ -56,8 +56,8 @@ app.set('key', 'abcdefg');
 app.set('crypto', crypto);
 
 // Controladores
-require("./routes/rUsers.js")(app, swig, usersRepository);
-require("./routes/rRequests.js")(app, swig, requestsRepository);
+require("./routes/rUsers.js")(app, swig, usersRepository, requestsRepository);
+require("./routes/rRequests.js")(app, swig, usersRepository, requestsRepository);
 require("./routes/rFriendship.js")(app, swig, friendshipsRepository);
 
 app.get('/', function (req, res) {

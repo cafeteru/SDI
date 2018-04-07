@@ -1,37 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-<head th:replace="fragments/head" />
-
-<body>
-	<nav th:replace="fragments/nav" />
-	<main class="container" style="text-align: center">
-	<h1 th:text="#{nav.receive}">Esta es una zona privada la web</h1>
-        <table class="table table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col" th:text="#{signup.name}">Column heading</th>
-                    <th scope="col" th:text="#{signup.surname}">Column heading</th>
-                    <th scope="col" th:text="#{receiver.button}"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="table-light" th:each="user:${usersList}">
-                    <td th:text="${user.name}">Column content</td>
-                    <td th:text="${user.surName}">Column content</td>
-                    <td>
-                        <form th:attr="action=${'/request/accepted/' + user.id}">
-                            <input type="submit" class="btn btn-success" th:attr="value=#{receiver.button}" />
-                        </form>
-                        <form th:attr="action=${'/request/blocked/' + user.id}">
-                            <input type="submit" class="btn btn-danger" th:attr="value=#{receiver.blocked}" />
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div th:replace="fragments/pagination"></div>
-	</main>
-	<footer th:replace="fragments/footer" />
-</body>
-
-</html>
+{% extends "../templates/templatePagination.html" %}
+{% block titulo %} Peticiones Recibidas - UO239795 {% endblock %}
+{% block main %}
+<h1>Peticiones recibidas</h1>
+<table class="table table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Email</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr class="table-light">
+        <td>{{ user.name }}</td>
+        <td>{{ user.surName }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+            <form method="post" action="/request/accepted/{{ user._id.toString() }}">
+                <input type="submit" class="btn btn-success" value="Aceptar invitación"/>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -12,8 +12,8 @@
     </tr>
     </thead>
     <tbody>
+    {% for user in users %}
     <tr class="table-light">
-        {% for user in users %}
         <td>{{ user.name }}</td>
         <td>{{ user.surName }}</td>
         <td>{{ user.email }}</td>

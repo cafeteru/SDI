@@ -89,7 +89,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                 res.redirect("/login?error=Email o password incorrecto");
             } else {
                 req.session.user = users[0].email;
-                res.redirect("/home");
+                res.redirect("/list");
             }
         });
     }
@@ -144,22 +144,12 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                     var request = {
                         sender: user[0]._id.toString()
                     };
-                    requestsRepository.getRequests(request, function (requests) {
-                        for (var i = 0; i < users.length; i++) {
-                            for (var j = 0; i < requests.length; j++) {
-                                if(requests[j].receiver === users[i]._id.toString()){
-                                    users[i].request = requests[j];
-                                    break;
-                                }
-                            }
-                        }
-                        var respuesta = swig.renderFile('views/users/list.html', {
-                            users: users,
-                            pgActual: pg,
-                            pgLast: pgLast
-                        });
-                        res.send(respuesta);
+                    var respuesta = swig.renderFile('views/users/list.html', {
+                        users: users,
+                        pgActual: pg,
+                        pgLast: pgLast
                     });
+                    res.send(respuesta);
                 });
             }
         });

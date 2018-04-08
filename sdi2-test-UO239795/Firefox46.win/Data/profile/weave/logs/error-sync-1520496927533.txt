@@ -1,0 +1,27 @@
+1520473460797	Sync.LogManager	DEBUG	Flushing file log
+1520473460797	Sync.LogManager	TRACE	Beginning stream copy to error-sync-1520473460796.txt: 1520473460797
+1520473460801	Sync.Service	DEBUG	Exception: Aborting login, client not configured.
+1520473460802	Sync.Service	DEBUG	Not syncing: login returned false.
+1520473460804	browserwindow.syncui	DEBUG	_loginFailed has sync state=error.login.reason.no_username
+1520473460806	browserwindow.syncui	DEBUG	_loginFailed has sync state=error.login.reason.no_username
+1520473460811	browserwindow.syncui	DEBUG	_loginFailed has sync state=error.login.reason.no_username
+1520473460811	browserwindow.syncui	DEBUG	_loginFailed has sync state=error.login.reason.no_username
+1520473460812	browserwindow.syncui	DEBUG	observed: weave:ui:clear-error
+1520473460832	Sync.LogManager	TRACE	finished copy to: C:\Users\igm1990\Desktop\SDI\Firefox46.win\Data\profile\weave\logs\error-sync-1520473460796.txt
+1520473460832	Sync.LogManager	TRACE	onCopyComplete: 1520473460832
+1520473460833	Sync.LogManager	TRACE	Scheduling cleanup.
+1520473460833	Sync.LogManager	DEBUG	Log cleanup threshold time: 1519609460833
+1520473460841	Sync.LogManager	DEBUG	Done deleting files.
+1520475092110	Sync.SyncScheduler	DEBUG	Next sync in 3600000 ms.
+1520496927528	Sync.Service	DEBUG	User-Agent: Firefox/46.0 FxSync/1.48.0.20160421124000.
+1520496927528	Sync.Service	INFO	Starting sync at 2018-03-08 09:15:27
+1520496927528	Sync.Service	DEBUG	In sync: should login.
+1520496927529	browserwindow.syncui	DEBUG	observed: weave:service:login:start
+1520496927530	Sync.Status	DEBUG	Status.login: error.login.reason.no_username => error.login.reason.no_username
+1520496927530	Sync.Status	DEBUG	Status.service: service.client_not_configured => service.client_not_configured
+1520496927531	Sync.Status	DEBUG	Status.login: error.login.reason.no_username => error.login.reason.no_username
+1520496927531	Sync.Status	DEBUG	Status.service: service.client_not_configured => service.client_not_configured
+1520496927531	browserwindow.syncui	DEBUG	observed: weave:service:login:error
+1520496927531	browserwindow.syncui	DEBUG	onLoginError: login=error.login.reason.no_username, sync=success.sync
+1520496927532	Sync.SyncScheduler	DEBUG	Clearing sync triggers and the global score.
+1520496927533	Sync.ErrorHandler	ERROR	Sync encountered a login error

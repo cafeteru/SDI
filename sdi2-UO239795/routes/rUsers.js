@@ -156,7 +156,8 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                         let answer = swig.renderFile('views/users/list.html', {
                             users: users,
                             pgActual: pg,
-                            pgLast: pgLast
+                            pgLast: pgLast,
+                            user: req.session.user
                         });
                         res.send(answer);
                     });

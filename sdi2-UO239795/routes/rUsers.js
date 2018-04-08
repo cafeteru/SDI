@@ -193,7 +193,62 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                         for (; i < users.length; i++) {
                             for (let j = 0; j < requests.length; j++) {
                                 if (users[i]._id.toString() === requests[j].sender) {
-                                    collection[size++] = users[i];
+                                    collection[size] = users[i];
+                                    collection[size++].request = requests[j]._id.toString();
+                                    break;
+                                }
+                            }
+                        }
+                        i = (pg - 1) * 5;
+                        let j = i + 5;
+                        let pagUser = {};
+                        let countLimit = 0;
+                        for (; i < j; i++) {
+                            if (i < size)
+                                pagUser[countLimit++] = collection[i];
+                        }
+                        let answer = swig.renderFile('views/requests/receiver.html', {
+                            users: pagUser,
+                            pgActual: pg,
+                            pgLast: pgLast
+                        });
+                        res.send(answer);
+                    });
+                });
+            }
+        });
+    });
+
+    app.get("/requests", function (req, res) {
+        let pg = parseInt(req.query.pg);
+        if (req.query.pg == null) {
+            pg = 1;
+        }
+        usersRepository.getUsers({}, function (users) {
+            if (users == null) {
+                res.send("Error al listar ");
+            } else {
+                let pgLast = users.length / 5;
+                if (pgLast % 5 > 0) {
+                    pgLast = pgLast + 1;
+                }
+                let email = {
+                    email: req.session.user
+                };
+                usersRepository.getUsers(email, function (user) {
+                    let request = {
+                        receiver: user[0]._id.toString(),
+                        status: "SENT"
+                    };
+                    requestsRepository.getRequests(request, function (requests) {
+                        let collection = {};
+                        let size = 0;
+                        let i = 0;
+                        for (; i < users.length; i++) {
+                            for (let j = 0; j < requests.length; j++) {
+                                if (users[i]._id.toString() === requests[j].sender) {
+                                    collection[size] = users[i];
+                                    collection[size++].request = requests[j]._id.toString();
                                     break;
                                 }
                             }

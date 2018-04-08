@@ -18,7 +18,7 @@
         <td>{{ user.surName }}</td>
         <td>{{ user.email }}</td>
         <td>
-            <form method="post" action="/request/accepted/{{ user._id.toString() }}">
+            <form method="post" action="/accepted/{{ user.request }}">
                 <input type="submit" class="btn btn-success" value="Aceptar invitación"/>
             </form>
         </td>

@@ -15,14 +15,13 @@ var swig = require('swig');
 
 // Base de datos
 var mongo = require('mongodb');
+var ObjectId = require('mongodb').ObjectID;
 
 // Objeto para manejar base de datos
 var usersRepository = require("./modules/usersRepository.js");
 usersRepository.init(app, mongo);
 var requestsRepository = require("./modules/requestsRepository.js");
 requestsRepository.init(app, mongo);
-var friendshipsRepository = require("./modules/friendshipsRepository.js");
-friendshipsRepository.init(app, mongo);
 
 // routerUserSession
 var routerUserSession = express.Router();
@@ -38,6 +37,7 @@ app.use("/home", routerUserSession);
 app.use("/list", routerUserSession);
 app.use("/send", routerUserSession);
 app.use("/requests", routerUserSession);
+app.use("/accepted", routerUserSession);
 
 
 // Leer los cuerpos POST
@@ -59,8 +59,7 @@ app.set('crypto', crypto);
 
 // Controladores
 require("./routes/rUsers.js")(app, swig, usersRepository, requestsRepository);
-require("./routes/rRequests.js")(app, swig, usersRepository, requestsRepository);
-require("./routes/rFriendship.js")(app, swig, friendshipsRepository);
+require("./routes/rRequests.js")(app, swig, usersRepository, requestsRepository, ObjectId);
 
 app.get('/', function (req, res) {
     var respuesta = swig.renderFile('views/index.html', {});

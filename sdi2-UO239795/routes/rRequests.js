@@ -61,7 +61,6 @@ module.exports = function (app, swig, usersRepository, requestsRepository,  Obje
                     }
                 });
             } else {
-                console.log(requests);
                 updateRequest = {
                     sender: requests[0].sender,
                     receiver: requests[0].receiver,

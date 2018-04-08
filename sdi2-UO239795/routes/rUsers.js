@@ -220,6 +220,14 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
     });
 
     app.get("/requests", function (req, res) {
+        searchPersons(req, res, "SENT")
+    });
+
+    app.get("/friends", function (req, res) {
+        searchPersons(req, res, "ACCEPTED")
+    });
+
+    function searchPersons(req, res, status) {
         let pg = parseInt(req.query.pg);
         if (req.query.pg == null) {
             pg = 1;
@@ -238,7 +246,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                 usersRepository.getUsers(email, function (user) {
                     let request = {
                         receiver: user[0]._id.toString(),
-                        status: "SENT"
+                        status: status
                     };
                     requestsRepository.getRequests(request, function (requests) {
                         let collection = {};
@@ -261,7 +269,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                             if (i < size)
                                 pagUser[countLimit++] = collection[i];
                         }
-                        let answer = swig.renderFile('views/requests/receiver.html', {
+                        let answer = swig.renderFile('views/users/friends.html', {
                             users: pagUser,
                             pgActual: pg,
                             pgLast: pgLast
@@ -271,5 +279,5 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                 });
             }
         });
-    });
+    }
 };

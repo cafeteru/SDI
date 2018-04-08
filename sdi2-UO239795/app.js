@@ -38,6 +38,7 @@ app.use("/list", routerUserSession);
 app.use("/send", routerUserSession);
 app.use("/requests", routerUserSession);
 app.use("/accepted", routerUserSession);
+app.use("/friends", routerUserSession);
 
 
 // Leer los cuerpos POST

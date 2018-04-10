@@ -2,15 +2,29 @@
 {% block pagination %}
 <div class="text-center">
     <ul class="pagination pagination-centered">
-        <li class="page-item"><a class="page-link" href="?pg=1">Primera</a></li>
+        <li class="page-item">
+            <a id="first" class="page-link" href="?pg=1">Primera</a>
+        </li>
         {% if pgActual-1 >= 1 %}
-        <li class="page-item"><a class="page-link" href="?pg={{ pgActual -1 }}">{{ pgActual -1 }}</a></li>
+        <li class="page-item">
+            <a id="before" class="page-link" href="?pg={{ pgActual -1 }}">{{ pgActual -1 }}</a>
+        </li>
         {% endif %}
-        <li class="page-item active"><a class="page-link" href="?pg={{ pgActual }}">{{ pgActual }}</a></li>
+        <li class="page-item active">
+            <a id="now" class="page-link" href="?pg={{ pgActual }}">{{ pgActual }}</a>
+        </li>
         {% if pgActual+1 <= pgLast %}
-        <li class="page-item"><a class="page-link" href="?pg={{ pgActual+1 }}">{{ pgActual+1 }}</a></li>
+        <li class="page-item">
+            <a id="next" class="page-link" href="?pg={{ pgActual+1 }}">{{ pgActual+1 }}</a>
+        </li>
         {% endif %}
-        <li class="page-item"><a class="page-link" href="?pg={{ pgLast }}">Última</a></li>
+        <li class="page-item">
+            <a id="last" class="page-link" href="?pg={{ pgLast }}">Última</a>
+        </li>
     </ul>
 </div>
+<script src="/script/pagination.js"></script>
+<script>
+    var pag = new Pagination({{ pgActual }});
+</script>
 {% endblock %}

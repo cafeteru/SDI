@@ -4,7 +4,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository,  Obje
             email: req.session.user
         };
         usersRepository.getUsers(email, function (users) {
-            if (users == null || users.length == 0) {
+            if (users == null || users.length === 0) {
                 res.redirect("/list?error=Usuario no existe");
             } else {
                 let request = {

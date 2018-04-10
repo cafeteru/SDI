@@ -10,7 +10,7 @@ module.exports = {
             if (err) {
                 funcionCallback(null);
             } else {
-                var collection = db.collection('requests');
+                let collection = db.collection('requests');
                 collection.find(request).toArray(function (err, requests) {
                     if (err) {
                         funcionCallback(null);
@@ -27,7 +27,7 @@ module.exports = {
             if (err) {
                 funcionCallback(null);
             } else {
-                var collection = db.collection('requests');
+                let collection = db.collection('requests');
                 collection.insert(request, function (err, result) {
                     if (err) {
                         funcionCallback(null);
@@ -44,7 +44,7 @@ module.exports = {
             if (err) {
                 funcionCallback(null);
             } else {
-                var collection = db.collection('requests');
+                let collection = db.collection('requests');
                 collection.update(request, {$set: updateRequest}, function (err, result) {
                     if (err) {
                         funcionCallback(null);

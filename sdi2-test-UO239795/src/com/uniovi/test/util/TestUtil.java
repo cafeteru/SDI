@@ -28,7 +28,7 @@ public class TestUtil {
 	}
 
 	public void waitChangeWeb() {
-		waitSeconds(2);
+		waitSeconds(3);
 	}
 
 	public String closeAlertAndGetItsText() {

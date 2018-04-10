@@ -146,7 +146,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
         });
     });
 
-    function createQuery(req){
+    function createQuery(req) {
         let textSearch = {email: {$ne: req.session.user}};
         if (req.query.searchText != null) {
             let searchText = req.query.searchText;
@@ -169,15 +169,15 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
 
 
     app.get("/requests", function (req, res) {
-            searchPersons(req, res, "SENT")
+            searchPersons(req, res, "SENT", 'views/requests/receiver.html')
         }
     );
 
     app.get("/friends", function (req, res) {
-        searchPersons(req, res, "ACCEPTED")
+        searchPersons(req, res, "ACCEPTED", 'views/users/friends.html')
     });
 
-    function searchPersons(req, res, status) {
+    function searchPersons(req, res, status, view) {
         let pg = parseInt(req.query.pg);
         if (req.query.pg == null) {
             pg = 1;
@@ -207,7 +207,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                             }
                         }
                         i = (pg - 1) * 5;
-                        let answer = swig.renderFile('views/users/friends.html', {
+                        let answer = swig.renderFile(view, {
                             users: collection.slice(i, i + 5),
                             pgActual: pg,
                             pgLast: calculatePgLast(collection.length)

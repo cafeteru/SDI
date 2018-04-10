@@ -258,7 +258,8 @@ public class Sdi2UO239795Test {
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		driver.findElement(By.xpath("//input[@value='Enviar solicitud']"))
 				.click();
-		test.textoNoPresentePagina(email);
+		test.textoPresentePagina("Solicitud enviada");
+		test.textoPresentePagina("Petición enviada correctamente");
 	}
 
 	/**

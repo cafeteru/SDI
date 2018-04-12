@@ -20,7 +20,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
         };
         let findByEmail = {email: req.body.email};
         usersRepository.getUsers(findByEmail, function (users) {
-            if (users == null || users.length === 0) {
+            if (users == null || users.length == 0) {
                 usersRepository.addUser(user, function (id) {
                     if (id == null) {
                         res.redirect("/signup?email=Error al añadir al usuario. Intentelo más tarde");
@@ -40,7 +40,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
 
     function checkErrorSignUp(req) {
         let errors = [];
-        if (req.body.email === "") {
+        if (req.body.email == "") {
             errors.push("email=Este campo no puede ser vacío");
         }
         if (req.body.name.length < 2) {
@@ -83,7 +83,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
 
     function autoLogin(textSearch, req, res) {
         usersRepository.getUsers(textSearch, function (users) {
-            if (users == null || users.length === 0) {
+            if (users == null || users.length == 0) {
                 req.session.user = null;
                 res.redirect("/login?error=Email o password incorrecto");
             } else {
@@ -126,7 +126,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                         let i = 0;
                         for (; i < users.length; i++) {
                             for (let j = 0; j < requests.length; j++) {
-                                if (requests[j].receiver === users[i]._id.toString()) {
+                                if (requests[j].receiver == users[i]._id.toString()) {
                                     users[i].request = requests[j];
                                     break;
                                 }
@@ -199,7 +199,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                         let size = 0, i = 0;
                         for (; i < users.length; i++) {
                             for (let j = 0; j < requests.length; j++) {
-                                if (users[i]._id.toString() === requests[j].sender) {
+                                if (users[i]._id.toString() == requests[j].sender) {
                                     collection[size] = users[i];
                                     collection[size++].request = requests[j]._id.toString();
                                     break;
@@ -223,7 +223,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
         let pgLast = value / 5;
         if (value % 5 > 0) {
             return pgLast + 1;
-        } else if (value === 0) {
+        } else if (value == 0) {
             return 0;
         }
     }

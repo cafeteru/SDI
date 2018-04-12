@@ -63,7 +63,7 @@ public class Sdi2UO239795Test {
 	@Test
 	public void Test01_1_RegVal() {
 		email = Random.email();
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Registrarse")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -89,7 +89,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test01_2_RegInval() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Registrarse")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -114,7 +114,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test02_1_Inval() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Identifícate")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -136,7 +136,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test02_2_InInVal() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Identifícate")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -153,7 +153,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test03_1_LisUsrVal() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Identifícate")).click();
 		
 		test.waitChangeWeb();
@@ -180,7 +180,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test03_2_LisUsrInVal() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.get(URL + "list");
 		test.waitChangeWeb();
 		test.textoNoPresentePagina("Lista de usuarios");
@@ -193,7 +193,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test04_1_BusUsrVal() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Identifícate")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -222,7 +222,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test04_2_BusUsrInVal() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.get(URL + "list");
 		test.waitChangeWeb();
 		test.textoNoPresentePagina("Lista de usuarios");
@@ -235,7 +235,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test05_1_InvVal() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Identifícate")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -270,7 +270,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test05_2_InvInVal() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Identifícate")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -301,7 +301,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test06_1_LisInvVal() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Identifícate")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -322,7 +322,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test07_1_AcepInvVal() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Identifícate")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();
@@ -349,7 +349,7 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void Test08_1_ListAmiVal() {
-		driver.get(URL + "?lang=es");
+		driver.get(URL);
 		driver.findElement(By.linkText("Identifícate")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.name("email")).click();

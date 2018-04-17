@@ -23,7 +23,7 @@
         <td>{{ user.surName }}</td>
         <td>{{ user.email }}</td>
         <td>
-            {% if user.request === undefined %}
+            {% if user.request == undefined %}
             <form method="post" action="/send/{{ user._id.toString() }}">
                 <input type="submit" class="btn btn-success" value="Enviar solicitud"/>
             </form>

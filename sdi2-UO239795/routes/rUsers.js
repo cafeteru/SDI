@@ -55,7 +55,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
         if (req.body.passwordConfirm.length < 5) {
             errors.push("passwordConfirm=La contraseña debe tener entre 5 y 24 caracteres.");
         }
-        if (req.body.password !== req.body.passwordConfirm) {
+        if (req.body.password != req.body.passwordConfirm) {
             errors.push("coincidence=Las contraseñas no coinciden.");
         }
 
@@ -135,7 +135,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                         i = (pg - 1) * 5;
                         let answer = swig.renderFile('views/users/list.html', {
                             users: users.slice(i, i + 5),
-                            pgActual: pg,
+                            pgCurrent: pg,
                             pgLast: calculatePgLast(users.length),
                             user: req.session.user
                         });
@@ -167,7 +167,6 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
         return textSearch;
     }
 
-
     app.get("/requests", function (req, res) {
             searchPersons(req, res, "SENT", 'views/requests/receiver.html')
         }
@@ -195,21 +194,17 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                         status: status
                     };
                     requestsRepository.getRequests(request, function (requests) {
-                        let collection = [];
-                        let size = 0, i = 0;
-                        for (; i < users.length; i++) {
-                            for (let j = 0; j < requests.length; j++) {
-                                if (users[i]._id.toString() == requests[j].sender) {
-                                    collection[size] = users[i];
-                                    collection[size++].request = requests[j]._id.toString();
-                                    break;
-                                }
+                        let collection = users.filter(function (user) {
+                            for (let i = 0; i < requests.length; i++) {
+                                if (user._id.toString() == requests[i].sender)
+                                    return true;
                             }
-                        }
-                        i = (pg - 1) * 5;
+                            return false;
+                        });
+                        let limit = (pg - 1) * 5;
                         let answer = swig.renderFile(view, {
-                            users: collection.slice(i, i + 5),
-                            pgActual: pg,
+                            users: collection.slice(limit, limit + 5),
+                            pgCurrent: pg,
                             pgLast: calculatePgLast(collection.length)
                         });
                         res.send(answer);

@@ -11,7 +11,9 @@ module.exports = {
                 funcionCallback(null);
             } else {
                 let collection = db.collection('users');
-                collection.find(textSearch).sort({"surName": 1}).toArray(function (err, users) {
+                collection.find(textSearch).sort({
+                    "surName": 1
+                }).toArray(function (err, users) {
                     if (err) {
                         funcionCallback(null);
                     } else {

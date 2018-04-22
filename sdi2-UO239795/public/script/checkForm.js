@@ -1,8 +1,7 @@
 "use strict";
 
 class Check {
-    constructor() {
-    }
+    constructor() {}
 
     checkPasswords() {
         var password = $('input[name=password]').val();

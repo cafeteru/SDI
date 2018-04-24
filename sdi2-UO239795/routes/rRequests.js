@@ -1,4 +1,4 @@
-module.exports = function (app, swig, usersRepository, requestsRepository,  ObjectId) {
+module.exports = function (app, swig, usersRepository, requestsRepository, ObjectId) {
     app.post('/send/:id', function (req, res) {
         let email = {
             email: req.session.user
@@ -25,7 +25,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository,  Obje
             }
         });
     });
-    
+
     app.post('/accepted/:id', function (req, res) {
         let request = {
             "_id": new ObjectId(req.params.id)

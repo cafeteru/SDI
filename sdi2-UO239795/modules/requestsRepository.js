@@ -45,7 +45,9 @@ module.exports = {
                 funcionCallback(null);
             } else {
                 let collection = db.collection('requests');
-                collection.update(request, {$set: updateRequest}, function (err, result) {
+                collection.update(request, {
+                    $set: updateRequest
+                }, function (err, result) {
                     if (err) {
                         funcionCallback(null);
                     } else {

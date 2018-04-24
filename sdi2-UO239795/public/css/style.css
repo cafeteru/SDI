@@ -2,15 +2,16 @@ main {
     text-align: center;
 }
 
-main form{
+main form {
     text-align: left;
 }
 
-main button{
+main button {
     text-align: center;
 }
 
-form, table {
+form,
+table {
     padding: 2.5% 20%;
 }
 

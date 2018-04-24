@@ -18,7 +18,9 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
             surName: req.body.surName,
             password: password
         };
-        let findByEmail = {email: req.body.email};
+        let findByEmail = {
+            email: req.body.email
+        };
         usersRepository.getUsers(findByEmail, function (users) {
             if (users == null || users.length == 0) {
                 usersRepository.addUser(user, function (id) {
@@ -147,19 +149,36 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
     });
 
     function createQuery(req) {
-        let textSearch = {email: {$ne: req.session.user}};
+        let textSearch = {
+            email: {
+                $ne: req.session.user
+            }
+        };
         if (req.query.searchText != null) {
             let searchText = req.query.searchText;
             textSearch = {
-                $and: [
-                    {email: {$ne: req.session.user}},
+                $and: [{
+                        email: {
+                            $ne: req.session.user
+                        }
+                    },
                     {
-                        $or:
-                            [
-                                {email: {$regex: ".*" + searchText + ".*"}},
-                                {name: {$regex: ".*" + searchText + ".*"}},
-                                {surName: {$regex: ".*" + searchText + ".*"}}
-                            ]
+                        $or: [{
+                                email: {
+                                    $regex: ".*" + searchText + ".*"
+                                }
+                            },
+                            {
+                                name: {
+                                    $regex: ".*" + searchText + ".*"
+                                }
+                            },
+                            {
+                                surName: {
+                                    $regex: ".*" + searchText + ".*"
+                                }
+                            }
+                        ]
                     }
                 ]
             };
@@ -168,9 +187,8 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
     }
 
     app.get("/requests", function (req, res) {
-            searchPersons(req, res, "SENT", 'views/requests/receiver.html')
-        }
-    );
+        searchPersons(req, res, "SENT", 'views/requests/receiver.html')
+    });
 
     app.get("/friends", function (req, res) {
         searchPersons(req, res, "ACCEPTED", 'views/users/friends.html')

@@ -1,8 +1,7 @@
 "use strict";
 
 class ShowMessage {
-    constructor() {
-    }
+    constructor() {}
 
     getURLParameter(sParam) {
         var sPageURL = window.location.search.substring(1);
@@ -56,4 +55,3 @@ class ShowMessage {
 }
 
 var message = new ShowMessage();
-

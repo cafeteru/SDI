@@ -196,8 +196,10 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                     requestsRepository.getRequests(request, function (requests) {
                         let collection = users.filter(function (user) {
                             for (let i = 0; i < requests.length; i++) {
-                                if (user._id.toString() == requests[i].sender)
+                                if (user._id.toString() == requests[i].sender) {
+                                    user.request = requests[i]._id.toString();
                                     return true;
+                                }
                             }
                             return false;
                         });

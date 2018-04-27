@@ -201,7 +201,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
         }
         usersRepository.getUsers({}, function (users) {
             if (users == null) {
-                res.send("Error al listar ");
+                res.send("Error al listar");
             } else {
                 let email = {
                     email: req.session.user

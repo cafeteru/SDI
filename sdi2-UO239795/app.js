@@ -13,6 +13,9 @@ app.use(expressSession({
 // Motor de plantillas
 var swig = require('swig');
 
+var jwt = require('jsonwebtoken');
+app.set('jwt', jwt);
+
 // Base de datos
 var mongo = require('mongodb');
 var ObjectId = require('mongodb').ObjectID;
@@ -52,6 +55,37 @@ app.use(express.static('public'));
 // Encriptación de contraseñas
 var crypto = require('crypto');
 
+// routerUsuarioToken
+var routerUsuarioToken = express.Router();
+routerUsuarioToken.use(function (req, res, next) {
+    // obtener el token, puede ser un parámetro GET , POST o HEADER
+    var token = req.body.token || req.query.token || req.headers['token'];
+    if (token != null) {
+        // verificar el token
+        jwt.verify(token, 'secreto', function (err, infoToken) {
+            if (err || (Date.now() / 1000 - infoToken.tiempo) > 24000) {
+                res.status(403); // Forbidden
+                res.json({
+                    acceso: false,
+                    error: 'Token invalido o caducado'
+                });
+                return;
+            } else {
+                res.user = infoToken.user;
+                next();
+            }
+        });
+    } else {
+        res.status(403); // Forbidden
+        res.json({
+            acceso: false,
+            mensaje: 'No hay Token'
+        });
+    }
+});
+// Aplicar routerUsuarioToken
+app.use('/api/friends', routerUsuarioToken);
+
 // Variables
 app.set('port', 80);
 app.set('db', 'mongodb://uo239795:123456@ds231529.mlab.com:31529/sdi2-uo239795');
@@ -61,6 +95,7 @@ app.set('crypto', crypto);
 // Controladores
 require("./routes/rUsers.js")(app, swig, usersRepository, requestsRepository);
 require("./routes/rRequests.js")(app, swig, usersRepository, requestsRepository, ObjectId);
+require("./routes/api.js")(app, usersRepository, requestsRepository);
 
 app.get('/', function (req, res) {
     var respuesta = swig.renderFile('views/index.html', {});

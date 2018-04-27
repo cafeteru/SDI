@@ -65,6 +65,7 @@ routerUsuarioToken.use(function (req, res, next) {
                 // También podríamos comprobar que intoToken.usuario existe
                 return;
             } else {
+                console.log(infoToken.usuario)
                 // dejamos correr la petición
                 res.usuario = infoToken.usuario;
                 next();

@@ -134,9 +134,42 @@ module.exports = function (app, usersRepository, requestsRepository, messageRepo
                 time[i] = "0" + time[i];
             }
         }
-
         // Return the formatted string
         return date.join("/") + " " + time.join(":") + " " + suffix;
     }
 
+    app.get("/api/conversation/:email", function (req, res) {
+        let messages = {
+            $or: [
+                {
+                    $and: [
+                        {sender: res.user},
+                        {receiver: req.params.email},
+                    ]
+                },
+                {
+                    $and: [
+                        {sender: req.params.email},
+                        {receiver: res.user},
+                    ]
+                }
+            ]
+        };
+        messageRepository.getMessages(messages, function (conversation) {
+            if (conversation == null || conversation.length == 0) {
+                res.status(403);
+                res.json({
+                    error: 'No hay mensajes entre ' + res.user + " y " + req.params.email
+                });
+            } else {
+                for (var i = 0; i < conversation.length; i++) {
+                    if (conversation[i].receiver == res.user) {
+                        conversation[i].read = true;
+                    }
+                }
+                res.status(200);
+                res.send(JSON.stringify(conversation));
+            }
+        });
+    });
 };

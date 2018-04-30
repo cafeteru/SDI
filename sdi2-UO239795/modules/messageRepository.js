@@ -10,7 +10,7 @@ module.exports = {
             if (err) {
                 funcionCallback(null);
             } else {
-                let collection = db.collection('requests');
+                let collection = db.collection('messages');
                 collection.find(request).toArray(function (err, requests) {
                     if (err) {
                         funcionCallback(null);
@@ -22,12 +22,12 @@ module.exports = {
             }
         });
     },
-    addRequest: function (request, funcionCallback) {
+    addMessage: function (request, funcionCallback) {
         this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
             if (err) {
                 funcionCallback(null);
             } else {
-                let collection = db.collection('requests');
+                let collection = db.collection('messages');
                 collection.insert(request, function (err, result) {
                     if (err) {
                         funcionCallback(null);
@@ -39,12 +39,12 @@ module.exports = {
             }
         });
     },
-    updateRequest: function (request, updateRequest, funcionCallback) {
+    updateMessage: function (request, updateRequest, funcionCallback) {
         this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
             if (err) {
                 funcionCallback(null);
             } else {
-                let collection = db.collection('requests');
+                let collection = db.collection('messages');
                 collection.update(request, {
                     $set: updateRequest
                 }, function (err, result) {

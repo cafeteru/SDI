@@ -12,7 +12,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository, Objec
                     receiver: req.params.id,
                     status: "SENT"
                 };
-                requestsRepository.getRequests(request, function (requests) {
+                requestsRepository.getMessages(request, function (requests) {
                     if (requests == null || requests.length == 0) {
                         requestsRepository.addRequest(request, function () {
                             res.redirect("/list?success=Petición enviada correctamente");
@@ -30,7 +30,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository, Objec
         let request = {
             "_id": new ObjectId(req.params.id)
         };
-        requestsRepository.getRequests(request, function (requests) {
+        requestsRepository.getMessages(request, function (requests) {
             if (requests != null || requests.length > 0) {
                 acceptedRequest(requests[0].sender, requests[0].receiver);
                 acceptedRequest(requests[0].receiver, requests[0].sender);
@@ -46,7 +46,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository, Objec
             sender: senderParam,
             receiver: receiverParam
         };
-        requestsRepository.getRequests(request, function (requests) {
+        requestsRepository.getMessages(request, function (requests) {
             let updateRequest;
             if (requests == null || requests.length == 0) {
                 updateRequest = {

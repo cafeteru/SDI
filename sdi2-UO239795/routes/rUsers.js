@@ -124,7 +124,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                     let request = {
                         sender: user[0]._id.toString()
                     };
-                    requestsRepository.getRequests(request, function (requests) {
+                    requestsRepository.getMessages(request, function (requests) {
                         let i = 0;
                         for (; i < users.length; i++) {
                             for (let j = 0; j < requests.length; j++) {
@@ -211,7 +211,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
                         receiver: user[0]._id.toString(),
                         status: status
                     };
-                    requestsRepository.getRequests(request, function (requests) {
+                    requestsRepository.getMessages(request, function (requests) {
                         let collection = users.filter(function (user) {
                             for (let i = 0; i < requests.length; i++) {
                                 if (user._id.toString() == requests[i].sender) {

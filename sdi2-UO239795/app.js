@@ -25,6 +25,8 @@ var usersRepository = require("./modules/usersRepository.js");
 usersRepository.init(app, mongo);
 var requestsRepository = require("./modules/requestsRepository.js");
 requestsRepository.init(app, mongo);
+var messageRepository = require("./modules/messageRepository.js");
+messageRepository.init(app, mongo);
 
 // routerUserSession
 var routerUserSession = express.Router();
@@ -85,6 +87,7 @@ routerUsuarioToken.use(function (req, res, next) {
 });
 // Aplicar routerUsuarioToken
 app.use('/api/friends', routerUsuarioToken);
+app.use('/api/send', routerUsuarioToken);
 
 // Variables
 app.set('port', 80);
@@ -95,7 +98,7 @@ app.set('crypto', crypto);
 // Controladores
 require("./routes/rUsers.js")(app, swig, usersRepository, requestsRepository);
 require("./routes/rRequests.js")(app, swig, usersRepository, requestsRepository, ObjectId);
-require("./routes/api.js")(app, usersRepository, requestsRepository);
+require("./routes/api.js")(app, usersRepository, requestsRepository, messageRepository);
 
 app.get('/', function (req, res) {
     var respuesta = swig.renderFile('views/index.html', {});

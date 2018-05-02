@@ -22,7 +22,7 @@ public class Sdi2UO239795Test {
 	private static String email;
 
 	private static String PathFirefox = "../Firefox46.win/FirefoxPortable.exe";
-	private static String URL = "http://localhost/";
+	private static String URL = "http://localhost:8081/";
 	private static WebDriver driver = getDriver(PathFirefox);
 
 	public static WebDriver getDriver(String PathFirefox) {

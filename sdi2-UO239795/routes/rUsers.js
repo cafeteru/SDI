@@ -1,4 +1,4 @@
-module.exports = function (app, swig, usersRepository, requestsRepository) {
+module.exports = function (app, swig, repository) {
     app.get("/signup", function (req, res) {
         let answer = swig.renderFile('views/signup.html', {});
         res.send(answer);
@@ -21,9 +21,9 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
         let findByEmail = {
             email: req.body.email
         };
-        usersRepository.getUsers(findByEmail, function (users) {
+        repository.getElements(findByEmail, "users", function (users) {
             if (users == null || users.length == 0) {
-                usersRepository.addUser(user, function (id) {
+                repository.addElement(user, "users", function (id) {
                     if (id == null) {
                         res.redirect("/signup?email=Error al añadir al usuario. Intentelo más tarde");
                     } else {
@@ -84,7 +84,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
     });
 
     function autoLogin(textSearch, req, res) {
-        usersRepository.getUsers(textSearch, function (users) {
+        repository.getElements(textSearch, "users", function (users) {
             if (users == null || users.length == 0) {
                 req.session.user = null;
                 res.redirect("/login?error=Email o password incorrecto");
@@ -113,18 +113,18 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
         if (req.query.pg == null) {
             pg = 1;
         }
-        usersRepository.getUsers(textSearch, function (users) {
+        repository.getElements(textSearch, "users", function (users) {
             if (users == null) {
                 res.send("Error al listar ");
             } else {
                 let email = {
                     email: req.session.user
                 };
-                usersRepository.getUsers(email, function (user) {
+                repository.getElements(email, "users", function (user) {
                     let request = {
                         sender: user[0]._id.toString()
                     };
-                    requestsRepository.getMessages(request, function (requests) {
+                    repository.getElements(request, "requests", function (requests) {
                         let i = 0;
                         for (; i < users.length; i++) {
                             for (let j = 0; j < requests.length; j++) {
@@ -158,16 +158,16 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
             let searchText = req.query.searchText;
             textSearch = {
                 $and: [{
-                        email: {
-                            $ne: req.session.user
-                        }
-                    },
+                    email: {
+                        $ne: req.session.user
+                    }
+                },
                     {
                         $or: [{
-                                email: {
-                                    $regex: ".*" + searchText + ".*"
-                                }
-                            },
+                            email: {
+                                $regex: ".*" + searchText + ".*"
+                            }
+                        },
                             {
                                 name: {
                                     $regex: ".*" + searchText + ".*"
@@ -187,31 +187,31 @@ module.exports = function (app, swig, usersRepository, requestsRepository) {
     }
 
     app.get("/requests", function (req, res) {
-        searchPersons(req, res, "SENT", 'views/requests/receiver.html')
+        searchPeople(req, res, "SENT", 'views/requests/receiver.html')
     });
 
     app.get("/friends", function (req, res) {
-        searchPersons(req, res, "ACCEPTED", 'views/users/friends.html')
+        searchPeople(req, res, "ACCEPTED", 'views/users/friends.html')
     });
 
-    function searchPersons(req, res, status, view) {
+    function searchPeople(req, res, status, view) {
         let pg = parseInt(req.query.pg);
         if (req.query.pg == null) {
             pg = 1;
         }
-        usersRepository.getUsers({}, function (users) {
+        repository.getElements({}, "users", function (users) {
             if (users == null) {
                 res.send("Error al listar");
             } else {
                 let email = {
                     email: req.session.user
                 };
-                usersRepository.getUsers(email, function (user) {
+                repository.getElements(email, "users", function (user) {
                     let request = {
                         receiver: user[0]._id.toString(),
                         status: status
                     };
-                    requestsRepository.getMessages(request, function (requests) {
+                    repository.getElements(request, "requests", function (requests) {
                         let collection = users.filter(function (user) {
                             for (let i = 0; i < requests.length; i++) {
                                 if (user._id.toString() == requests[i].sender) {

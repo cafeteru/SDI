@@ -5,30 +5,30 @@ module.exports = {
         this.mongo = mongo;
         this.app = app;
     },
-    getMessages: function (request, funcionCallback) {
+    getElements: function (element, nameCollection, funcionCallback) {
         this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
             if (err) {
                 funcionCallback(null);
             } else {
-                let collection = db.collection('messages');
-                collection.find(request).toArray(function (err, requests) {
+                let collection = db.collection(nameCollection);
+                collection.find(element).toArray(function (err, elements) {
                     if (err) {
                         funcionCallback(null);
                     } else {
-                        funcionCallback(requests);
+                        funcionCallback(elements);
                     }
                     db.close();
                 });
             }
         });
     },
-    addMessage: function (request, funcionCallback) {
+    addElement: function (element, nameCollection, funcionCallback) {
         this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
             if (err) {
                 funcionCallback(null);
             } else {
-                let collection = db.collection('messages');
-                collection.insert(request, function (err, result) {
+                let collection = db.collection(nameCollection);
+                collection.insert(element, function (err, result) {
                     if (err) {
                         funcionCallback(null);
                     } else {
@@ -39,14 +39,14 @@ module.exports = {
             }
         });
     },
-    updateMessage: function (request, updateRequest, funcionCallback) {
+    updateElement: function (element, updateElement, nameCollection, funcionCallback) {
         this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
             if (err) {
                 funcionCallback(null);
             } else {
-                let collection = db.collection('messages');
-                collection.update(request, {
-                    $set: updateRequest
+                let collection = db.collection(nameCollection);
+                collection.update(element, {
+                    $set: updateElement
                 }, function (err, result) {
                     if (err) {
                         funcionCallback(null);

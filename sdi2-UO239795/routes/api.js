@@ -1,11 +1,11 @@
-module.exports = function (app, usersRepository, requestsRepository, messageRepository) {
+module.exports = function (app, repository, ObjectId) {
     app.post("/api/login/", function (req, res) {
         let seguro = app.get("crypto").createHmac('sha256', app.get('key')).update(req.body.password).digest('hex');
-        let criterio = {
+        let user = {
             email: req.body.email,
             password: seguro
         };
-        usersRepository.getUsers(criterio, function (users) {
+        repository.getElements(user, "users", function (users) {
             if (users == null || users.length == 0) {
                 res.status(401);
                 res.json({
@@ -14,7 +14,7 @@ module.exports = function (app, usersRepository, requestsRepository, messageRepo
                 });
             } else {
                 let token = app.get('jwt').sign({
-                    user: criterio.email,
+                    user: user.email,
                     time: Date.now() / 1000
                 }, "secreto");
                 res.status(200);
@@ -40,7 +40,7 @@ module.exports = function (app, usersRepository, requestsRepository, messageRepo
         let email = {
             email: res.user
         };
-        getFriends(req, res, email, function (friends) {
+        getFriends(res, email, function (friends) {
             let friend = friends.filter(function (element) {
                 return element.email == req.body.email;
             });
@@ -57,7 +57,7 @@ module.exports = function (app, usersRepository, requestsRepository, messageRepo
                     date: timeStamp(),
                     read: false
                 }
-                messageRepository.addMessage(message, function (id) {
+                repository.addElement(message, "messages", function (id) {
                     if (id == null) {
                         res.status(501);
                         res.json({
@@ -72,20 +72,20 @@ module.exports = function (app, usersRepository, requestsRepository, messageRepo
         });
     });
 
-    function getFriends(req, res, email, functionCallBack) {
-        usersRepository.getUsers({}, function (users) {
+    function getFriends(res, email, functionCallBack) {
+        repository.getElements({}, "users", function (users) {
             if (users == null || users.length == 0) {
                 res.status(403); // Forbidden
                 res.json({
                     error: 'No hay usuarios'
                 });
             } else {
-                usersRepository.getUsers(email, function (user) {
+                repository.getElements(email, "users", function (user) {
                     let request = {
                         receiver: user[0]._id.toString(),
                         status: "ACCEPTED"
                     };
-                    requestsRepository.getMessages(request, function (requests) {
+                    repository.getElements(request, "requests", function (requests) {
                         if (requests == null || requests.length == 0) {
                             res.status(403);
                             res.json({
@@ -155,20 +155,50 @@ module.exports = function (app, usersRepository, requestsRepository, messageRepo
                 }
             ]
         };
-        messageRepository.getMessages(messages, function (conversation) {
+        repository.getElements(messages, "messages", function (conversation) {
             if (conversation == null || conversation.length == 0) {
                 res.status(403);
                 res.json({
                     error: 'No hay mensajes entre ' + res.user + " y " + req.params.email
                 });
             } else {
-                for (var i = 0; i < conversation.length; i++) {
-                    if (conversation[i].receiver == res.user) {
-                        conversation[i].read = true;
-                    }
-                }
                 res.status(200);
                 res.send(JSON.stringify(conversation));
+            }
+        });
+    });
+
+    app.get("/api/read/:id", function (req, res) {
+        var message = {
+            "_id": new ObjectId(req.params.id)
+        };
+        repository.getElements(message, "messages", function (conversation) {
+            if (conversation == null || conversation.length == 0) {
+                res.status(403);
+                res.json({
+                    error: 'No existe el mensaje'
+                });
+            } else {
+                var updateMessage = {
+                    sender: conversation[0].sender,
+                    receiver: conversation[0].receiver,
+                    message: conversation[0].message,
+                    date: conversation[0].date,
+                    read: true
+                };
+                repository.updateElement(conversation[0], updateMessage, "messages", function (result) {
+                    if (result == null) {
+                        res.status(501);
+                        res.json({
+                            error: 'No se puede actualizar el mensaje'
+                        });
+                    } else {
+                        res.status(200);
+                        res.json({
+                            result: 'Mensaje marcado correctamente'
+                        });
+                    }
+                });
             }
         });
     });

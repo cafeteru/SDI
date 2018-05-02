@@ -21,12 +21,8 @@ var mongo = require('mongodb');
 var ObjectId = require('mongodb').ObjectID;
 
 // Objeto para manejar base de datos
-var usersRepository = require("./modules/usersRepository.js");
-usersRepository.init(app, mongo);
-var requestsRepository = require("./modules/requestsRepository.js");
-requestsRepository.init(app, mongo);
-var messageRepository = require("./modules/messageRepository.js");
-messageRepository.init(app, mongo);
+var repository = require("./modules/repository.js");
+repository.init(app, mongo);
 
 // routerUserSession
 var routerUserSession = express.Router();
@@ -97,9 +93,9 @@ app.set('key', 'abcdefg');
 app.set('crypto', crypto);
 
 // Controladores
-require("./routes/rUsers.js")(app, swig, usersRepository, requestsRepository);
-require("./routes/rRequests.js")(app, swig, usersRepository, requestsRepository, ObjectId);
-require("./routes/api.js")(app, usersRepository, requestsRepository, messageRepository);
+require("./routes/rUsers.js")(app, swig, repository);
+require("./routes/rRequests.js")(app, swig, repository, ObjectId);
+require("./routes/api.js")(app, repository, ObjectId);
 
 app.get('/', function (req, res) {
     var respuesta = swig.renderFile('views/index.html', {});

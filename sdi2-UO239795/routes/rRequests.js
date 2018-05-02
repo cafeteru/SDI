@@ -1,9 +1,9 @@
-module.exports = function (app, swig, usersRepository, requestsRepository, ObjectId) {
+module.exports = function (app, swig, repository, ObjectId) {
     app.post('/send/:id', function (req, res) {
         let email = {
             email: req.session.user
         };
-        usersRepository.getUsers(email, function (users) {
+        repository.getElements(email, "users", function (users) {
             if (users == null || users.length == 0) {
                 res.redirect("/list?error=Usuario no existe");
             } else {
@@ -12,13 +12,12 @@ module.exports = function (app, swig, usersRepository, requestsRepository, Objec
                     receiver: req.params.id,
                     status: "SENT"
                 };
-                requestsRepository.getMessages(request, function (requests) {
+                repository.getElements(request, "requests", function (requests) {
                     if (requests == null || requests.length == 0) {
-                        requestsRepository.addRequest(request, function () {
+                        repository.addElement(request, "requests", function () {
                             res.redirect("/list?success=Petición enviada correctamente");
                         });
                     } else {
-
                         res.redirect("/list?error=Petición ya enviada");
                     }
                 });
@@ -30,7 +29,7 @@ module.exports = function (app, swig, usersRepository, requestsRepository, Objec
         let request = {
             "_id": new ObjectId(req.params.id)
         };
-        requestsRepository.getMessages(request, function (requests) {
+        repository.getElements(request, "requests", function (requests) {
             if (requests != null || requests.length > 0) {
                 acceptedRequest(requests[0].sender, requests[0].receiver);
                 acceptedRequest(requests[0].receiver, requests[0].sender);
@@ -46,27 +45,20 @@ module.exports = function (app, swig, usersRepository, requestsRepository, Objec
             sender: senderParam,
             receiver: receiverParam
         };
-        requestsRepository.getMessages(request, function (requests) {
-            let updateRequest;
+        repository.getElements(request, "requests", function (requests) {
+            let updateRequest = {
+                sender: senderParam,
+                receiver: receiverParam,
+                status: "ACCEPTED"
+            };
             if (requests == null || requests.length == 0) {
-                updateRequest = {
-                    sender: senderParam,
-                    receiver: receiverParam,
-                    status: "ACCEPTED"
-                };
-                requestsRepository.addRequest(updateRequest, function (result) {
+                repository.addElement(updateRequest, "requests", function (result) {
                     if (result == null) {
                         res.redirect("/list?error=No se ha podido aceptar la peticion");
-
                     }
                 });
             } else {
-                updateRequest = {
-                    sender: requests[0].sender,
-                    receiver: requests[0].receiver,
-                    status: "ACCEPTED"
-                };
-                requestsRepository.updateRequest(requests[0], updateRequest, function (result) {
+                repository.updateElement(requests[0], updateRequest, "requests", function (result) {
                     if (result == null) {
                         res.redirect("/list?error=No se ha podido aceptar la peticion");
                     }

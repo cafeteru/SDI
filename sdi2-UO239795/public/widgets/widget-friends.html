@@ -1,0 +1,70 @@
+<h1>Amistades</h1>
+<table class="table table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Email</th>
+    </tr>
+    </thead>
+    <tbody id="bodyTable">
+    </tbody>
+</table>
+<h2>Buscar usuario</h2>
+<div class="navbar-form">
+    <div class="form-group">
+        <input id="searchText" type="text" class="form-control" size="50"
+               placeholder="Buscar por email o nombre o apellido del alumno"/>
+    </div>
+    <button type="submit" class="btn btn-primary" onclick="getFriends()">Buscar</button>
+</div>
+<script>
+    var users;
+    getFriends();
+    window.history.pushState("", "", "/main.html?w=friends");
+
+    function getFriends() {
+        $.ajax({
+            url: URLbase + "/users",
+            type: "GET",
+            data: {},
+            dataType: 'json',
+            headers: {"token": token},
+            success: function (res) {
+                users = res;
+                search();
+                loadTable(users);
+            },
+            error: function (error) {
+                $("main").load("widget-login.html");
+            }
+        });
+    }
+
+    function loadTable(users) {
+        $("#bodyTable").empty();
+        for (var i = 0; i < users.length; i++) {
+            $("#bodyTable").append(
+                "<tr class='table-light'>" +
+                "<td>" + users[i].name + "</td>" +
+                "<td>" + users[i].surName + "</td>" +
+                "<td>" + users[i].email + "</td>" +
+                "</tr>"
+            );
+        }
+    }
+
+    function search() {
+        var param = $("#searchText").val();
+        users = users.filter(function (user) {
+            if (user.name.includes(param) || user.surName.includes(param) || user.email.includes(param)) {
+                return true;
+            }
+            return false;
+        });
+    }
+
+    setInterval(function () {
+        getFriends();
+    }, 5000);
+</script>

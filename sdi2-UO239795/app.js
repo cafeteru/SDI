@@ -83,7 +83,7 @@ routerUsuarioToken.use(function (req, res, next) {
 });
 // Aplicar routerUsuarioToken
 app.use('/api/users', routerUsuarioToken);
-app.use('/api/message', routerUsuarioToken);
+app.use('/api/messages', routerUsuarioToken);
 
 // Variables
 app.set('port', 8081);

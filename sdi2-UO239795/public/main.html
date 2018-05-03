@@ -10,10 +10,11 @@
     <script src="/script/jquery.js"></script>
     <script src="/script/popper.min.js"></script>
     <script src="/script/bootstrap.min.js"></script>
+    <script src="/script/cookie.js"></script>
 </head>
 <body>
 <nav></nav>
-<main>
+<main class="container">
 </main>
 <footer>
     <address>
@@ -29,6 +30,37 @@
         </div>
     </div>
 </footer>
-<script src="/script/rulesjQuery.js"></script>
+<script>
+    var token;
+    var URLbase = "http://localhost:8081/api";
+    $("main").load("/widgets/widget-login.html");
+    agregarNavFooter();
+    if (Cookies.get('token') != null) {
+        token = Cookies.get('token');
+        var url = new URL(window.location.href);
+        var w = url.searchParams.get("w");
+        switch (w) {
+            case "login":
+                $("main").load("widgets/widget-login.html");
+                break;
+            case "friends":
+                $("main").load("widgets/widget-friends.html");
+                break;
+            default:
+                $("main").load("widgets/widget-login.html");
+                break;
+        }
+    }
+
+    function agregarNavFooter() {
+        var url = window.location.href.toString();
+        console.log(url);
+        if (url.indexOf("login") >= 0) {
+            $("nav").load("/widgets/widget-navlogin.html");
+        } else {
+            $("nav").load("/widgets/widget-navlogout.html");
+        }
+    }
+</script>
 </body>
 </html>

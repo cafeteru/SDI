@@ -72,6 +72,71 @@ module.exports = function (app, repository, ObjectId) {
         });
     });
 
+    app.get("/api/messages/", function (req, res) {
+        let messages = {
+            $or: [
+                {
+                    $and: [
+                        {sender: res.user},
+                        {receiver: req.query.email},
+                    ]
+                },
+                {
+                    $and: [
+                        {sender: req.query.email},
+                        {receiver: res.user},
+                    ]
+                }
+            ]
+        };
+        repository.getElements(messages, "messages", function (conversation) {
+            if (conversation == null || conversation.length == 0) {
+                res.status(403);
+                res.json({
+                    error: 'No hay mensajes entre ' + res.user + " y " + req.params.email
+                });
+            } else {
+                res.status(200);
+                res.send(JSON.stringify(conversation));
+            }
+        });
+    });
+
+    app.get("/api/messages/:id", function (req, res) {
+        var message = {
+            "_id": new ObjectId(req.params.id)
+        };
+        repository.getElements(message, "messages", function (conversation) {
+            if (conversation == null || conversation.length == 0) {
+                res.status(403);
+                res.json({
+                    error: 'No existe el mensaje'
+                });
+            } else {
+                var updateMessage = {
+                    sender: conversation[0].sender,
+                    receiver: conversation[0].receiver,
+                    message: conversation[0].message,
+                    date: conversation[0].date,
+                    read: true
+                };
+                repository.updateElement(conversation[0], updateMessage, "messages", function (result) {
+                    if (result == null) {
+                        res.status(501);
+                        res.json({
+                            error: 'No se puede actualizar el mensaje'
+                        });
+                    } else {
+                        res.status(200);
+                        res.json({
+                            result: 'Mensaje marcado correctamente'
+                        });
+                    }
+                });
+            }
+        });
+    });
+
     function getFriends(res, email, functionCallBack) {
         repository.getElements({}, "users", function (users) {
             if (users == null || users.length == 0) {
@@ -137,69 +202,4 @@ module.exports = function (app, repository, ObjectId) {
         // Return the formatted string
         return date.join("/") + " " + time.join(":") + " " + suffix;
     }
-
-    app.get("/api/message/", function (req, res) {
-        let messages = {
-            $or: [
-                {
-                    $and: [
-                        {sender: res.user},
-                        {receiver: req.query.email},
-                    ]
-                },
-                {
-                    $and: [
-                        {sender: req.query.email},
-                        {receiver: res.user},
-                    ]
-                }
-            ]
-        };
-        repository.getElements(messages, "messages", function (conversation) {
-            if (conversation == null || conversation.length == 0) {
-                res.status(403);
-                res.json({
-                    error: 'No hay mensajes entre ' + res.user + " y " + req.params.email
-                });
-            } else {
-                res.status(200);
-                res.send(JSON.stringify(conversation));
-            }
-        });
-    });
-
-    app.get("/api/message/:id", function (req, res) {
-        var message = {
-            "_id": new ObjectId(req.params.id)
-        };
-        repository.getElements(message, "messages", function (conversation) {
-            if (conversation == null || conversation.length == 0) {
-                res.status(403);
-                res.json({
-                    error: 'No existe el mensaje'
-                });
-            } else {
-                var updateMessage = {
-                    sender: conversation[0].sender,
-                    receiver: conversation[0].receiver,
-                    message: conversation[0].message,
-                    date: conversation[0].date,
-                    read: true
-                };
-                repository.updateElement(conversation[0], updateMessage, "messages", function (result) {
-                    if (result == null) {
-                        res.status(501);
-                        res.json({
-                            error: 'No se puede actualizar el mensaje'
-                        });
-                    } else {
-                        res.status(200);
-                        res.json({
-                            result: 'Mensaje marcado correctamente'
-                        });
-                    }
-                });
-            }
-        });
-    });
 };

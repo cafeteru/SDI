@@ -1,4 +1,5 @@
-<form id="widget-login">
+<h1>Idéntificate</h1>
+<div id="widget-login">
     <fieldset>
         <div class="form-group">
             <label class="control-label col-sm-2" for="email">Email:</label>
@@ -21,7 +22,9 @@
             </div>
         </div>
     </fieldset>
-</form>
+</div>
+<div id="error"></div>
+<div id="logout"></div>
 <script>
     window.history.pushState("", "", "/main.html?w=login");
     $("#boton-login").click(function () {
@@ -34,14 +37,13 @@
             },
             dataType: 'json',
             success: function (respuesta) {
-                console.log(respuesta.token); // <- Prueba
                 token = respuesta.token;
                 Cookies.set('token', respuesta.token);
-                $("$main").load("widget-canciones.html");
+                $("main").load("widgets/widget-friends.html");
             },
             error: function (error) {
                 Cookies.remove('token');
-                $("#widget-login").prepend("<div class='alert alert-danger'>Usuario no encontrado</div>");
+                $("#error").prepend("<div class='alert alert-danger'>Usuario no encontrado</div>");
             }
         });
     });

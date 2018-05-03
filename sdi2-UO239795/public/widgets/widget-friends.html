@@ -46,13 +46,19 @@
         for (var i = 0; i < users.length; i++) {
             $("#bodyTable").append(
                 "<tr class='table-light'>" +
-                "<td>" + users[i].name + "</td>" +
+                "<td><a onclick=loadConversation('" + users[i].email + "')>" + users[i].name + "</a></td>" +
                 "<td>" + users[i].surName + "</td>" +
                 "<td>" + users[i].email + "</td>" +
                 "</tr>"
             );
         }
     }
+
+    function loadConversation(email) {
+        Cookies.set('friend', email);
+        $("main").load("widgets/widget-messages.html");
+    }
+
 
     function search() {
         var param = $("#searchText").val();
@@ -63,8 +69,4 @@
             return false;
         });
     }
-
-    setInterval(function () {
-        getFriends();
-    }, 5000);
 </script>

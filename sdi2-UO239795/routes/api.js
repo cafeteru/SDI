@@ -36,7 +36,7 @@ module.exports = function (app, repository, ObjectId) {
         });
     });
 
-    app.post("/api/message/", function (req, res) {
+    app.post("/api/messages/", function (req, res) {
         let email = {
             email: res.user
         };

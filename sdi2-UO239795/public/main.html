@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
     <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
     <link rel="stylesheet" type="text/css" href="/css/sketchy.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/chat.css"/>
     <script src="/script/jquery.js"></script>
     <script src="/script/popper.min.js"></script>
     <script src="/script/bootstrap.min.js"></script>
@@ -46,6 +47,9 @@
             case "friends":
                 $("main").load("widgets/widget-friends.html");
                 break;
+            case "messages":
+                $("main").load("widgets/widget-messages.html");
+                break;
             default:
                 $("main").load("widgets/widget-login.html");
                 break;
@@ -54,7 +58,6 @@
 
     function agregarNavFooter() {
         var url = window.location.href.toString();
-        console.log(url);
         if (url.indexOf("login") >= 0) {
             $("nav").load("/widgets/widget-navlogin.html");
         } else {

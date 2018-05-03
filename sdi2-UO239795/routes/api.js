@@ -26,7 +26,7 @@ module.exports = function (app, repository, ObjectId) {
         });
     });
 
-    app.get("/api/friends/", function (req, res) {
+    app.get("/api/users/", function (req, res) {
         let email = {
             email: res.user
         };
@@ -36,7 +36,7 @@ module.exports = function (app, repository, ObjectId) {
         });
     });
 
-    app.post("/api/send/", function (req, res) {
+    app.post("/api/message/", function (req, res) {
         let email = {
             email: res.user
         };
@@ -138,18 +138,18 @@ module.exports = function (app, repository, ObjectId) {
         return date.join("/") + " " + time.join(":") + " " + suffix;
     }
 
-    app.get("/api/conversation/:email", function (req, res) {
+    app.get("/api/message/", function (req, res) {
         let messages = {
             $or: [
                 {
                     $and: [
                         {sender: res.user},
-                        {receiver: req.params.email},
+                        {receiver: req.query.email},
                     ]
                 },
                 {
                     $and: [
-                        {sender: req.params.email},
+                        {sender: req.query.email},
                         {receiver: res.user},
                     ]
                 }
@@ -168,7 +168,7 @@ module.exports = function (app, repository, ObjectId) {
         });
     });
 
-    app.get("/api/read/:id", function (req, res) {
+    app.get("/api/message/:id", function (req, res) {
         var message = {
             "_id": new ObjectId(req.params.id)
         };

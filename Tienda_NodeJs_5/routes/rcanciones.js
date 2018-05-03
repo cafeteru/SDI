@@ -103,7 +103,7 @@ module.exports = function (app, swig, gestorBD) {
             var rest = app.get("rest");
             rest(configuracion, function (error, response, body) {
                 console.log("cod: " + response.statusCode + " Cuerpo :" + body);
-                var objetoRespuesta = JSON.parse(body);
+                var objetoRespuesta = JSON.parse(body); // Para acceder a los atributos del JSON
                 var cambioUSD = objetoRespuesta.rates.USD; // nuevo campo "usd"
                 canciones[0].usd = cambioUSD * canciones[0].precio;
                 canciones[0].usd = Math.round(canciones[0].usd * 100) / 100;

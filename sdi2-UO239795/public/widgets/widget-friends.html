@@ -5,6 +5,7 @@
         <th scope="col">Nombre</th>
         <th scope="col">Apellidos</th>
         <th scope="col">Email</th>
+        <th scope="col">Mensajes no leídos</th>
     </tr>
     </thead>
     <tbody id="bodyTable">
@@ -20,10 +21,28 @@
 </div>
 <script>
     var users;
-    getFriends();
+    var messages;
+    loadMessageNoRead();
     window.history.pushState("", "", "/main.html?w=friends");
 
-    function getFriends() {
+    function loadMessageNoRead() {
+        $.ajax({
+            url: URLbase + "/messages/unread",
+            type: "GET",
+            data: {},
+            dataType: 'json',
+            headers: {"token": token},
+            success: function (res) {
+                messages = res;
+                getFriends(messages);
+            },
+            error: function (error) {
+                $("main").load("widget-login.html");
+            }
+        });
+    }
+
+    function getFriends(messages) {
         $.ajax({
             url: URLbase + "/users",
             type: "GET",
@@ -33,7 +52,7 @@
             success: function (res) {
                 users = res;
                 search();
-                loadTable(users);
+                loadTable(users, messages);
             },
             error: function (error) {
                 $("main").load("widget-login.html");
@@ -41,14 +60,26 @@
         });
     }
 
-    function loadTable(users) {
+
+    function loadTable(users, messages) {
         $("#bodyTable").empty();
-        for (var i = 0; i < users.length; i++) {
+        for (let i = 0; i < users.length; i++) {
+            let count = 0;
+            if (messages == null || messages.length == 0) {
+                count = 0;
+            } else {
+                for (let j = 0; j < messages.length; j++) {
+                    if (messages[j].receiver == Cookies.get('email') && messages[j].sender == users[i].email) {
+                        count++;
+                    }
+                }
+            }
             $("#bodyTable").append(
                 "<tr class='table-light'>" +
                 "<td><a onclick=loadConversation('" + users[i].email + "')>" + users[i].name + "</a></td>" +
                 "<td>" + users[i].surName + "</td>" +
                 "<td>" + users[i].email + "</td>" +
+                "<td style='color: red'>" + count + "</td>" +
                 "</tr>"
             );
         }
@@ -61,7 +92,7 @@
 
 
     function search() {
-        var param = $("#searchText").val();
+        let param = $("#searchText").val();
         users = users.filter(function (user) {
             if (user.name.includes(param) || user.surName.includes(param) || user.email.includes(param)) {
                 return true;
@@ -69,4 +100,8 @@
             return false;
         });
     }
+
+    setInterval(function () {
+        loadMessageNoRead();
+    }, 1000);
 </script>

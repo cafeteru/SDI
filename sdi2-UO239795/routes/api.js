@@ -102,6 +102,17 @@ module.exports = function (app, repository, ObjectId) {
         });
     });
 
+    app.get("/api/messages/unread", function (req, res) {
+        let messages = {
+            receiver: res.user,
+            read: false
+        };
+        repository.getElements(messages, "messages", function (conversation) {
+            res.status(200);
+            res.send(JSON.stringify(conversation));
+        });
+    });
+
     app.put("/api/messages/:id", function (req, res) {
         var message = {
             "_id": new ObjectId(req.params.id)
@@ -113,26 +124,28 @@ module.exports = function (app, repository, ObjectId) {
                     error: 'No existe el mensaje'
                 });
             } else {
-                var updateMessage = {
-                    sender: conversation[0].sender,
-                    receiver: conversation[0].receiver,
-                    message: conversation[0].message,
-                    date: conversation[0].date,
-                    read: true
-                };
-                repository.updateElement(conversation[0], updateMessage, "messages", function (result) {
-                    if (result == null) {
-                        res.status(501);
-                        res.json({
-                            error: 'No se puede actualizar el mensaje'
-                        });
-                    } else {
-                        res.status(200);
-                        res.json({
-                            result: 'Mensaje marcado correctamente'
-                        });
-                    }
-                });
+                if (conversation[0].receiver == res.user) {
+                    var updateMessage = {
+                        sender: conversation[0].sender,
+                        receiver: conversation[0].receiver,
+                        message: conversation[0].message,
+                        date: conversation[0].date,
+                        read: true
+                    };
+                    repository.updateElement(conversation[0], updateMessage, "messages", function (result) {
+                        if (result == null) {
+                            res.status(501);
+                            res.json({
+                                error: 'No se puede actualizar el mensaje'
+                            });
+                        } else {
+                            res.status(200);
+                            res.json({
+                                result: 'Mensaje marcado correctamente'
+                            });
+                        }
+                    });
+                }
             }
         });
     });

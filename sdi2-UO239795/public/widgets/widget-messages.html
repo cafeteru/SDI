@@ -1,16 +1,16 @@
 <h1>Chat con <span id="friend"></span></h1>
-<div id="conversation" style="overflow-y: scroll; height: 300px">
+<div id="conversation" style="overflow-y: scroll; height: 600px">
 </div>
 <div>
     <input id="message" class="form-control"/>
-    <button type="button" class="btn btn-success" onclick="sendMessage()">Enviar</button>
+    <button id="send" type="button" class="btn btn-success" onclick="sendMessage()">Enviar</button>
 </div>
 <script>
     var email = Cookies.get('friend');
     window.history.pushState("", "", "/main.html?w=messages&email=" + email);
     $('#friend').text(email);
     getMessages();
-    conversationDown();
+
     function getMessages() {
         $.ajax({
             url: URLbase + "/messages?email=" + email,
@@ -33,7 +33,6 @@
         for (var i = 0; i < messages.length; i++) {
             var message = "";
             if (messages[i].receiver == email) {
-                readMessage(messages[i]._id.toString());
                 message = "<div class='containerChat'>" +
                     "<p class='text-right'>" + messages[i].sender + "</p>" +
                     "<p class='text-right'>" + messages[i].message + "</p>" +
@@ -42,6 +41,7 @@
                 message += "</div>";
             }
             else {
+                readMessage(messages[i]._id.toString());
                 message = "<div class='containerChat darker'>" +
                     "<p class='text-left'>" + messages[i].sender + "</p>" +
                     "<p class='text-left'>" + messages[i].message + "</p>" +
@@ -58,7 +58,7 @@
 
     setInterval(function () {
         getMessages();
-    }, 5000);
+    }, 2000);
 
     function sendMessage() {
         if ($("#message").val() != '') {
@@ -74,7 +74,6 @@
                 success: function (respuesta) {
                     getMessages();
                     $("#message").val('');
-                    conversationDown();
                 },
                 error: function (error) {
                     $("main").append("<div class='alert alert-danger'>Error enviando el mensaje</div>");
@@ -83,8 +82,6 @@
         }
     }
 
-    function conversationDown() {
-    }
 
     function readMessage(id) {
         $.ajax({
@@ -94,7 +91,6 @@
             dataType: 'json',
             headers: {"token": token},
             success: function (res) {
-
             },
             error: function (error) {
                 $("main").append("<div class='alert alert-danger'>Error al marcar el mensaje</div>");

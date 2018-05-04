@@ -10,8 +10,7 @@
     window.history.pushState("", "", "/main.html?w=messages&email=" + email);
     $('#friend').text(email);
     getMessages();
-
-
+    conversationDown();
     function getMessages() {
         $.ajax({
             url: URLbase + "/messages?email=" + email,
@@ -32,22 +31,29 @@
     function loadMessages(messages) {
         $("#conversation").empty();
         for (var i = 0; i < messages.length; i++) {
+            var message = "";
             if (messages[i].receiver == email) {
-                $("#conversation").append("<div class='containerChat'>" +
+                readMessage(messages[i]._id.toString());
+                message = "<div class='containerChat'>" +
                     "<p class='text-right'>" + messages[i].sender + "</p>" +
                     "<p class='text-right'>" + messages[i].message + "</p>" +
-                    "<span class='time-right'>" + messages[i].date + "</span>" +
-                    "</div>");
+                    "<span class='time-right'>" + messages[i].date + "</span>";
+                message += "<img src='img/check.png' style='width: 25px' class='rounded float-right'>"
+                message += "</div>";
             }
             else {
-                $("#conversation").append("<div class='containerChat '>" +
+                message = "<div class='containerChat darker'>" +
                     "<p class='text-left'>" + messages[i].sender + "</p>" +
                     "<p class='text-left'>" + messages[i].message + "</p>" +
-                    "<span class='time-left'>" + messages[i].date + "</span>" +
-                    "</div>");
+                    "<span class='time-left'>" + messages[i].date + "</span>";
+                if (messages[i].read) {
+                    message += "<img src='img/check.png' style='width: 25px' class='rounded float-left'>";
+                }
+                message += "</div>";
             }
+            $("#conversation").append(message);
         }
-        $("#conversation").scrollTop($("#conversation").get(0).scrollHeight);
+
     }
 
     setInterval(function () {
@@ -68,11 +74,31 @@
                 success: function (respuesta) {
                     getMessages();
                     $("#message").val('');
+                    conversationDown();
                 },
                 error: function (error) {
                     $("main").append("<div class='alert alert-danger'>Error enviando el mensaje</div>");
                 }
             });
         }
+    }
+
+    function conversationDown() {
+    }
+
+    function readMessage(id) {
+        $.ajax({
+            url: URLbase + "/messages/" + id,
+            type: "PUT",
+            data: {},
+            dataType: 'json',
+            headers: {"token": token},
+            success: function (res) {
+
+            },
+            error: function (error) {
+                $("main").append("<div class='alert alert-danger'>Error al marcar el mensaje</div>");
+            }
+        });
     }
 </script>

@@ -102,7 +102,7 @@ module.exports = function (app, repository, ObjectId) {
         });
     });
 
-    app.get("/api/messages/:id", function (req, res) {
+    app.put("/api/messages/:id", function (req, res) {
         var message = {
             "_id": new ObjectId(req.params.id)
         };

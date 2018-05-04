@@ -34,9 +34,10 @@
                 password: $("#password").val()
             },
             dataType: 'json',
-            success: function (respuesta) {
-                token = respuesta.token;
-                Cookies.set('token', respuesta.token);
+            success: function (res) {
+                token = res.token;
+                Cookies.set('email', $("#email").val());
+                Cookies.set('token', res.token);
                 $("main").load("widgets/widget-friends.html");
             },
             error: function (error) {

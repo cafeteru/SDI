@@ -1,7 +1,16 @@
+<h1>Chat con <span id="friend"></span></h1>
+<div id="conversation" style="overflow-y: scroll; height: 300px">
+</div>
+<div>
+    <input id="message" class="form-control"/>
+    <button type="button" class="btn btn-success" onclick="sendMessage()">Enviar</button>
+</div>
 <script>
     var email = Cookies.get('friend');
     window.history.pushState("", "", "/main.html?w=messages&email=" + email);
+    $('#friend').text(email);
     getMessages();
+
 
     function getMessages() {
         $.ajax({
@@ -21,28 +30,49 @@
     }
 
     function loadMessages(messages) {
-        $("main").empty();
-        $("main").append("<h1>Chat con <span id=\"friend\"></span></h1>");
-        $('#friend').text(email);
+        $("#conversation").empty();
         for (var i = 0; i < messages.length; i++) {
             if (messages[i].receiver == email) {
-                $("main").append("<div class='containerChat'>" +
+                $("#conversation").append("<div class='containerChat'>" +
                     "<p class='text-right'>" + messages[i].sender + "</p>" +
                     "<p class='text-right'>" + messages[i].message + "</p>" +
                     "<span class='time-right'>" + messages[i].date + "</span>" +
                     "</div>");
             }
             else {
-                $("main").append("<div class='containerChat '>" +
+                $("#conversation").append("<div class='containerChat '>" +
                     "<p class='text-left'>" + messages[i].sender + "</p>" +
                     "<p class='text-left'>" + messages[i].message + "</p>" +
                     "<span class='time-left'>" + messages[i].date + "</span>" +
                     "</div>");
             }
-
         }
+        $("#conversation").scrollTop($("#conversation").get(0).scrollHeight);
     }
+
     setInterval(function () {
         getMessages();
     }, 5000);
+
+    function sendMessage() {
+        if ($("#message").val() != '') {
+            $.ajax({
+                url: URLbase + "/messages",
+                type: "POST",
+                data: {
+                    email: email,
+                    message: $("#message").val(),
+                    token: token
+                },
+                dataType: 'json',
+                success: function (respuesta) {
+                    getMessages();
+                    $("#message").val('');
+                },
+                error: function (error) {
+                    $("main").append("<div class='alert alert-danger'>Error enviando el mensaje</div>");
+                }
+            });
+        }
+    }
 </script>

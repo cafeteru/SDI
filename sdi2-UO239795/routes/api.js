@@ -74,17 +74,22 @@ module.exports = function (app, repository, ObjectId) {
 
     app.get("/api/messages/", function (req, res) {
         let messages = {
-            $or: [
-                {
-                    $and: [
-                        {sender: res.user},
-                        {receiver: req.query.email},
+            $or: [{
+                    $and: [{
+                            sender: res.user
+                        },
+                        {
+                            receiver: req.query.email
+                        },
                     ]
                 },
                 {
-                    $and: [
-                        {sender: req.query.email},
-                        {receiver: res.user},
+                    $and: [{
+                            sender: req.query.email
+                        },
+                        {
+                            receiver: res.user
+                        },
                     ]
                 }
             ]

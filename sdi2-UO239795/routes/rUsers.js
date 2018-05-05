@@ -2,6 +2,7 @@ module.exports = function (app, swig, repository) {
     app.get("/signup", function (req, res) {
         let answer = swig.renderFile('views/signup.html', {});
         res.send(answer);
+        app.get("logger").debug('Usuario se va a registrar');
     });
 
     app.post('/signup', function (req, res) {
@@ -158,16 +159,16 @@ module.exports = function (app, swig, repository) {
             let searchText = req.query.searchText;
             textSearch = {
                 $and: [{
-                    email: {
-                        $ne: req.session.user
-                    }
-                },
+                        email: {
+                            $ne: req.session.user
+                        }
+                    },
                     {
                         $or: [{
-                            email: {
-                                $regex: ".*" + searchText + ".*"
-                            }
-                        },
+                                email: {
+                                    $regex: ".*" + searchText + ".*"
+                                }
+                            },
                             {
                                 name: {
                                     $regex: ".*" + searchText + ".*"

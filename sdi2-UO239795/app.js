@@ -1,9 +1,23 @@
 // Servidor Web
-var express = require('express');
-var app = express();
+let express = require('express');
+let app = express();
+
+let log4js = require('log4js');
+log4js.configure({
+    appenders: { sdi: { type: 'file', filename: 'sdi.log' } },
+    categories: { default: { appenders: ['sdi'], level: 'trace' } }
+});
+let logger = log4js.getLogger('sdi');
+
+/*logger.trace('Entering sdi testing');
+logger.debug('Got sdi.');
+logger.info('sdi is Gouda.');
+logger.warn('sdi is quite smelly.');
+logger.error('sdi is too ripe!');
+logger.fatal('sdi was breeding ground for listeria.');*/
 
 // Objeto sessión para guardar al usuario actual
-var expressSession = require('express-session');
+let expressSession = require('express-session');
 app.use(expressSession({
     secret: 'abcdefg',
     resave: true,
@@ -11,21 +25,21 @@ app.use(expressSession({
 }));
 
 // Motor de plantillas
-var swig = require('swig');
+let swig = require('swig');
 
-var jwt = require('jsonwebtoken');
+let jwt = require('jsonwebtoken');
 app.set('jwt', jwt);
 
 // Base de datos
-var mongo = require('mongodb');
-var ObjectId = require('mongodb').ObjectID;
+let mongo = require('mongodb');
+let ObjectId = require('mongodb').ObjectID;
 
 // Objeto para manejar base de datos
-var repository = require("./modules/repository.js");
+let repository = require("./modules/repository.js");
 repository.init(app, mongo);
 
 // routerUserSession
-var routerUserSession = express.Router();
+let routerUserSession = express.Router();
 routerUserSession.use(function (req, res, next) {
     if (req.session.user) { // dejamos correr la petición
         next();
@@ -43,7 +57,7 @@ app.use("/friends", routerUserSession);
 
 
 // Leer los cuerpos POST
-var bodyParser = require('body-parser');
+let bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -51,13 +65,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
 // Encriptación de contraseñas
-var crypto = require('crypto');
+let crypto = require('crypto');
 
 // routerUsuarioToken
-var routerUsuarioToken = express.Router();
+let routerUsuarioToken = express.Router();
 routerUsuarioToken.use(function (req, res, next) {
     // obtener el token, puede ser un parámetro GET , POST o HEADER
-    var token = req.body.token || req.query.token || req.headers['token'];
+    let token = req.body.token || req.query.token || req.headers['token'];
     if (token != null) {
         // verificar el token
         jwt.verify(token, 'secreto', function (err, infoToken) {
@@ -90,6 +104,7 @@ app.set('port', 8081);
 app.set('db', 'mongodb://uo239795:123456@ds231529.mlab.com:31529/sdi2-uo239795');
 app.set('key', 'abcdefg');
 app.set('crypto', crypto);
+app.set('logger', logger);
 
 // Controladores
 require("./routes/rUsers.js")(app, swig, repository);
@@ -97,7 +112,7 @@ require("./routes/rRequests.js")(app, swig, repository, ObjectId);
 require("./routes/api.js")(app, repository, ObjectId);
 
 app.get('/', function (req, res) {
-    var respuesta = swig.renderFile('views/index.html', {});
+    let respuesta = swig.renderFile('views/index.html', {});
     res.send(respuesta);
 });
 

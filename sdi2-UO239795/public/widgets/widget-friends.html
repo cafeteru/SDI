@@ -1,12 +1,16 @@
+<h2 align="center">
+    <span> Usuario Autenticado como :</span>
+    <b id="user"></b>
+</h2>
 <h1>Amistades</h1>
 <table class="table table-hover">
     <thead class="table-dark">
-    <tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellidos</th>
-        <th scope="col">Email</th>
-        <th scope="col">Mensajes no leídos</th>
-    </tr>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mensajes no leídos</th>
+        </tr>
     </thead>
     <tbody id="bodyTable">
     </tbody>
@@ -14,8 +18,8 @@
 <h2>Buscar usuario</h2>
 <div class="navbar-form">
     <div class="form-group">
-        <input id="searchText" type="text" class="form-control" size="50"
-               placeholder="Buscar por email o nombre o apellido del alumno"/>
+        <input id="searchText" type="text" class="form-control" size="50" placeholder="Buscar por email o nombre o apellido del alumno"
+        />
     </div>
     <button type="submit" class="btn btn-primary" onclick="getFriends()">Buscar</button>
 </div>
@@ -24,6 +28,7 @@
     var messages;
     loadMessageNoRead();
     window.history.pushState("", "", "/main.html?w=friends");
+    $("#user").text(Cookies.get("email"));
 
     function loadMessageNoRead() {
         $.ajax({
@@ -31,13 +36,15 @@
             type: "GET",
             data: {},
             dataType: 'json',
-            headers: {"token": token},
+            headers: {
+                "token": token
+            },
             success: function (res) {
                 messages = res;
                 getFriends(messages);
             },
             error: function (error) {
-                $("main").load("widget-login.html");
+                $("main").load("widgets/widget-login.html");
             }
         });
     }
@@ -48,14 +55,16 @@
             type: "GET",
             data: {},
             dataType: 'json',
-            headers: {"token": token},
+            headers: {
+                "token": token
+            },
             success: function (res) {
                 users = res;
                 search();
                 loadTable(users, messages);
             },
             error: function (error) {
-                $("main").load("widget-login.html");
+                $("main").load("widgets/widget-login.html");
             }
         });
     }
@@ -67,7 +76,8 @@
             users[i].count = 0;
             if (messages != null || messages.length > 0) {
                 for (let j = messages.length - 1; j >= 0; j--) {
-                    if (messages[j].receiver == Cookies.get('email') && messages[j].sender == users[i].email) {
+                    if (messages[j].receiver == Cookies.get('email') 
+                            && messages[j].sender == users[i].email) {
                         if (users[i].lastMessaje == undefined) {
                             users[i].lastMessaje = messages[j];
                         }

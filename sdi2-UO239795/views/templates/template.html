@@ -1,38 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta name="author" content="Iván González Mahagamage"/>
+    <meta charset="utf-8" />
+    <meta name="author" content="Iván González Mahagamage" />
     <title>{% block title %} SDI - UO239795 {% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/sketchy.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/footer.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sketchy.css" />
     <script src="/script/jquery.js"></script>
     <script src="/script/popper.min.js"></script>
     <script src="/script/bootstrap.min.js"></script>
 </head>
+
 <body>
-{% block nav %}
-{% endblock %}
-<main class="container">
-    {% block main %}
-    {% endblock %}
-    {% block pagination %}
-    {% endblock %}
-</main>
-<footer>
-    <address>
-        <p><span>Autor</span>: Iván González Mahagamage</p>
-        <p>
-            <span>Contacto</span>: <a href="mailto:uo239795@uniovi.es">uo239795@uniovi.es</a>
-        </p>
-    </address>
-    <div class="footer-copyright py-3 text-center">
-        <div class="container-fluid">
-            © 2018 Copyright: <a href="https://www.linkedin.com/in/iv%C3%A1n-gonz%C3%A1lez-mahagamage-5bb340107/">
-            Linkedin</a>
+    {% block nav %} {% endblock %}
+    <main class="container">
+        {% block main %} {% endblock %} {% block pagination %} {% endblock %}
+    </main>
+    <footer>
+        <address>
+            <p>
+                <span>Autor</span>: Iván González Mahagamage</p>
+            <p>
+                <span>Contacto</span>:
+                <a href="mailto:uo239795@uniovi.es" style="color: white">uo239795@uniovi.es</a>
+            </p>
+        </address>
+        <div class="footer-copyright py-3 text-center">
+            <div class="container-fluid">
+                © 2018 Copyright:
+                <a href="https://www.linkedin.com/in/iv%C3%A1n-gonz%C3%A1lez-mahagamage-5bb340107/">
+                    Linkedin</a>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 </body>
 </html>

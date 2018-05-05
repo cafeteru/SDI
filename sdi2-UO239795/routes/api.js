@@ -12,6 +12,7 @@ module.exports = function (app, repository, ObjectId) {
                     authenticated: false,
                     error: 'Identificación no válida'
                 });
+                app.get("logger").error('Identificación no válida con token en la API');
             } else {
                 let token = app.get('jwt').sign({
                     user: user.email,
@@ -22,6 +23,7 @@ module.exports = function (app, repository, ObjectId) {
                     authenticated: true,
                     token: token
                 });
+                app.get("logger").info('Identificación válida con token en la API del usuario ' + user.email);
             }
         });
     });
@@ -33,6 +35,7 @@ module.exports = function (app, repository, ObjectId) {
         getFriends(res, email, function (emails) {
             res.status(200);
             res.send(JSON.stringify(emails));
+            app.get("logger").info('Listando los amigos del usuario ' + res.user + ' en la API');
         });
     });
 
@@ -49,6 +52,7 @@ module.exports = function (app, repository, ObjectId) {
                 res.json({
                     error: 'El receptor no es amigo'
                 });
+                app.get("logger").error('El usuario ' + req.body.email + ' no es amigo del usuario ' + res.user);
             } else {
                 let message = {
                     sender: res.user,
@@ -63,9 +67,11 @@ module.exports = function (app, repository, ObjectId) {
                         res.json({
                             error: 'Error en el servidor al crear el mensaje'
                         });
+                        app.get("logger").error('Error al crear el mensaje entre los usuarios ' + req.body.email + ' y ' + res.user);
                     } else {
                         res.status(200);
                         res.send(JSON.stringify(message));
+                        app.get("logger").info('Exito al crear el mensaje entre los usuarios ' + req.body.email + ' y ' + res.user);
                     }
                 });
             }
@@ -75,18 +81,18 @@ module.exports = function (app, repository, ObjectId) {
     app.get("/api/messages/", function (req, res) {
         let messages = {
             $or: [{
-                    $and: [{
-                            sender: res.user
-                        },
-                        {
-                            receiver: req.query.email
-                        },
-                    ]
+                $and: [{
+                    sender: res.user
                 },
+                    {
+                        receiver: req.query.email
+                    },
+                ]
+            },
                 {
                     $and: [{
-                            sender: req.query.email
-                        },
+                        sender: req.query.email
+                    },
                         {
                             receiver: res.user
                         },
@@ -100,9 +106,11 @@ module.exports = function (app, repository, ObjectId) {
                 res.json({
                     error: 'No hay mensajes entre ' + res.user + " y " + req.params.email
                 });
+                app.get("logger").error('No hay mensajes entre ' + res.user + " y " + req.params.email);
             } else {
                 res.status(200);
                 res.send(JSON.stringify(conversation));
+                app.get("logger").info('Listando los mensajes entre los usuarios ' + res.user + " y " + req.params.email);
             }
         });
     });
@@ -111,6 +119,7 @@ module.exports = function (app, repository, ObjectId) {
         repository.getElements({}, "messages", function (conversation) {
             res.status(200);
             res.send(JSON.stringify(conversation));
+            app.get("logger").info('Listando todos los mensajes del usuario ' + res.user);
         });
     });
 
@@ -124,6 +133,7 @@ module.exports = function (app, repository, ObjectId) {
                 res.json({
                     error: 'No existe el mensaje'
                 });
+                app.get("logger").error('No existe el mensaje con id ' + req.params.id);
             } else {
                 if (conversation[0].receiver == res.user) {
                     var updateMessage = {
@@ -139,11 +149,13 @@ module.exports = function (app, repository, ObjectId) {
                             res.json({
                                 error: 'No se puede actualizar el mensaje'
                             });
+                            app.get("logger").error('No se ha podido actualizar el mensaje con id ' + req.params.id);
                         } else {
                             res.status(200);
                             res.json({
                                 result: 'Mensaje marcado correctamente'
                             });
+                            app.get("logger").info('Actualizado correctamente el mensaje con id ' + req.params.id);
                         }
                     });
                 }
@@ -158,6 +170,7 @@ module.exports = function (app, repository, ObjectId) {
                 res.json({
                     error: 'No hay usuarios'
                 });
+                app.get("logger").error('No existen usuarios');
             } else {
                 repository.getElements(email, "users", function (user) {
                     let request = {
@@ -168,8 +181,9 @@ module.exports = function (app, repository, ObjectId) {
                         if (requests == null || requests.length == 0) {
                             res.status(403);
                             res.json({
-                                error: 'El usuario ' + email.email + " no tiene petición."
+                                error: 'El usuario ' + email.email + " no tiene amistades."
                             });
+                            app.get("logger").error('\'El usuario \' + email.email + " no tiene amistades"');
                         } else {
                             let collection = users.filter(function (user) {
                                 for (let i = 0; i < requests.length; i++) {

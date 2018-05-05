@@ -4,7 +4,7 @@ let app = express();
 
 let log4js = require('log4js');
 log4js.configure({
-    appenders: { sdi: { type: 'file', filename: 'sdi.log' } },
+    appenders: { sdi: { type: 'file', filename: 'logs/sdi.log' } },
     categories: { default: { appenders: ['sdi'], level: 'trace' } }
 });
 let logger = log4js.getLogger('sdi');

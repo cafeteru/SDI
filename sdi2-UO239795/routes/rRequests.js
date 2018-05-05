@@ -15,9 +15,11 @@ module.exports = function (app, swig, repository, ObjectId) {
                 repository.getElements(request, "requests", function (requests) {
                     if (requests == null || requests.length == 0) {
                         repository.addElement(request, "requests", function () {
+                            app.get("logger").info('El usuario ' + req.session.user + " ha enviado una petición de amistad");
                             res.redirect("/list?success=Petición enviada correctamente");
                         });
                     } else {
+                        app.get("logger").error('Error al enviar una petición de amistad por parte del usuario ' + req.session.user);
                         res.redirect("/list?error=Petición ya enviada");
                     }
                 });
@@ -34,7 +36,9 @@ module.exports = function (app, swig, repository, ObjectId) {
                 acceptedRequest(requests[0].sender, requests[0].receiver);
                 acceptedRequest(requests[0].receiver, requests[0].sender);
                 res.redirect("/list?success=Petición aceptada correctamente");
+                app.get("logger").error('La peticion con id ' + req.params.id + " ha sido aceptada");
             } else {
+                app.get("logger").info('La peticion con id ' + req.params.id + " no se ha podido aceptar");
                 res.redirect("/list?error=No se ha podido aceptar la peticion");
             }
         });
@@ -55,12 +59,14 @@ module.exports = function (app, swig, repository, ObjectId) {
                 repository.addElement(updateRequest, "requests", function (result) {
                     if (result == null) {
                         res.redirect("/list?error=No se ha podido aceptar la peticion");
+                        app.get("logger").error('No se ha podido aceptar la peticion');
                     }
                 });
             } else {
                 repository.updateElement(requests[0], updateRequest, "requests", function (result) {
                     if (result == null) {
                         res.redirect("/list?error=No se ha podido aceptar la peticion");
+                        app.get("logger").error('No se ha podido aceptar la peticion');
                     }
                 });
             }

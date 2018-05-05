@@ -2,10 +2,11 @@ module.exports = function (app, swig, repository) {
     app.get("/signup", function (req, res) {
         let answer = swig.renderFile('views/signup.html', {});
         res.send(answer);
-        app.get("logger").debug('Usuario se va a registrar');
+        app.get("logger").info('Usuario se va a registrar');
     });
 
     app.post('/signup', function (req, res) {
+        app.get("logger").info('Usuario se intenta registrar');
         let errors = checkErrorSignUp(req);
         if (errors.length > 0) {
             res.redirect("/signup?" + errors);
@@ -32,10 +33,12 @@ module.exports = function (app, swig, repository) {
                             email: req.body.email,
                             password: password
                         };
+                        app.get("logger").info('Usuario registrado como ' + req.body.email);
                         autoLogin(textSearch, req, res);
                     }
                 });
             } else {
+                app.get("logger").error('Error al registrar al usuarios');
                 res.redirect("/signup?email=Este correo ya esta registrado.");
             }
         });
@@ -44,21 +47,27 @@ module.exports = function (app, swig, repository) {
     function checkErrorSignUp(req) {
         let errors = [];
         if (req.body.email == "") {
+            app.get("logger").error('Email vacío al registrar el usuario');
             errors.push("email=Este campo no puede ser vacío");
         }
         if (req.body.name.length < 2) {
+            app.get("logger").error('Longitud del nombre invalida');
             errors.push("name=El nombre debe tener entre 5 y 24 caracteres.");
         }
         if (req.body.surName.length < 2) {
+            app.get("logger").error('Longitud del apellido invalida');
             errors.push("surName=El apellido debe tener entre 5 y 24 caracteres.");
         }
         if (req.body.password.length < 5) {
+            app.get("logger").error('Longitud de la contraseña invalida');
             errors.push("password=La contraseña debe tener entre 5 y 24 caracteres.");
         }
         if (req.body.passwordConfirm.length < 5) {
+            app.get("logger").error('Longitud de la recontraseña invalida');
             errors.push("passwordConfirm=La contraseña debe tener entre 5 y 24 caracteres.");
         }
         if (req.body.password != req.body.passwordConfirm) {
+            app.get("logger").error('No coinciden las contraseñas');
             errors.push("coincidence=Las contraseñas no coinciden.");
         }
 
@@ -72,6 +81,7 @@ module.exports = function (app, swig, repository) {
     app.get("/login", function (req, res) {
         let answer = swig.renderFile('views/login.html', {});
         res.send(answer);
+        app.get("logger").info('Usuario se intenta loguear');
     });
 
     app.post("/login", function (req, res) {
@@ -89,9 +99,11 @@ module.exports = function (app, swig, repository) {
             if (users == null || users.length == 0) {
                 req.session.user = null;
                 res.redirect("/login?error=Email o password incorrecto");
+                app.get("logger").error('Error al loguear al usuario');
             } else {
                 req.session.user = users[0].email;
                 res.redirect("/list");
+                app.get("logger").info('El usuario ' + req.session.user + " se ha logueado correctamente");
             }
         });
     }
@@ -104,11 +116,13 @@ module.exports = function (app, swig, repository) {
     });
 
     app.get('/logout', function (req, res) {
+        app.get("logger").info('El usuario ' + req.session.user + " ha cerrado sesión correctamente");
         req.session.user = null;
         res.redirect("/login?logout=Ha cerrado la sesión correctamente");
     });
 
     app.get("/list", function (req, res) {
+        app.get("logger").info('El usuario ' + req.session.user + " lista los usuarios de la aplicación");
         let textSearch = createQuery(req);
         let pg = parseInt(req.query.pg);
         if (req.query.pg == null) {
@@ -159,16 +173,16 @@ module.exports = function (app, swig, repository) {
             let searchText = req.query.searchText;
             textSearch = {
                 $and: [{
-                        email: {
-                            $ne: req.session.user
-                        }
-                    },
+                    email: {
+                        $ne: req.session.user
+                    }
+                },
                     {
                         $or: [{
-                                email: {
-                                    $regex: ".*" + searchText + ".*"
-                                }
-                            },
+                            email: {
+                                $regex: ".*" + searchText + ".*"
+                            }
+                        },
                             {
                                 name: {
                                     $regex: ".*" + searchText + ".*"
@@ -188,10 +202,12 @@ module.exports = function (app, swig, repository) {
     }
 
     app.get("/requests", function (req, res) {
+        app.get("logger").info('El usuario ' + req.session.user + " lista su peticiones de amistades recibidas");
         searchPeople(req, res, "SENT", 'views/requests/receiver.html')
     });
 
     app.get("/friends", function (req, res) {
+        app.get("logger").info('El usuario ' + req.session.user + " lista sus amigos");
         searchPeople(req, res, "ACCEPTED", 'views/users/friends.html')
     });
 

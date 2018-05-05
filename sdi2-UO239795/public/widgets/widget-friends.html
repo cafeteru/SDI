@@ -27,7 +27,7 @@
 
     function loadMessageNoRead() {
         $.ajax({
-            url: URLbase + "/messages/unread",
+            url: URLbase + "/messages/all",
             type: "GET",
             data: {},
             dataType: 'json',
@@ -64,22 +64,37 @@
     function loadTable(users, messages) {
         $("#bodyTable").empty();
         for (let i = 0; i < users.length; i++) {
-            let count = 0;
-            if (messages == null || messages.length == 0) {
-                count = 0;
-            } else {
-                for (let j = 0; j < messages.length; j++) {
+            users[i].count = 0;
+            if (messages != null || messages.length > 0) {
+                for (let j = messages.length - 1; j >= 0; j--) {
                     if (messages[j].receiver == Cookies.get('email') && messages[j].sender == users[i].email) {
-                        count++;
+                        if (users[i].lastMessaje == undefined) {
+                            users[i].lastMessaje = messages[j];
+                        }
+                        if (messages[j].read == false) {
+                            users[i].count++;
+                        }
                     }
                 }
             }
+            if (users[i].lastMessaje == undefined)
+                users[i].lastMessaje = {
+                    date: new Date(2000, 11, 24, 10, 33, 30, 0)
+                };
+            console.log(users[i].lastMessaje)
+        }
+
+        users = users.sort(function (a, b) {
+            return new Date(b.lastMessaje.date) - new Date(a.lastMessaje.date);
+        });
+
+        for (let i = 0; i < users.length; i++) {
             $("#bodyTable").append(
                 "<tr class='table-light'>" +
                 "<td><a onclick=loadConversation('" + users[i].email + "')>" + users[i].name + "</a></td>" +
                 "<td>" + users[i].surName + "</td>" +
                 "<td>" + users[i].email + "</td>" +
-                "<td style='color: red'>" + count + "</td>" +
+                "<td style='color: red'>" + users[i].count + "</td>" +
                 "</tr>"
             );
         }

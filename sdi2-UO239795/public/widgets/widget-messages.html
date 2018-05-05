@@ -36,7 +36,7 @@
                 message = "<div class='containerChat'>" +
                     "<p class='text-right'>" + messages[i].sender + "</p>" +
                     "<p class='text-right'>" + messages[i].message + "</p>" +
-                    "<span class='time-right'>" + messages[i].date + "</span>";
+                    "<span class='time-right'>" + timeStamp(new Date(messages[i].date)) + "</span>";
                 message += "<img src='img/check.png' style='width: 25px' class='rounded float-right'>"
                 message += "</div>";
             }
@@ -45,7 +45,7 @@
                 message = "<div class='containerChat darker'>" +
                     "<p class='text-left'>" + messages[i].sender + "</p>" +
                     "<p class='text-left'>" + messages[i].message + "</p>" +
-                    "<span class='time-left'>" + messages[i].date + "</span>";
+                    "<span class='time-left'>" + timeStamp(new Date(messages[i].date)) + "</span>";
                 if (messages[i].read) {
                     message += "<img src='img/check.png' style='width: 25px' class='rounded float-left'>";
                 }
@@ -96,5 +96,31 @@
                 $("main").append("<div class='alert alert-danger'>Error al marcar el mensaje</div>");
             }
         });
+    }
+
+    function timeStamp(now) {
+        // Create an array with the current month, day and time
+        var date = [now.getMonth() + 1, now.getDate(), now.getFullYear()];
+
+        // Create an array with the current hour, minute and second
+        var time = [now.getHours(), now.getMinutes(), now.getSeconds()];
+
+        // Determine AM or PM suffix based on the hour
+        var suffix = (time[0] < 12) ? "AM" : "PM";
+
+        // Convert hour from military time
+        time[0] = (time[0] < 12) ? time[0] : time[0] - 12;
+
+        // If hour is 0, set it to 12
+        time[0] = time[0] || 12;
+
+        // If seconds and minutes are less than 10, add a zero
+        for (var i = 1; i < 3; i++) {
+            if (time[i] < 10) {
+                time[i] = "0" + time[i];
+            }
+        }
+        // Return the formatted string
+        return date.join("/") + " " + time.join(":") + " " + suffix;
     }
 </script>

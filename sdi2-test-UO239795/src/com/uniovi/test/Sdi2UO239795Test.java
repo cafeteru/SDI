@@ -403,7 +403,6 @@ public class Sdi2UO239795Test {
 		assertTrue(list.size() == 1);
 		driver.findElement(By.linkText("Iván")).click();
 		test.waitChangeWeb();
-		test.waitChangeWeb();
 		numMessagesAfter = driver.findElements(By.className("containerChat"))
 				.size();
 		numImgs = driver.findElements(By.tagName("img")).size();

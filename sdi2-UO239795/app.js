@@ -9,13 +9,6 @@ log4js.configure({
 });
 let logger = log4js.getLogger('sdi');
 
-/*logger.trace('Entering sdi testing');
-logger.debug('Got sdi.');
-logger.info('sdi is Gouda.');
-logger.warn('sdi is quite smelly.');
-logger.error('sdi is too ripe!');
-logger.fatal('sdi was breeding ground for listeria.');*/
-
 // Objeto sessión para guardar al usuario actual
 let expressSession = require('express-session');
 app.use(expressSession({

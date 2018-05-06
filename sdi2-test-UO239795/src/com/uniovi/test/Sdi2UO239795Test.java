@@ -401,7 +401,7 @@ public class Sdi2UO239795Test {
 		List<WebElement> list = driver.findElements(By.xpath(
 				"//tbody[@id='bodyTable']/tr/td[4][contains(text(),'2')]"));
 		assertTrue(list.size() == 1);
-		driver.findElement(By.linkText("Iván")).click();
+		driver.findElement(By.xpath("//tbody[@id='bodyTable']/tr/td")).click();
 		test.waitChangeWeb();
 		numMessagesAfter = driver.findElements(By.className("containerChat"))
 				.size();

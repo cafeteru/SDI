@@ -5,12 +5,12 @@
 <h1>Amistades</h1>
 <table class="table table-hover">
     <thead class="table-dark">
-        <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellidos</th>
-            <th scope="col">Email</th>
-            <th scope="col">Mensajes no leídos</th>
-        </tr>
+    <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Email</th>
+        <th scope="col">Mensajes no leídos</th>
+    </tr>
     </thead>
     <tbody id="bodyTable">
     </tbody>
@@ -18,7 +18,8 @@
 <h2>Buscar usuario</h2>
 <div class="navbar-form">
     <div class="form-group">
-        <input id="searchText" type="text" class="form-control" size="50" placeholder="Buscar por email o nombre o apellido del alumno"
+        <input id="searchText" type="text" class="form-control" size="50"
+               placeholder="Buscar por email o nombre o apellido del alumno"
         />
     </div>
     <button type="submit" class="btn btn-primary" onclick="getFriends()">Buscar</button>
@@ -76,14 +77,17 @@
             users[i].count = 0;
             if (messages != null || messages.length > 0) {
                 for (let j = messages.length - 1; j >= 0; j--) {
-                    if (messages[j].receiver == Cookies.get('email') 
-                            && messages[j].sender == users[i].email) {
+                    if (messages[j].receiver == Cookies.get('email')
+                        && messages[j].sender == users[i].email) {
                         if (users[i].lastMessaje == undefined) {
                             users[i].lastMessaje = messages[j];
                         }
                         if (messages[j].read == false) {
                             users[i].count++;
                         }
+                    } else if (messages[j].sender == Cookies.get('email')
+                        && messages[j].receiver == users[i].email && users[i].lastMessaje == undefined) {
+                        users[i].lastMessaje = messages[j];
                     }
                 }
             }

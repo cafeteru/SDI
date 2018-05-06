@@ -12,18 +12,19 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
-    @Autowired
-    private UsersRepository usersRepository;
+public class UserDetailsServiceImpl implements UserDetailsService {
+	@Autowired
+	private UsersRepository usersRepository;
 
-@Override
-public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException{
-    User user = usersRepository.findByDni(dni);
-    
-    Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-    grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
-  
-    return  new org.springframework.security.core.userdetails.User(
-            user.getDni(), user.getPassword(), grantedAuthorities);
-}
+	@Override
+	public UserDetails loadUserByUsername(String dni)
+			throws UsernameNotFoundException {
+		User user = usersRepository.findByDni(dni);
+
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+		grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
+
+		return new org.springframework.security.core.userdetails.User(
+				user.getDni(), user.getPassword(), grantedAuthorities);
+	}
 }

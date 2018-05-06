@@ -101,17 +101,9 @@ module.exports = function (app, repository, ObjectId) {
             ]
         };
         repository.getElements(messages, "messages", function (conversation) {
-            if (conversation == null || conversation.length == 0) {
-                res.status(403);
-                res.json({
-                    error: 'No hay mensajes entre ' + res.user + " y " + req.params.email
-                });
-                app.get("logger").error('No hay mensajes entre ' + res.user + " y " + req.params.email);
-            } else {
-                res.status(200);
-                res.send(JSON.stringify(conversation));
-                app.get("logger").info('Listando los mensajes entre los usuarios ' + res.user + " y " + req.params.email);
-            }
+            res.status(200);
+            res.send(JSON.stringify(conversation));
+            app.get("logger").info('Listando los mensajes entre los usuarios ' + res.user + " y " + req.params.email);
         });
     });
 

@@ -18,7 +18,6 @@ public class UsersService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
 	@PostConstruct
 	public void init() {
 
@@ -33,11 +32,10 @@ public class UsersService {
 	public User getUser(Long id) {
 		return usersRepository.findOne(id);
 	}
-	
+
 	public User getUserByDni(String dni) {
 		return usersRepository.findByDni(dni);
 	}
-	
 
 	public void addUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -47,6 +45,5 @@ public class UsersService {
 	public void deleteUser(Long id) {
 		usersRepository.delete(id);
 	}
-
 
 }

@@ -37,7 +37,9 @@
                     "<p class='text-right'>" + messages[i].sender + "</p>" +
                     "<p class='text-right'>" + messages[i].message + "</p>" +
                     "<span class='time-right'>" + timeStamp(new Date(messages[i].date)) + "</span>";
-                message += "<img src='img/check.png' style='width: 25px' class='rounded float-right'>"
+                if (messages[i].read) {
+                    message += "<img src='img/check.png' style='width: 25px' class='rounded float-right'>";
+                }
                 message += "</div>";
             }
             else {

@@ -102,7 +102,7 @@ public class InsertSampleDataService {
 		usersService.addUser(user4);
 		usersService.addUser(user5);
 		usersService.addUser(user6);
-		
+
 		User user7 = new User("71676818D", "Iván", "González Mahagamage");
 		user7.setPassword("123456");
 		user7.setRole(rolesService.getRoles()[2]);

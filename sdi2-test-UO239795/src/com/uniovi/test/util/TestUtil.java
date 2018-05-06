@@ -58,4 +58,34 @@ public class TestUtil {
 				By.xpath("//*[contains(text(),'" + texto + "')]"));
 		assertTrue("Texto " + texto + " aun presente !", list.size() == 0);
 	}
+
+	public void login(String url, String email, String password) {
+		driver.get(url);
+		waitChangeWeb();
+		driver.findElement(By.id("email")).click();
+		driver.findElement(By.id("email")).clear();
+		driver.findElement(By.id("email")).sendKeys(email);
+		driver.findElement(By.id("password")).click();
+		driver.findElement(By.id("password")).clear();
+		driver.findElement(By.id("password")).sendKeys(password);
+		driver.findElement(By.id("boton-login")).click();
+		waitChangeWeb();
+	}
+
+	public void searchText(String text) {
+		driver.findElement(By.id("searchText")).click();
+		driver.findElement(By.id("searchText")).clear();
+		driver.findElement(By.id("searchText")).sendKeys(text);
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		waitChangeWeb();
+	}
+
+	public void sendEmail() {
+		String message = Random.email();
+		driver.findElement(By.id("message")).click();
+		driver.findElement(By.id("message")).clear();
+		driver.findElement(By.id("message")).sendKeys(message);
+		driver.findElement(By.id("send")).click();
+		waitChangeWeb();
+	}
 }

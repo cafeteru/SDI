@@ -1,4 +1,5 @@
 package com.uniovi;
+
 import java.util.List;
 import java.util.Locale;
 import org.springframework.context.annotation.Bean;
@@ -13,14 +14,14 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 @Configuration
-public class CustomConfiguration extends  WebMvcConfigurerAdapter{
+public class CustomConfiguration extends WebMvcConfigurerAdapter {
 
 	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+	public void addArgumentResolvers(
+			List<HandlerMethodArgumentResolver> argumentResolvers) {
 
-		PageableHandlerMethodArgumentResolver resolver =
-				new PageableHandlerMethodArgumentResolver();
-		
+		PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
+
 		resolver.setFallbackPageable(new PageRequest(0, 5));
 		argumentResolvers.add(resolver);
 		super.addArgumentResolvers(argumentResolvers);
@@ -35,8 +36,7 @@ public class CustomConfiguration extends  WebMvcConfigurerAdapter{
 
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
-		LocaleChangeInterceptor localeChangeInterceptor = 
-				new LocaleChangeInterceptor();
+		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
 		localeChangeInterceptor.setParamName("lang");
 		return localeChangeInterceptor;
 	}
@@ -45,5 +45,5 @@ public class CustomConfiguration extends  WebMvcConfigurerAdapter{
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
 	}
-	
+
 }

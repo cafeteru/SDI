@@ -9,15 +9,15 @@ public class User {
 	@Id
 	@GeneratedValue
 	private long id;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String dni;
 	private String name;
 	private String lastName;
 	private String role;
-	
-    private String password;
-    @Transient //Specifies that the property or field is not persistent. 
-    private String passwordConfirm;
+
+	private String password;
+	@Transient // Specifies that the property or field is not persistent.
+	private String passwordConfirm;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Mark> marks;
@@ -28,24 +28,22 @@ public class User {
 		this.name = name;
 		this.lastName = lastName;
 	}
-	
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
 
 	public User() {
 	}
@@ -86,23 +84,20 @@ public class User {
 		this.marks = marks;
 	}
 
-	public Set<Mark>  getMarks() {
+	public Set<Mark> getMarks() {
 		return marks;
 	}
-	
+
 	public String getFullName() {
 		return this.name + " " + this.lastName;
 	}
 
+	public String getRole() {
+		return role;
+	}
 
-public String getRole() {
-	return role;
-}
-
-public void setRole(String role) {
-	this.role = role;
-}
-	
-	
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 }

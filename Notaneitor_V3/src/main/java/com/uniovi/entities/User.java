@@ -29,7 +29,6 @@ public class User {
 
 	private String role;
 
-	
 	public User(String dni, String name, String lastName) {
 		super();
 		this.dni = dni;
@@ -107,7 +106,7 @@ public class User {
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", dni=" + dni + ", name=" + name

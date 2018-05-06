@@ -31,10 +31,12 @@ public class PageWrapper<T> {
 			start = 1;
 			size = page.getTotalPages();
 		} else {
-			if (currentNumber <= MAX_PAGE_ITEM_DISPLAY - MAX_PAGE_ITEM_DISPLAY / 2) {
+			if (currentNumber <= MAX_PAGE_ITEM_DISPLAY
+					- MAX_PAGE_ITEM_DISPLAY / 2) {
 				start = 1;
 				size = MAX_PAGE_ITEM_DISPLAY;
-			} else if (currentNumber >= page.getTotalPages() - MAX_PAGE_ITEM_DISPLAY / 2) {
+			} else if (currentNumber >= page.getTotalPages()
+					- MAX_PAGE_ITEM_DISPLAY / 2) {
 				start = page.getTotalPages() - MAX_PAGE_ITEM_DISPLAY + 1;
 				size = MAX_PAGE_ITEM_DISPLAY;
 			} else {

@@ -6,7 +6,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Mark {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;

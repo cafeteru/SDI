@@ -12,35 +12,37 @@ import org.springframework.stereotype.Service;;
 
 @Service
 public class SecurityService {
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(SecurityService.class);
 
-    public String findLoggedInDni() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if (userDetails instanceof UserDetails) {
-            return ((UserDetails)userDetails).getUsername();
-        }
+	public String findLoggedInDni() {
+		Object userDetails = SecurityContextHolder.getContext()
+				.getAuthentication().getDetails();
+		if (userDetails instanceof UserDetails) {
+			return ((UserDetails) userDetails).getUsername();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public void autoLogin(String dni, String password) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(dni);
-        
-        UsernamePasswordAuthenticationToken aToken = new UsernamePasswordAuthenticationToken(
-        		userDetails, password, userDetails.getAuthorities());
+	public void autoLogin(String dni, String password) {
+		UserDetails userDetails = userDetailsService.loadUserByUsername(dni);
 
-        authenticationManager.authenticate(aToken);
+		UsernamePasswordAuthenticationToken aToken = new UsernamePasswordAuthenticationToken(
+				userDetails, password, userDetails.getAuthorities());
 
-        if (aToken.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(aToken);
-            logger.debug(String.format("Auto login %s successfully!", dni));
-        }
-    }
-    
+		authenticationManager.authenticate(aToken);
+
+		if (aToken.isAuthenticated()) {
+			SecurityContextHolder.getContext().setAuthentication(aToken);
+			logger.debug(String.format("Auto login %s successfully!", dni));
+		}
+	}
+
 }

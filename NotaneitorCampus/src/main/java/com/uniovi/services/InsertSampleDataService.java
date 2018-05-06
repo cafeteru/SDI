@@ -13,16 +13,16 @@ import com.uniovi.entities.User;
 
 @Service
 public class InsertSampleDataService {
-	
+
 	@Autowired
 	private UsersService usersService;
-	
+
 	@Autowired
 	private MarksService marksService;
-	
+
 	@Autowired
 	private RolesService rolesService;
-	
+
 	@PostConstruct
 	public void init() {
 		User user1 = new User("99999990A", "Pedro", "Díaz");
@@ -43,7 +43,7 @@ public class InsertSampleDataService {
 		User user6 = new User("99999988F", "Edward", "Núñez");
 		user6.setPassword("123456");
 		user6.setRole(rolesService.getRoles()[2]);
-		
+
 		Set user1Marks = new HashSet<Mark>() {
 			{
 				add(new Mark("Nota A1", 10.0, user1));
@@ -53,7 +53,7 @@ public class InsertSampleDataService {
 			}
 		};
 		user1.setMarks(user1Marks);
-		
+
 		Set user2Marks = new HashSet<Mark>() {
 			{
 				add(new Mark("Nota B1", 5.0, user2));

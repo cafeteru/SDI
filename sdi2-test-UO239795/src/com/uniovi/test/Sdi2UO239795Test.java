@@ -445,7 +445,7 @@ public class Sdi2UO239795Test {
 	/**
 	 * Identificarse con un usuario A que al menos tenga 3 amigos, ir al chat
 	 * del ultimo amigo de la lista y enviarle un mensaje, volver a la lista de
-	 * amigos y comprobar que el usuario al que se le ha enviado el mensaje esta
+	 * amigos y comprobar que el usuario al que se le ha enviado el mensaje este
 	 * en primera posición. Identificarse con el usuario B y enviarle un mensaje
 	 * al usuario A. Volver a identificarse con el usuario A y ver que el
 	 * usuario que acaba de mandarle el mensaje es el primero en su lista de

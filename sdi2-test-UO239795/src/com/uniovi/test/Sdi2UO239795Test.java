@@ -125,7 +125,7 @@ public class Sdi2UO239795Test {
 		test.textoPresentePagina("Usuario Autenticado como");
 		test.textoPresentePagina("ivangonzalezmahagamage@gmail.com");
 		test.textoPresentePagina("Logout");
-		test.textoNoPresentePagina("Idéntificate");
+		test.textoNoPresentePagina("Identifícate");
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class Sdi2UO239795Test {
 	@Test
 	public void Test02_2_InInVal() {
 		test.login(URLLogin, "noExisto@gmail.com", "123456");
-		test.textoPresentePagina("Idéntificate");
+		test.textoPresentePagina("Identifícate");
 		test.textoNoPresentePagina("Usuario Autenticado como");
 		test.textoNoPresentePagina("noExisto@gmail.com");
 		test.textoNoPresentePagina("Logout");
@@ -164,7 +164,7 @@ public class Sdi2UO239795Test {
 		driver.get(URL + "list");
 		test.waitChangeWeb();
 		test.textoNoPresentePagina("Lista de usuarios");
-		test.textoPresentePagina("Idéntificate");
+		test.textoPresentePagina("Identifícate");
 	}
 
 	/**
@@ -192,7 +192,7 @@ public class Sdi2UO239795Test {
 		test.waitChangeWeb();
 		test.textoNoPresentePagina("Lista de usuarios");
 		test.textoNoPresentePagina("Buscar usuario");
-		test.textoPresentePagina("Idéntificate");
+		test.textoPresentePagina("Identifícate");
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class Sdi2UO239795Test {
 		test.textoPresentePagina("ivangonzalezmahagamage@gmail.com");
 		test.textoPresentePagina("Usuario Autenticado como");
 		test.textoPresentePagina("Amistades");
-		test.textoNoPresentePagina("Idéntificate");
+		test.textoNoPresentePagina("Identifícate");
 		test.textoNoPresentePagina("Login");
 	}
 
@@ -294,7 +294,7 @@ public class Sdi2UO239795Test {
 		test.textoNoPresentePagina("noExisto@gmail.com");
 		test.textoNoPresentePagina("Usuario Autenticado como");
 		test.textoNoPresentePagina("Amistades");
-		test.textoPresentePagina("Idéntificate");
+		test.textoPresentePagina("Identifícate");
 		test.textoPresentePagina("Login");
 	}
 

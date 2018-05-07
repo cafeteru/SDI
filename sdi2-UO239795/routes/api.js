@@ -81,18 +81,18 @@ module.exports = function (app, repository, ObjectId) {
     app.get("/api/messages/", function (req, res) {
         let messages = {
             $or: [{
-                $and: [{
-                    sender: res.user
+                    $and: [{
+                            sender: res.user
+                        },
+                        {
+                            receiver: req.query.email
+                        },
+                    ]
                 },
-                    {
-                        receiver: req.query.email
-                    },
-                ]
-            },
                 {
                     $and: [{
-                        sender: req.query.email
-                    },
+                            sender: req.query.email
+                        },
                         {
                             receiver: res.user
                         },
@@ -108,6 +108,15 @@ module.exports = function (app, repository, ObjectId) {
     });
 
     app.get("/api/messages/all", function (req, res) {
+        let user = {
+            $or: [{
+                    sender: res.user
+                },
+                {
+                    receiver: res.user
+                }
+            ]
+        };
         repository.getElements({}, "messages", function (conversation) {
             res.status(200);
             res.send(JSON.stringify(conversation));

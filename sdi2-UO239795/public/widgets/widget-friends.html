@@ -42,7 +42,7 @@
             },
             success: function (res) {
                 messages = res;
-                getFriends(messages);
+                getFriends();
             },
             error: function (error) {
                 $("main").load("widgets/widget-login.html");
@@ -50,7 +50,7 @@
         });
     }
 
-    function getFriends(messages) {
+    function getFriends() {
         $.ajax({
             url: URLbase + "/users",
             type: "GET",
@@ -79,26 +79,26 @@
                 for (let j = messages.length - 1; j >= 0; j--) {
                     if (messages[j].receiver == Cookies.get('email')
                         && messages[j].sender == users[i].email) {
-                        if (users[i].lastMessaje == undefined) {
-                            users[i].lastMessaje = messages[j];
+                        if (users[i].lastMessage == undefined) {
+                            users[i].lastMessage = messages[j];
                         }
                         if (messages[j].read == false) {
                             users[i].count++;
                         }
                     } else if (messages[j].sender == Cookies.get('email')
-                        && messages[j].receiver == users[i].email && users[i].lastMessaje == undefined) {
-                        users[i].lastMessaje = messages[j];
+                        && messages[j].receiver == users[i].email && users[i].lastMessage == undefined) {
+                        users[i].lastMessage = messages[j];
                     }
                 }
             }
-            if (users[i].lastMessaje == undefined)
-                users[i].lastMessaje = {
+            if (users[i].lastMessage == undefined)
+                users[i].lastMessage = {
                     date: new Date(2000, 11, 24, 10, 33, 30, 0)
                 };
         }
 
         users = users.sort(function (a, b) {
-            return new Date(b.lastMessaje.date) - new Date(a.lastMessaje.date);
+            return new Date(b.lastMessage.date) - new Date(a.lastMessage.date);
         });
 
         for (let i = 0; i < users.length; i++) {

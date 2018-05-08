@@ -237,8 +237,7 @@ public class Sdi2UO239795Test {
 		test.login(URLLogin, email, "123456");
 		driver.findElement(By.linkText("Peticiones")).click();
 		test.waitChangeWeb();
-		test.textoPresentePagina("Iván");
-		test.textoPresentePagina("González Mahagamage");
+		test.textoPresentePagina("ivangonzalezmahagamage@gmail.com");
 	}
 
 	/**
@@ -247,8 +246,7 @@ public class Sdi2UO239795Test {
 	@Test
 	public void Test07_1_AcepInvVal() {
 		test.login(URLLogin, email, "123456");
-		test.textoPresentePagina("Iván");
-		test.textoPresentePagina("González Mahagamage");
+		test.textoPresentePagina("ivangonzalezmahagamage@gmail.com");
 		driver.findElement(By.linkText("Peticiones")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.xpath("//input[@value='Aceptar invitación']"))
@@ -267,8 +265,7 @@ public class Sdi2UO239795Test {
 		test.login(URLLogin, email, "123456");
 		driver.findElement(By.linkText("Amigos")).click();
 		test.waitChangeWeb();
-		test.textoPresentePagina("Iván");
-		test.textoPresentePagina("González Mahagamage");
+		test.textoPresentePagina("ivangonzalezmahagamage@gmail.com");
 	}
 
 	/**
@@ -326,8 +323,6 @@ public class Sdi2UO239795Test {
 		test.searchText("igm1990");
 		List<WebElement> filas = driver.findElements(By.xpath("//tr"));
 		assertTrue(filas.size() > 1);
-		test.textoPresentePagina("Iván");
-		test.textoPresentePagina("González Mahagamage");
 		test.textoPresentePagina("igm1990@hotmail.com");
 	}
 
@@ -347,7 +342,7 @@ public class Sdi2UO239795Test {
 		test.waitChangeWeb();
 		List<WebElement> numMensages = driver
 				.findElements(By.className("containerChat"));
-		assertTrue(numMensages.size() > 3);
+		assertTrue(numMensages.size() >= 3);
 	}
 
 	/**
@@ -452,16 +447,20 @@ public class Sdi2UO239795Test {
 	 */
 	@Test
 	public void TestC7_1_COrdenMenVall() {
+		// Identificarse con un usuario A que al menos tenga 3 amigos
 		test.login(URLjQuery, "ivangonzalezmahagamage@gmail.com", "123456");
+		// ir al chat del ultimo amigo de la lista
 		test.searchText(email);
 		driver.findElement(By.xpath("//tbody[@id='bodyTable']/tr/td")).click();
 		test.waitChangeWeb();
+		// enviarle un mensaje
 		int numMessagesBefore = driver
 				.findElements(By.className("containerChat")).size();
 		test.sendEmail();
 		int numMessagesAfter = driver
 				.findElements(By.className("containerChat")).size();
 		assertEquals(1, numMessagesAfter - numMessagesBefore);
+		// volver a la lista de amigos
 		driver.findElement(By.linkText("Amigos")).click();
 		test.waitChangeWeb();
 		List<WebElement> list = driver.findElements(

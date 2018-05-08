@@ -1,8 +1,10 @@
-<h1>Chat con <span id="friend"></span></h1>
+<h1>Chat con
+    <span id="friend"></span>
+</h1>
 <div id="conversation" style="overflow-y: scroll; height: 600px">
 </div>
 <div>
-    <input id="message" class="form-control"/>
+    <input id="message" class="form-control" />
     <button id="send" type="button" class="btn btn-success" onclick="sendMessage()">Enviar</button>
 </div>
 <script>
@@ -17,7 +19,9 @@
             type: "GET",
             data: {},
             dataType: 'json',
-            headers: {"token": token},
+            headers: {
+                "token": token
+            },
             success: function (res) {
                 var messages = res;
                 loadMessages(messages);
@@ -41,8 +45,7 @@
                     message += "<img src='img/check.png' style='width: 25px' class='rounded float-right'>";
                 }
                 message += "</div>";
-            }
-            else {
+            } else {
                 readMessage(messages[i]._id.toString());
                 message = "<div class='containerChat darker'>" +
                     "<p class='text-left'>" + messages[i].sender + "</p>" +
@@ -91,9 +94,10 @@
             type: "PUT",
             data: {},
             dataType: 'json',
-            headers: {"token": token},
-            success: function (res) {
+            headers: {
+                "token": token
             },
+            success: function (res) {},
             error: function (error) {
                 $("main").append("<div class='alert alert-danger'>Error al marcar el mensaje</div>");
             }

@@ -58,6 +58,7 @@
             token = Cookies.get('token');
             var url = new URL(window.location.href);
             var w = url.searchParams.get("w");
+            console.log(w);
             switch (w) {
                 case "friends":
                     $("main").load("widgets/widget-friends.html");

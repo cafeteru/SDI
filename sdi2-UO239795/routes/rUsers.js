@@ -123,12 +123,11 @@ module.exports = function (app, swig, repository) {
 
     app.get("/list", function (req, res) {
         app.get("logger").info('El usuario ' + req.session.user + " lista los usuarios de la aplicación");
-        let textSearch = createQuery(req);
         let pg = parseInt(req.query.pg);
         if (req.query.pg == null) {
             pg = 1;
         }
-        repository.getElements(textSearch, "users", function (users) {
+        repository.getElements(repository.createQuery(req), "users", function (users) {
             if (users == null) {
                 res.send("Error al listar ");
             } else {
@@ -162,44 +161,6 @@ module.exports = function (app, swig, repository) {
             }
         });
     });
-
-    function createQuery(req) {
-        let textSearch = {
-            email: {
-                $ne: req.session.user
-            }
-        };
-        if (req.query.searchText != null) {
-            let searchText = req.query.searchText;
-            textSearch = {
-                $and: [{
-                    email: {
-                        $ne: req.session.user
-                    }
-                },
-                    {
-                        $or: [{
-                            email: {
-                                $regex: ".*" + searchText + ".*"
-                            }
-                        },
-                            {
-                                name: {
-                                    $regex: ".*" + searchText + ".*"
-                                }
-                            },
-                            {
-                                surName: {
-                                    $regex: ".*" + searchText + ".*"
-                                }
-                            }
-                        ]
-                    }
-                ]
-            };
-        }
-        return textSearch;
-    }
 
     app.get("/requests", function (req, res) {
         app.get("logger").info('El usuario ' + req.session.user + " lista su peticiones de amistades recibidas");

@@ -57,5 +57,42 @@ module.exports = {
                 });
             }
         });
+    },
+    createQuery(req) {
+        let textSearch = {
+            email: {
+                $ne: req.session.user
+            }
+        };
+        if (req.query.searchText != null) {
+            let searchText = req.query.searchText;
+            textSearch = {
+                $and: [{
+                        email: {
+                            $ne: req.session.user
+                        }
+                    },
+                    {
+                        $or: [{
+                                email: {
+                                    $regex: ".*" + searchText + ".*"
+                                }
+                            },
+                            {
+                                name: {
+                                    $regex: ".*" + searchText + ".*"
+                                }
+                            },
+                            {
+                                surName: {
+                                    $regex: ".*" + searchText + ".*"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            };
+        }
+        return textSearch;
     }
 };

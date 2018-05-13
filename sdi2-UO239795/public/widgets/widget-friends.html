@@ -69,7 +69,6 @@
         });
     }
 
-
     function loadTable(users, messages) {
         $("#bodyTable").empty();
         for (let i = 0; i < users.length; i++) {
@@ -116,7 +115,6 @@
         Cookies.set('friend', email);
         $("main").load("widgets/widget-messages.html");
     }
-
 
     function search() {
         let param = $("#searchText").val();

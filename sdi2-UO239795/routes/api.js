@@ -79,28 +79,7 @@ module.exports = function (app, repository, ObjectId) {
     });
 
     app.get("/api/messages/", function (req, res) {
-        let messages = {
-            $or: [{
-                    $and: [{
-                            sender: res.user
-                        },
-                        {
-                            receiver: req.query.email
-                        },
-                    ]
-                },
-                {
-                    $and: [{
-                            sender: req.query.email
-                        },
-                        {
-                            receiver: res.user
-                        },
-                    ]
-                }
-            ]
-        };
-        repository.getElements(messages, "messages", function (conversation) {
+        repository.getElements(repository.getMessagesBySenderAndReceiver(req, res), "messages", function (conversation) {
             res.status(200);
             res.send(JSON.stringify(conversation));
             app.get("logger").info('Listando los mensajes entre los usuarios ' + res.user + " y " + req.params.email);
@@ -108,16 +87,7 @@ module.exports = function (app, repository, ObjectId) {
     });
 
     app.get("/api/messages/all", function (req, res) {
-        let user = {
-            $or: [{
-                    sender: res.user
-                },
-                {
-                    receiver: res.user
-                }
-            ]
-        };
-        repository.getElements({}, "messages", function (conversation) {
+        repository.getElements(repository.getAllMessages(res), "messages", function (conversation) {
             res.status(200);
             res.send(JSON.stringify(conversation));
             app.get("logger").info('Listando todos los mensajes del usuario ' + res.user);

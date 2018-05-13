@@ -94,5 +94,40 @@ module.exports = {
             };
         }
         return textSearch;
+    },
+    getMessagesBySenderAndReceiver(req, res) {
+        let messages = {
+            $or: [{
+                    $and: [{
+                            sender: res.user
+                        },
+                        {
+                            receiver: req.query.email
+                        },
+                    ]
+                },
+                {
+                    $and: [{
+                            sender: req.query.email
+                        },
+                        {
+                            receiver: res.user
+                        },
+                    ]
+                }
+            ]
+        };
+        return messages;
+    },
+    getAllMessages(res) {
+        let user = {
+            $or: [{
+                    sender: res.user
+                },
+                {
+                    receiver: res.user
+                }
+            ]
+        };
     }
 };

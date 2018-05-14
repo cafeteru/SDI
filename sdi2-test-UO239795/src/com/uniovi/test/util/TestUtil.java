@@ -12,7 +12,6 @@ import org.openqa.selenium.WebElement;
 public class TestUtil {
 	private boolean acceptNextAlert = true;
 	private WebDriver driver;
-	private int time = 7;
 
 	public TestUtil(WebDriver driver) {
 		this.driver = driver;
@@ -29,7 +28,7 @@ public class TestUtil {
 	}
 
 	public void waitChangeWeb() {
-		waitSeconds(time);
+		waitSeconds(6);
 	}
 
 	public String closeAlertAndGetItsText() {

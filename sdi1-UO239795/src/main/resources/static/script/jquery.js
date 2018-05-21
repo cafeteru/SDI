@@ -1156,7 +1156,11 @@
     }
     r.extend({
         Deferred: function (b) {
-            var c = [["notify", "progress", r.Callbacks("memory"), r.Callbacks("memory"), 2], ["resolve", "done", r.Callbacks("once memory"), r.Callbacks("once memory"), 0, "resolved"], ["reject", "fail", r.Callbacks("once memory"), r.Callbacks("once memory"), 1, "rejected"]],
+            var c = [
+                    ["notify", "progress", r.Callbacks("memory"), r.Callbacks("memory"), 2],
+                    ["resolve", "done", r.Callbacks("once memory"), r.Callbacks("once memory"), 0, "resolved"],
+                    ["reject", "fail", r.Callbacks("once memory"), r.Callbacks("once memory"), 1, "rejected"]
+                ],
                 d = "pending",
                 e = {
                     state: function () {

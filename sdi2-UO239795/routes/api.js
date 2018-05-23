@@ -82,7 +82,7 @@ module.exports = function (app, repository, ObjectId) {
         repository.getElements(repository.getMessagesBySenderAndReceiver(req, res), "messages", function (conversation) {
             res.status(200);
             res.send(JSON.stringify(conversation));
-            app.get("logger").info('Listando los mensajes entre los usuarios ' + res.user + " y " + req.params.email);
+            app.get("logger").info('Listando los mensajes entre los usuarios ' + res.user + " y " + req.query.email);
         });
     });
 

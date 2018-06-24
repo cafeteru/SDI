@@ -1,0 +1,29 @@
+{% extends "../templates/templatePagination.html" %}
+{% block titulo %} Peticiones Recibidas - UO239795 {% endblock %}
+{% block main %}
+<h1>Peticiones recibidas</h1>
+<table class="table table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Email</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr class="table-light">
+        <td>{{ user.name }}</td>
+        <td>{{ user.surName }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+            <form method="post" action="/accepted/{{ user.request }}">
+                <input type="submit" class="btn btn-success" value="Aceptar invitación"/>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

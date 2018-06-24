@@ -1,0 +1,27 @@
+main {
+    text-align: center;
+}
+
+main form {
+    text-align: left;
+}
+
+main button {
+    text-align: center;
+}
+
+form,
+table {
+    padding: 2.5% 20%;
+}
+
+td {
+    float: none;
+    text-align: center;
+}
+
+td form {
+    padding: 0;
+    padding-left: 1%;
+    display: inline-block;
+}

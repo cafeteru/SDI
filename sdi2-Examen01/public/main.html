@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cliente jQuery</title>
+    <meta name="author" content="Iván González Mahagamage" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/footer.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sketchy.css" />
+    <link rel="stylesheet" type="text/css" href="/css/chat.css" />
+    <script src="/script/jquery.js"></script>
+    <script src="/script/popper.min.js"></script>
+    <script src="/script/bootstrap.min.js"></script>
+    <script src="/script/cookie.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/main.html">Inicio</a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/main.html?w=friends">Amigos</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main class="container">
+    </main>
+    <footer>
+        <address>
+            <p>
+                <span>Autor</span>: Iván González Mahagamage</p>
+            <p>
+                <span>Contacto</span>:
+                <a href="mailto:uo239795@uniovi.es" style="color: white">uo239795@uniovi.es</a>
+            </p>
+        </address>
+        <div class="footer-copyright py-3 text-center">
+            <div class="container-fluid">
+                © 2018 Copyright:
+                <a href="https://www.linkedin.com/in/iv%C3%A1n-gonz%C3%A1lez-mahagamage-5bb340107/">
+                    Linkedin</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        var token;
+        var URLbase = "http://localhost:8081/api";
+        $("main").load("/widgets/widget-login.html");
+        if (Cookies.get('token') != null) {
+            token = Cookies.get('token');
+            var url = new URL(window.location.href);
+            var w = url.searchParams.get("w");
+            console.log(w);
+            switch (w) {
+                case "friends":
+                    $("main").load("widgets/widget-friends.html");
+                    break;
+                case "messages":
+                    $("main").load("widgets/widget-messages.html");
+                    break;
+                default:
+                    $("main").load("widgets/widget-login.html");
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>

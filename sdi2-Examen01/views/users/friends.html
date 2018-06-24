@@ -1,0 +1,23 @@
+{% extends "../templates/templatePagination.html" %}
+{% block titulo %} Amistades - UO239795 {% endblock %}
+{% block main %}
+<h1>Amistades</h1>
+<table class="table table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr class="table-light">
+        <td>{{ user.name }}</td>
+        <td>{{ user.surName }}</td>
+        <td>{{ user.email }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

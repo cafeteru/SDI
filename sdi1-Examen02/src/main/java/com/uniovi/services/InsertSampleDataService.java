@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Post;
-import com.uniovi.entities.Request;
 import com.uniovi.entities.User;
 
 @Service
@@ -54,7 +53,7 @@ public class InsertSampleDataService {
 
 	@PostConstruct
 	public void init() {
-		// inicializar(100);
+		inicializar(100);
 	}
 
 	protected void inicializar(int limite) {
@@ -96,15 +95,15 @@ public class InsertSampleDataService {
 		User user = new User(email.toLowerCase(), name, surName);
 		user.setPassword("123456");
 		user.setRole(rolesService.getUser());
-		int i = integer(0, 20);
-		if (i % 5 == 0) {
-			user.getReceiveRequests().add(new Request(user1, user));
-			user.getReceiveRequests().add(new Request(user, user1));
-		} else if (i % 11 == 0) {
-			Request a = new Request(user1, user);
-			a.block();
-			user.getReceiveRequests().add(a);
-		}
+		// int i = integer(0, 20);
+		// if (i % 5 == 0) {
+		// user.getReceiveRequests().add(new Request(user1, user));
+		// user.getReceiveRequests().add(new Request(user, user1));
+		// } else if (i % 11 == 0) {
+		// Request a = new Request(user1, user);
+		// a.block();
+		// user.getReceiveRequests().add(a);
+		// }
 		Post post = new Post(user, "Titulo1", "Contenido", "");
 		user.getPosts().add(post);
 		users.add(user);

@@ -3,14 +3,15 @@
     <b id="user"></b>
 </h2>
 <h1>Amistades</h1>
+<h2 id="total"></h2>
 <table class="table table-hover">
     <thead class="table-dark">
-        <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellidos</th>
-            <th scope="col">Email</th>
-            <th scope="col">Mensajes no leídos</th>
-        </tr>
+    <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Email</th>
+        <th scope="col">Mensajes no leídos</th>
+    </tr>
     </thead>
     <tbody id="bodyTable">
     </tbody>
@@ -18,7 +19,8 @@
 <h2>Buscar usuario</h2>
 <div class="navbar-form">
     <div class="form-group">
-        <input id="searchText" type="text" class="form-control" size="50" placeholder="Buscar por email o nombre o apellido del alumno"
+        <input id="searchText" type="text" class="form-control" size="50"
+               placeholder="Buscar por email o nombre o apellido del alumno"
         />
     </div>
     <button type="submit" class="btn btn-primary" onclick="getFriends()">Buscar</button>
@@ -128,5 +130,8 @@
 
     setInterval(function () {
         loadMessageNoRead();
+        $("#total").empty();
+        $("#total").append("Número total de amigos: " + users.length);
     }, 1000);
+
 </script>

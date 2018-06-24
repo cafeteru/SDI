@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="fragments/head" />
+
+<body>
+    <nav th:replace="fragments/nav" />
+    <main class="container" style="text-align: center">
+        <h1 th:text="#{friends.title}">Esta es una zona privada la web</h1>
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" th:text="#{signup.name}">Column heading</th>
+                    <th scope="col" th:text="#{signup.surname}">Column heading</th>
+                    <th scope="col">Email</th>
+                    <th scope="col" th:text="#{nav.post}">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-light" th:each="user:${usersList}">
+                    <td th:text="${user.name}">Column content</td>
+                    <td th:text="${user.surName}">Column content</td>
+                    <td th:text="${user.email}">Column content</td>
+                    <td>
+                        <form th:attr="action=${'/post/friends/' + user.id}">
+                            <input type="submit" class="btn btn-info" th:attr="value=#{post.button.friend}" />
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:replace="fragments/pagination"></div>
+    </main>
+    <footer th:replace="fragments/footer" />
+</body>
+
+</html>

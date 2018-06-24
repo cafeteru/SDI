@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="fragments/head" />
+
+<body>
+    <nav th:replace="fragments/nav" />
+    <main class="container" style="text-align: center">
+        <h1 th:text="#{list.title}">Esta es una zona privada la web</h1>
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" th:text="#{signup.name}">Column heading</th>
+                    <th scope="col" th:text="#{signup.surname}">Column heading</th>
+                    <th scope="col">Email</th>
+                    <th scope="col" th:text="#{list.add}"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-light" th:each="user:${usersList}">
+                    <td th:text="${user.name}">Column content</td>
+                    <td th:text="${user.surName}">Column content</td>
+                    <td th:text="${user.email}">Column content</td>
+                    <td>
+                        <form th:if="${user.receiveRequest} == null" th:attr="action=${'/request/send/' + user.id}">
+                            <input type="submit" class="btn btn-success" th:attr="value=#{list.send}" />
+                        </form>
+                        <span th:if="${user.receiveRequest} != null and ${#strings.toString(user.receiveRequest.status)} == 'ACCEPTED'" class="text-success" th:text="#{list.send.accepted}">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</span>
+                        <span th:if="${user.receiveRequest} != null and ${#strings.toString(user.receiveRequest.status)} == 'SENT'" type="button" class="text-info" th:text="#{list.send.info}" disabled="disable">Success</span>
+                        <span th:if="${user.receiveRequest} != null and ${#strings.toString(user.receiveRequest.status)} == 'BLOCKED'" type="button" class="text-danger" th:text="#{list.send.blocked}" disabled="disable">Success</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:replace="fragments/pagination"></div>
+        <h2 th:text="#{list.search.title}">Buscar usuario</h2>
+        <form class="navbar-form" action="/user/list">
+            <div class="form-group">
+                <input name="searchText" type="text" class="form-control" size="50" th:attr="placeholder=#{list.search}" />
+            </div>
+            <button type="submit" class="btn btn-primary" th:text="#{list.search.button}">Buscar</button>
+        </form>
+    </main>
+    <footer th:replace="fragments/footer" />
+</body>
+
+</html>

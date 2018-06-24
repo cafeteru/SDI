@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="fragments/head" />
+
+<body>
+    <nav th:replace="fragments/nav" />
+    <main class="container" style="text-align: center">
+        <h1><span th:text="#{post.friend.title}"></span><span th:text="${friend}">Amigo</span></h1>
+        <div class="jumbotron" th:each="post:${list}">
+            <h1 class="display-3" th:text="${post.title}">Hello, world!</h1>
+            <hr class="my-4" />
+            <p th:text="${post.text}">It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <img th:attr="src=${post.img}" width="100%" height="100%" />
+            <p class="lead" th:text="${post.date}"></p>
+        </div>
+        <div th:replace="fragments/pagination"></div>
+    </main>
+    <footer th:replace="fragments/footer" />
+</body>
+
+</html>

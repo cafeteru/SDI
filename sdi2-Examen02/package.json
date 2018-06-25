@@ -1,0 +1,19 @@
+{
+  "name": "sdi2-UO239795",
+  "version": "0.0.1",
+  "description": "Entregable 2 de la asignatura SDI",
+  "author": "Iván Gonzalez Mahagamage",
+  "license": "UNLICENSED",
+  "repository": "https://github.com/igm1990/SDI",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "eslint": "^4.19.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "install": "^0.11.0",
+    "jsonwebtoken": "^8.2.1",
+    "log4js": "^2.5.3",
+    "mongodb": "^2.2.33",
+    "swig": "^1.4.2"
+  }
+}

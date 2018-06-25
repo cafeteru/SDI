@@ -1,0 +1,62 @@
+{% extends "../templates/templatePagination.html" %}
+{% block titulo %} Lista de Usuarios - UO239795 {% endblock %}
+{% block main %}
+<h1>Esta es una zona privada la web</h1>
+<h2 align="center">
+    <span> Usuario Autenticado como :</span>
+    <b>{{ user }}</b>
+</h2>
+<h1>Lista de usuarios</h1>
+<h2>Número de usuarios totales: {{ total }}</h2>
+<h2>Número de peticiones enviadas: {{ requestsSent }}</h2>
+<h2>Número de peticiones aceptadas: {{ requestsAccepted }}</h2>
+<table class="table table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Email</th>
+        <th scope="col">Enviar invitación</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr class="table-light">
+        <td>{{ user.name }}</td>
+        <td>{{ user.surName }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+            {% if user.request == undefined %}
+            <form method="post" action="/send/{{ user._id.toString() }}">
+                <input type="submit" class="btn btn-success" value="Enviar solicitud"/>
+            </form>
+            {% endif %}
+
+            {% if user.request !== undefined && user.request.status == "ACCEPTED"%}
+            <span class="text-success">Solicitud aceptada</span>
+            {% endif %}
+
+            {% if user.request !== undefined && user.request.status == "SENT"%}
+            <span type="button" class="text-info" disabled="disable">Solicitud enviada</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div id="error"></div>
+<div id="success"></div>
+<h2>Buscar usuario</h2>
+<form class="navbar-form" action="/list">
+    <div class="form-group">
+        <input id="searchText" name="searchText" type="text" class="form-control" size="50"
+               placeholder="Buscar por email o nombre o apellido del alumno"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+<script src="/script/showMessage.js"></script>
+<script>
+    message.showErrors("error");
+    message.showInfo("success");
+</script>
+{% endblock %}

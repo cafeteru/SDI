@@ -1,0 +1,132 @@
+<h1>Chat con
+    <span id="friend"></span>
+</h1>
+<div id="conversation" style="overflow-y: scroll; height: 600px">
+</div>
+<div>
+    <input id="message" class="form-control" />
+    <button id="send" type="button" class="btn btn-success" onclick="sendMessage()">Enviar</button>
+</div>
+<script>
+    var email = Cookies.get('friend');
+    window.history.pushState("", "", "/main.html?w=messages&email=" + email);
+    $('#friend').text(email);
+    getMessages();
+
+    function getMessages() {
+        $.ajax({
+            url: URLbase + "/messages?email=" + email,
+            type: "GET",
+            data: {},
+            dataType: 'json',
+            headers: {
+                "token": token
+            },
+            success: function (res) {
+                var messages = res;
+                loadMessages(messages);
+            },
+            error: function (error) {
+                $("main").load("widgets/widget-login.html");
+            }
+        });
+    }
+
+    function loadMessages(messages) {
+        $("#conversation").empty();
+        for (var i = 0; i < messages.length; i++) {
+            var message = "";
+            if (messages[i].receiver == email) {
+                message = "<div class='containerChat'>" +
+                    "<p class='text-right'>" + messages[i].sender + "</p>" +
+                    "<p class='text-right'>" + messages[i].message + "</p>" +
+                    "<span class='time-right'>" + timeStamp(new Date(messages[i].date)) + "</span>";
+                if (messages[i].read) {
+                    message += "<img src='img/check.png' style='width: 25px' class='rounded float-right'>";
+                }
+                message += "</div>";
+            } else {
+                readMessage(messages[i]._id.toString());
+                message = "<div class='containerChat darker'>" +
+                    "<p class='text-left'>" + messages[i].sender + "</p>" +
+                    "<p class='text-left'>" + messages[i].message + "</p>" +
+                    "<span class='time-left'>" + timeStamp(new Date(messages[i].date)) + "</span>";
+                if (messages[i].read) {
+                    message += "<img src='img/check.png' style='width: 25px' class='rounded float-left'>";
+                }
+                message += "</div>";
+            }
+            $("#conversation").append(message);
+        }
+
+    }
+
+    setInterval(function () {
+        getMessages();
+    }, 2000);
+
+    function sendMessage() {
+        if ($("#message").val() != '') {
+            $.ajax({
+                url: URLbase + "/messages",
+                type: "POST",
+                data: {
+                    email: email,
+                    message: $("#message").val(),
+                    token: token
+                },
+                dataType: 'json',
+                success: function (respuesta) {
+                    getMessages();
+                    $("#message").val('');
+                },
+                error: function (error) {
+                    $("main").append("<div class='alert alert-danger'>Error enviando el mensaje</div>");
+                }
+            });
+        }
+    }
+
+
+    function readMessage(id) {
+        $.ajax({
+            url: URLbase + "/messages/" + id,
+            type: "PUT",
+            data: {},
+            dataType: 'json',
+            headers: {
+                "token": token
+            },
+            success: function (res) {},
+            error: function (error) {
+                $("main").append("<div class='alert alert-danger'>Error al marcar el mensaje</div>");
+            }
+        });
+    }
+
+    function timeStamp(now) {
+        // Create an array with the current month, day and time
+        var date = [now.getMonth() + 1, now.getDate(), now.getFullYear()];
+
+        // Create an array with the current hour, minute and second
+        var time = [now.getHours(), now.getMinutes(), now.getSeconds()];
+
+        // Determine AM or PM suffix based on the hour
+        var suffix = (time[0] < 12) ? "AM" : "PM";
+
+        // Convert hour from military time
+        time[0] = (time[0] < 12) ? time[0] : time[0] - 12;
+
+        // If hour is 0, set it to 12
+        time[0] = time[0] || 12;
+
+        // If seconds and minutes are less than 10, add a zero
+        for (var i = 1; i < 3; i++) {
+            if (time[i] < 10) {
+                time[i] = "0" + time[i];
+            }
+        }
+        // Return the formatted string
+        return date.join("/") + " " + time.join(":") + " " + suffix;
+    }
+</script>

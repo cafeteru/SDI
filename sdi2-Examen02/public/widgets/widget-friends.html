@@ -1,0 +1,141 @@
+<h2 align="center">
+    <span> Usuario Autenticado como :</span>
+    <b id="user"></b>
+</h2>
+<h1>Amistades</h1>
+<table class="table table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Email</th>
+        <th scope="col">Es amigo</th>
+        <th scope="col">Mensajes no leídos</th>
+    </tr>
+    </thead>
+    <tbody id="bodyTable">
+    </tbody>
+</table>
+<h2>Buscar usuario</h2>
+<div class="navbar-form">
+    <div class="form-group">
+        <input id="searchText" type="text" class="form-control" size="50"
+               placeholder="Buscar por email o nombre o apellido del alumno"
+        />
+    </div>
+    <button type="submit" class="btn btn-primary" onclick="getFriends()">Buscar</button>
+</div>
+<script>
+    var users;
+    var messages;
+    loadMessageNoRead();
+    window.history.pushState("", "", "/main.html?w=friends");
+    $("#user").text(Cookies.get("email"));
+
+    function loadMessageNoRead() {
+        $.ajax({
+            url: URLbase + "/messages/all",
+            type: "GET",
+            data: {},
+            dataType: 'json',
+            headers: {
+                "token": token
+            },
+            success: function (res) {
+                messages = res;
+                getFriends();
+            },
+            error: function (error) {
+                $("main").load("widgets/widget-login.html");
+            }
+        });
+    }
+
+    function getFriends() {
+        $.ajax({
+            url: URLbase + "/users",
+            type: "GET",
+            data: {},
+            dataType: 'json',
+            headers: {
+                "token": token
+            },
+            success: function (res) {
+                users = res;
+                search();
+                loadTable(users, messages);
+            },
+            error: function (error) {
+                $("main").load("widgets/widget-login.html");
+            }
+        });
+    }
+
+    function loadTable(users, messages) {
+        $("#bodyTable").empty();
+        for (let i = 0; i < users.length; i++) {
+            users[i].count = 0;
+            if (messages != null || messages.length > 0) {
+                for (let j = messages.length - 1; j >= 0; j--) {
+                    if (messages[j].receiver == Cookies.get('email') &&
+                        messages[j].sender == users[i].email) {
+                        if (users[i].lastMessage == undefined) {
+                            users[i].lastMessage = messages[j];
+                        }
+                        if (messages[j].read == false) {
+                            users[i].count++;
+                        }
+                    } else if (messages[j].sender == Cookies.get('email') &&
+                        messages[j].receiver == users[i].email && users[i].lastMessage == undefined) {
+                        users[i].lastMessage = messages[j];
+                    }
+                }
+            }
+            if (users[i].lastMessage == undefined)
+                users[i].lastMessage = {
+                    date: new Date(2000, 11, 24, 10, 33, 30, 0)
+                };
+        }
+
+        users = users.sort(function (a, b) {
+            return new Date(b.lastMessage.date) - new Date(a.lastMessage.date);
+        });
+
+        for (let i = 0; i < users.length; i++) {
+            var friend = "";
+            if (users[i].isFriend) {
+                friend = "Es amigo";
+            } else {
+                friend = "No es amigo";
+            }
+            $("#bodyTable").append(
+                "<tr class='table-light'>" +
+                "<td><a onclick=loadConversation('" + users[i].email + "')>" + users[i].name + "</a></td>" +
+                "<td>" + users[i].surName + "</td>" +
+                "<td>" + users[i].email + "</td>" +
+                "<td>" + friend + "</td>" +
+                "<td style='color: red'>" + users[i].count + "</td>" +
+                "</tr>"
+            );
+        }
+    }
+
+    function loadConversation(email) {
+        Cookies.set('friend', email);
+        $("main").load("widgets/widget-messages.html");
+    }
+
+    function search() {
+        let param = $("#searchText").val();
+        users = users.filter(function (user) {
+            if (user.name.includes(param) || user.surName.includes(param) || user.email.includes(param)) {
+                return true;
+            }
+            return false;
+        });
+    }
+
+    setInterval(function () {
+        loadMessageNoRead();
+    }, 1000);
+</script>

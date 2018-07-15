@@ -1,9 +1,7 @@
-package com.uniovi.services;
+package com.uniovi.services.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.uniovi.services.util.CreateFolder;
 
 public class LogService {
 

@@ -16,9 +16,9 @@ import com.uniovi.entities.Friendship;
 import com.uniovi.entities.Request;
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendshipService;
-import com.uniovi.services.LogService;
 import com.uniovi.services.RequestsService;
 import com.uniovi.services.UsersService;
+import com.uniovi.services.util.LogService;
 
 @Controller
 public class RequestController {

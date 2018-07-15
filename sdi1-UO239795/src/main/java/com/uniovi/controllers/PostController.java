@@ -21,9 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.uniovi.entities.Post;
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendshipService;
-import com.uniovi.services.LogService;
 import com.uniovi.services.PostService;
 import com.uniovi.services.UsersService;
+import com.uniovi.services.util.LogService;
 import com.uniovi.validators.PostValidator;
 
 @Controller

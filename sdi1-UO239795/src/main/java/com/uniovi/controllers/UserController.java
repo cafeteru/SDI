@@ -1,12 +1,10 @@
 package com.uniovi.controllers;
 
 import java.security.Principal;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -147,14 +145,11 @@ public class UserController {
 
 	private Page<User> getUsers(Pageable pageable, String searchText,
 			User user) {
-		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		if (searchText != null && !searchText.isEmpty()) {
-			users = usersService.searchByEmailAndNameAndSurname(pageable,
+			return usersService.searchByEmailAndNameAndSurname(pageable,
 					searchText, user.getId());
-		} else {
-			users = usersService.getUsers(pageable, user.getId());
 		}
-		return users;
+		return usersService.getUsers(pageable, user.getId());
 	}
 
 	@PostMapping("/user/delete/{id}")

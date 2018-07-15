@@ -1,0 +1,47 @@
+<!-- nav.html -->
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<img src="/img/student-48.png" alt="logo" />
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li th:if="@{${#httpServletRequest.requestURI}} == '/mark/list'" class="active">
+					<a href="/mark/list">Ver Notas</a>
+				</li>
+				<li th:unless="@{${#httpServletRequest.requestURI}} == '/mark/list'">
+					<a href="/mark/list">Ver Notas</a>
+				</li>
+				<li th:if="@{${#httpServletRequest.requestURI}} == '/mark/add'" class="active">
+					<a href="/mark/add">Agregar Nota</a>
+				</li>
+				<li th:unless="@{${#httpServletRequest.requestURI}} == '/mark/add'">
+					<a href="/mark/add">Agregar Nota</a>
+				</li>
+				<li th:if="@{${#httpServletRequest.requestURI}} == '/mark/filter'" class="active">
+					<a href="/mark/filter">Filtrar</a>
+				</li>
+				<li th:unless="@{${#httpServletRequest.requestURI}} == '/mark/filter'">
+					<a href="/mark/filter">Filtrar</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="/signup">
+						<span class="glyphicon glyphicon-user"></span> Registrate
+					</a>
+				</li>
+				<li>
+					<a href="/login">
+						<span class="glyphicon glyphicon-log-in"></span> Identifícate
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>

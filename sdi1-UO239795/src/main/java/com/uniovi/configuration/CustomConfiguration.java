@@ -28,6 +28,11 @@ public class CustomConfiguration extends WebMvcConfigurerAdapter {
 	@Autowired
 	private RequestTimeInterceptor requestTimeInterceptor;
 
+	/**
+	 * Indica el idioma por defecto de la aplicación
+	 * 
+	 * @return
+	 */
 	@Bean
 	public LocaleResolver localeResolver() {
 		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
@@ -35,6 +40,11 @@ public class CustomConfiguration extends WebMvcConfigurerAdapter {
 		return localeResolver;
 	}
 
+	/**
+	 * Indica el parámetro para cambiar de idioma la aplicación
+	 * 
+	 * @return
+	 */
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor localeChangeInterceptor;

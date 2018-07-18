@@ -1,4 +1,4 @@
-package com.uniovi.services;
+package com.uniovi.services.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +16,7 @@ public class SecurityService {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
 	private static final Logger logger = LoggerFactory
 			.getLogger(SecurityService.class);
 

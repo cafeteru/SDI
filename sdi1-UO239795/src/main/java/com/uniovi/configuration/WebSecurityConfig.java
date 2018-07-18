@@ -34,7 +34,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// pagina de autentificacion por defecto
 				.and().formLogin().loginPage("/login").permitAll()
 				// Si se loguea bien
-				.defaultSuccessUrl("/home").and().logout().permitAll();
+				.defaultSuccessUrl("/home")
+				// desconectarse
+				.and().logout().permitAll();
 	}
 
 	@Autowired

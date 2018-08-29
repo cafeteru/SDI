@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="fragments/head" />
+
+<body>
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h2 th:text="#{edit.title}">Editar Nota</h2>
+		<form class="form-horizontal" method="post" th:action="${'/mark/edit/' + mark.id}">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="description" th:text="#{add.description}">Email:</label>
+				<div class="col-sm-10">
+					<input th:value="${mark.description}" type="text" class="form-control" name="description" required="required" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="pwd" th:text="#{add.score}">Puntuación:</label>
+				<div class="col-sm-10">
+					<input th:value="${mark.score}" type="number" class="form-control" name="score" min="0" max="10" required="required" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary" th:text="#{edit.button}">Modificar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+
+</html>

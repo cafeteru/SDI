@@ -2,17 +2,18 @@
 let express = require('express');
 let app = express();
 
+// Log
 let log4js = require('log4js');
 log4js.configure({
-    appenders: { sdi: { type: 'file', filename: 'logs/sdi.log' } },
-    categories: { default: { appenders: ['sdi'], level: 'trace' } }
+    appenders: {sdi: {type: 'file', filename: 'logs/sdi.log'}},
+    categories: {default: {appenders: ['sdi'], level: 'trace'}}
 });
 let logger = log4js.getLogger('sdi');
 
 // Objeto sessión para guardar al usuario actual
 let expressSession = require('express-session');
 app.use(expressSession({
-    secret: 'abcdefg',
+    secret: 'abcdefg', // Codifica la contraseña
     resave: true,
     saveUninitialized: true
 }));
@@ -20,6 +21,7 @@ app.use(expressSession({
 // Motor de plantillas
 let swig = require('swig');
 
+// Lee los json
 let jwt = require('jsonwebtoken');
 app.set('jwt', jwt);
 
@@ -40,7 +42,8 @@ routerUserSession.use(function (req, res, next) {
         res.redirect("/login");
     }
 });
-//Aplicar routerUsuarioSession
+
+// Aplicar routerUsuarioSession
 app.use("/home", routerUserSession);
 app.use("/list", routerUserSession);
 app.use("/send", routerUserSession);
@@ -61,8 +64,8 @@ app.use(express.static('public'));
 let crypto = require('crypto');
 
 // routerUsuarioToken
-let routerUsuarioToken = express.Router();
-routerUsuarioToken.use(function (req, res, next) {
+let apiToken = express.Router();
+apiToken.use(function (req, res, next) {
     // obtener el token, puede ser un parámetro GET , POST o HEADER
     let token = req.body.token || req.query.token || req.headers['token'];
     if (token != null) {
@@ -89,8 +92,8 @@ routerUsuarioToken.use(function (req, res, next) {
     }
 });
 // Aplicar routerUsuarioToken
-app.use('/api/users', routerUsuarioToken);
-app.use('/api/messages', routerUsuarioToken);
+app.use('/api/users', apiToken);
+app.use('/api/messages', apiToken);
 
 // Variables
 app.set('port', 8081);

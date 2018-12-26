@@ -45,9 +45,9 @@ module.exports = function (app, repository, ObjectId) {
         };
         getFriends(res, email, function (friends) {
             let friend = friends.filter(function (element) {
-                return element.email == req.body.email;
+                return element.email === req.body.email;
             });
-            if (friend.length == 0) {
+            if (friend.length === 0) {
                 res.status(401);
                 res.json({
                     error: 'El receptor no es amigo'
@@ -60,7 +60,7 @@ module.exports = function (app, repository, ObjectId) {
                     message: req.body.message,
                     date: new Date(),
                     read: false
-                }
+                };
                 repository.addElement(message, "messages", function (id) {
                     if (id == null) {
                         res.status(501);
@@ -99,14 +99,14 @@ module.exports = function (app, repository, ObjectId) {
             "_id": new ObjectId(req.params.id)
         };
         repository.getElements(message, "messages", function (conversation) {
-            if (conversation == null || conversation.length == 0) {
+            if (conversation == null || conversation.length === 0) {
                 res.status(403);
                 res.json({
                     error: 'No existe el mensaje'
                 });
                 app.get("logger").error('No existe el mensaje con id ' + req.params.id);
             } else {
-                if (conversation[0].receiver == res.user) {
+                if (conversation[0].receiver === res.user) {
                     var updateMessage = {
                         sender: conversation[0].sender,
                         receiver: conversation[0].receiver,
@@ -136,7 +136,7 @@ module.exports = function (app, repository, ObjectId) {
 
     function getFriends(res, email, functionCallBack) {
         repository.getElements({}, "users", function (users) {
-            if (users == null || users.length == 0) {
+            if (users == null || users.length === 0) {
                 res.status(403); // Forbidden
                 res.json({
                     error: 'No hay usuarios'
@@ -149,7 +149,7 @@ module.exports = function (app, repository, ObjectId) {
                         status: "ACCEPTED"
                     };
                     repository.getElements(request, "requests", function (requests) {
-                        if (requests == null || requests.length == 0) {
+                        if (requests == null || requests.length === 0) {
                             res.status(403);
                             res.json({
                                 error: 'El usuario ' + email.email + " no tiene amistades."
@@ -158,7 +158,7 @@ module.exports = function (app, repository, ObjectId) {
                         } else {
                             let collection = users.filter(function (user) {
                                 for (let i = 0; i < requests.length; i++) {
-                                    if (user._id.toString() == requests[i].sender) {
+                                    if (user._id.toString() === requests[i].sender) {
                                         delete user.password;
                                         return true;
                                     }

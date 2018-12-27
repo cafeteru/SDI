@@ -1,8 +1,8 @@
 module.exports = function (app, swig, repository) {
-    app.get("/signup", function (req, res) {
+    app.get('/signup', function (req, res) {
         let answer = swig.renderFile('views/signup.html', {});
         res.send(answer);
-        app.get("logger").info('Usuario se va a registrar');
+        app.get('logger').info('Usuario se va a registrar');
     });
 
     app.post('/signup', function (req, res) {
@@ -24,7 +24,7 @@ module.exports = function (app, swig, repository) {
             email: req.body.email
         };
         repository.getElements(findByEmail, "users", function (users) {
-            if (users == null || users.length == 0) {
+            if (users === null || users.length === 0) {
                 repository.addElement(user, "users", function (id) {
                     if (id == null) {
                         res.redirect("/signup?email=Error al añadir al usuario. Intentelo más tarde");
@@ -66,7 +66,7 @@ module.exports = function (app, swig, repository) {
             app.get("logger").error('Longitud de la recontraseña invalida');
             errors.push("passwordConfirm=La contraseña debe tener entre 5 y 24 caracteres.");
         }
-        if (req.body.password != req.body.passwordConfirm) {
+        if (req.body.password !== req.body.passwordConfirm) {
             app.get("logger").error('No coinciden las contraseñas');
             errors.push("coincidence=Las contraseñas no coinciden.");
         }
@@ -192,7 +192,7 @@ module.exports = function (app, swig, repository) {
                     repository.getElements(request, "requests", function (requests) {
                         let collection = users.filter(function (user) {
                             for (let i = 0; i < requests.length; i++) {
-                                if (user._id.toString() == requests[i].sender) {
+                                if (user._id.toString() === requests[i].sender) {
                                     user.request = requests[i]._id.toString();
                                     return true;
                                 }

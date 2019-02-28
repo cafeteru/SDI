@@ -129,7 +129,7 @@ module.exports = function (app, swig, repository) {
         }
         repository.getElements(repository.createQuery(req), "users", function (users) {
             if (users == null) {
-                res.send("Error al listar ");
+                res.redirect("/list?error=Error al listar");
             } else {
                 let email = {
                     email: req.session.user
@@ -142,7 +142,7 @@ module.exports = function (app, swig, repository) {
                         let i = 0;
                         for (; i < users.length; i++) {
                             for (let j = 0; j < requests.length; j++) {
-                                if (requests[j].receiver == users[i]._id.toString()) {
+                                if (requests[j].receiver === users[i]._id.toString()) {
                                     users[i].request = requests[j];
                                     break;
                                 }
@@ -153,7 +153,6 @@ module.exports = function (app, swig, repository) {
                             users: users.slice(i, i + 5),
                             pgCurrent: pg,
                             pgLast: calculatePgLast(users.length),
-                            user: req.session.user
                         });
                         res.send(answer);
                     });

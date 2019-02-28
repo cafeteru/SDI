@@ -17,7 +17,7 @@ module.exports = function (app, repository, ObjectId) {
                 let token = app.get('jwt').sign({
                     user: user.email,
                     time: Date.now() / 1000
-                }, "secreto");
+                }, app.get('keyApi'));
                 res.status(200);
                 res.json({
                     authenticated: true,
@@ -150,7 +150,7 @@ module.exports = function (app, repository, ObjectId) {
                     };
                     repository.getElements(request, "requests", function (requests) {
                         if (requests == null || requests.length === 0) {
-                            res.status(403);
+                            res.status(400);
                             res.json({
                                 error: 'El usuario ' + email.email + " no tiene amistades."
                             });

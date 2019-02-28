@@ -63,6 +63,14 @@ app.use(express.static('public'));
 // Encriptación de contraseñas
 let crypto = require('crypto');
 
+// Variables
+app.set('port', 8081);
+app.set('db', 'mongodb://admin:123456a@ds145184.mlab.com:45184/sdi-enero-2019');
+app.set('key', 'abcdefg');
+app.set('crypto', crypto);
+app.set('logger', logger);
+app.set('keyApi', 'secreto');
+
 // routerUsuarioToken
 let apiToken = express.Router();
 apiToken.use(function (req, res, next) {
@@ -70,7 +78,8 @@ apiToken.use(function (req, res, next) {
     let token = req.body.token || req.query.token || req.headers['token'];
     if (token != null) {
         // verificar el token
-        jwt.verify(token, 'secreto', function (err, infoToken) {
+        jwt.verify(token, app.get('keyApi'), function (err, infoToken) {
+            // Si esta caducado lo echa para fuera
             if (err || (Date.now() / 1000 - infoToken.tiempo) > 24000) {
                 res.status(403); // Forbidden
                 res.json({
@@ -79,11 +88,13 @@ apiToken.use(function (req, res, next) {
                 });
                 return;
             } else {
+                // si es correcto, deja pasar la peticion
                 res.user = infoToken.user;
                 next();
             }
         });
     } else {
+        // No hay token en la petición
         res.status(403); // Forbidden
         res.json({
             acceso: false,
@@ -91,16 +102,10 @@ apiToken.use(function (req, res, next) {
         });
     }
 });
-// Aplicar routerUsuarioToken
+
+// Indica en que urls aplicar routerUsuarioToken
 app.use('/api/users', apiToken);
 app.use('/api/messages', apiToken);
-
-// Variables
-app.set('port', 8081);
-app.set('db', 'mongodb://uo239795:123456@ds231529.mlab.com:31529/sdi2-uo239795');
-app.set('key', 'abcdefg');
-app.set('crypto', crypto);
-app.set('logger', logger);
 
 // Controladores
 require("./routes/rUsers.js")(app, swig, repository);

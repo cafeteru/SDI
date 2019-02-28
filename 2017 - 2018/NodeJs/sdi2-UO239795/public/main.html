@@ -51,14 +51,13 @@
         </div>
     </footer>
     <script>
-        var token;
-        var URLbase = "http://localhost:8081/api";
+        let token;
+        let URLbase = "http://localhost:8081/api";
         $("main").load("/widgets/widget-login.html");
         if (Cookies.get('token') != null) {
             token = Cookies.get('token');
-            var url = new URL(window.location.href);
-            var w = url.searchParams.get("w");
-            console.log(w);
+            let url = new URL(window.location.href);
+            let w = url.searchParams.get("w");
             switch (w) {
                 case "friends":
                     $("main").load("widgets/widget-friends.html");

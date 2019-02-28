@@ -37,13 +37,15 @@
             data: {},
             dataType: 'json',
             headers: {
-                "token": token
+                "token": Cookies.get('token')
             },
             success: function (res) {
                 messages = res;
                 getFriends();
             },
             error: function (error) {
+                alert('Error al listar los amigos. Intentelo de nuevo');
+                Cookies.remove('token');
                 $("main").load("widgets/widget-login.html");
             }
         });

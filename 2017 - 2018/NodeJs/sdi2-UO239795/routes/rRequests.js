@@ -4,7 +4,7 @@ module.exports = function (app, swig, repository, ObjectId) {
             email: req.session.user
         };
         repository.getElements(email, "users", function (users) {
-            if (users == null || users.length == 0) {
+            if (users == null || users.length === 0) {
                 res.redirect("/list?error=Usuario no existe");
             } else {
                 let request = {
@@ -13,7 +13,7 @@ module.exports = function (app, swig, repository, ObjectId) {
                     status: "SENT"
                 };
                 repository.getElements(request, "requests", function (requests) {
-                    if (requests == null || requests.length == 0) {
+                    if (requests == null || requests.length === 0) {
                         repository.addElement(request, "requests", function () {
                             app.get("logger").info('El usuario ' + req.session.user + " ha enviado una petición de amistad");
                             res.redirect("/list?success=Petición enviada correctamente");

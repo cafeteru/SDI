@@ -17,6 +17,9 @@ public class Message {
 	@ManyToOne
 	private User receiver;
 
+	@ManyToOne
+	private Sale sale;
+
 	private String body;
 
 	private LocalDateTime date;
@@ -24,6 +27,7 @@ public class Message {
 	private boolean valid;
 
 	public Message() {
+		this.valid = true;
 	}
 
 	public Long getId() {
@@ -87,8 +91,7 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message{" + "id=" + id + ", sender=" + sender + ", receiver="
-				+ receiver + ", body='" + body + '\'' + ", date=" + date
-				+ ", valid=" + valid + '}';
+		return "Message{" + "id=" + id + ", sender=" + sender + ", receiver=" + receiver + ", body='" + body + '\''
+				+ ", date=" + date + ", valid=" + valid + '}';
 	}
 }

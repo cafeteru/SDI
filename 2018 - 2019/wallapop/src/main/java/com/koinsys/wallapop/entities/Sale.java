@@ -7,12 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.joda.time.LocalDateTime;
 
 import com.koinsys.wallapop.entities.types.SaleStatus;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Sale {
@@ -36,7 +39,11 @@ public class Sale {
 	@ManyToOne
 	private User buyer;
 
+	@OneToMany(mappedBy = "sale")
+	private Set<Message> messages = new HashSet<>();
+
 	public Sale() {
+		this.status = SaleStatus.ONSALE;
 	}
 
 	public Long getId() {

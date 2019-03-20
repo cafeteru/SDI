@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public')); // Funcionalidad adicional a la aplicación
 
 //Variables
-app.set("port",80);
+app.set("port",8081);
 
 require("./routes/rusuarios.js")(app, swig);
 require("./routes/rcanciones.js")(app, swig);

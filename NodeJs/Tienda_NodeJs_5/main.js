@@ -35,7 +35,7 @@ app.use(fileUpload());
 // Base de datos
 var mongo = require('mongodb');
 
-var swig = require('swig');
+var swig = require('swig-templates');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());

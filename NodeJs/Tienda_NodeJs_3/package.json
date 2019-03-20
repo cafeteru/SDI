@@ -8,6 +8,6 @@
     "express-session": "^1.15.6",
     "moment": "^2.22.0",
     "mongodb": "^2.2.33",
-    "swig": "^1.4.2"
+    "swig-templates": "^2.0.3"
   }
 }

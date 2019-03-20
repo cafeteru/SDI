@@ -2,7 +2,7 @@
 var express = require('express');
 var app = express();
 
-var swig = require('swig');
+var swig = require('swig-templates');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());

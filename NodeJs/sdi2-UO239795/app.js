@@ -19,7 +19,7 @@ app.use(expressSession({
 }));
 
 // Motor de plantillas
-let swig = require('swig');
+let swig = require('swig-templates');
 
 // Lee los json
 let jwt = require('jsonwebtoken');
@@ -126,5 +126,5 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(app.get('port'), function () {
-    console.log("Servidor activo");
+    console.log("Servidor activo en puerto " + app.get('port'));
 });

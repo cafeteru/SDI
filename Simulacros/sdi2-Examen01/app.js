@@ -18,7 +18,7 @@ app.use(expressSession({
 }));
 
 // Motor de plantillas
-let swig = require('swig');
+let swig = require('swig-templates');
 
 let jwt = require('jsonwebtoken');
 app.set('jwt', jwt);

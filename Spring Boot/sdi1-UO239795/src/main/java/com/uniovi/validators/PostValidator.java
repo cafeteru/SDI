@@ -20,9 +20,9 @@ public class PostValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		Post post = (Post) target;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title",
-				"Error.empty");
+				"error.empty");
 		if (post.getTitle().length() < 2) {
-			errors.rejectValue("title", "Error.post.title.length");
+			errors.rejectValue("title", "error.post.title.length");
 		}
 
 	}

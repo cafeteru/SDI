@@ -11,7 +11,7 @@ import com.uniovi.services.util.LogService;
 @Component
 public class RequestTimeInterceptor extends HandlerInterceptorAdapter {
 
-	private LogService log = new LogService(this);
+	private final LogService log = new LogService(this);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,

@@ -27,7 +27,7 @@ app.set('jwt', jwt);
 
 // Base de datos
 let mongo = require('mongodb');
-let ObjectId = require('mongodb').ObjectID;
+let ObjectId = require('mongodb').ObjectId;
 // Encriptación de contraseñas
 let crypto = require('crypto');
 

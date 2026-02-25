@@ -1,93 +1,79 @@
 module.exports = {
     mongo: null,
     app: null,
+    client: null,
+    db: null,
     init: function (app, mongo) {
         this.mongo = mongo;
         this.app = app;
+        this.client = new mongo.MongoClient(this.app.get('db'));
+    },
+    getDb: async function () {
+        if (this.db) return this.db;
+        try {
+            await this.client.connect();
+            console.log("INFO: Conexión exitosa a la base de datos");
+            this.db = this.client.db();
+            return this.db;
+        } catch (err) {
+            console.log("CRITICAL ERROR: Fallo al conectar a MongoDB: " + err);
+            return null;
+        }
     },
     getElements: function (element, nameCollection, funcionCallback) {
-        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
-            if (err) {
-                funcionCallback(null);
-            } else {
-                let collection = db.collection(nameCollection);
-                collection.find(element).toArray(function (err, elements) {
-                    if (err) {
-                        funcionCallback(null);
-                    } else {
-                        funcionCallback(elements);
-                    }
-                    db.close();
+        this.getDb().then(db => {
+            if (!db) return funcionCallback(null);
+            db.collection(nameCollection).find(element).toArray()
+                .then(elements => {
+                    funcionCallback(elements);
+                })
+                .catch(err => {
+                    console.log("ERROR en getElements: " + err);
+                    funcionCallback(null);
                 });
-            }
+        }).catch(err => {
+            console.log("ERROR: Excepción en getElements: " + err);
+            funcionCallback(null);
         });
     },
     addElement: function (element, nameCollection, funcionCallback) {
-        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
-            if (err) {
-                funcionCallback(null);
-            } else {
-                let collection = db.collection(nameCollection);
-                collection.insert(element, function (err, result) {
-                    if (err) {
-                        funcionCallback(null);
-                    } else {
-                        funcionCallback(result.ops[0]._id);
-                    }
-                    db.close();
+        this.getDb().then(db => {
+            if (!db) return funcionCallback(null);
+            db.collection(nameCollection).insertOne(element)
+                .then(result => {
+                    funcionCallback(result.insertedId);
+                })
+                .catch(err => {
+                    console.log("ERROR en addElement: " + err);
+                    funcionCallback(null);
                 });
-            }
         });
     },
     updateElement: function (element, updateElement, nameCollection, funcionCallback) {
-        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
-            if (err) {
-                funcionCallback(null);
-            } else {
-                let collection = db.collection(nameCollection);
-                collection.update(element, {
-                    $set: updateElement
-                }, function (err, result) {
-                    if (err) {
-                        funcionCallback(null);
-                    } else {
-                        funcionCallback(result);
-                    }
-                    db.close();
+        this.getDb().then(db => {
+            if (!db) return funcionCallback(null);
+            db.collection(nameCollection).updateOne(element, { $set: updateElement })
+                .then(result => {
+                    funcionCallback(result);
+                })
+                .catch(err => {
+                    console.log("ERROR en updateElement: " + err);
+                    funcionCallback(null);
                 });
-            }
         });
     },
     createQuery(req) {
-        let textSearch = {
-            email: {
-                $ne: req.session.user
-            }
-        };
+        let textSearch = { email: { $ne: req.session.user } };
         if (req.query.searchText != null) {
             let searchText = req.query.searchText;
             textSearch = {
-                $and: [{
-                        email: {
-                            $ne: req.session.user
-                        }
-                    },
+                $and: [
+                    { email: { $ne: req.session.user } },
                     {
-                        $or: [{
-                                email: {
-                                    $regex: ".*" + searchText + ".*"
-                                }
-                            },
-                            {
-                                name: {
-                                    $regex: ".*" + searchText + ".*"
-                                }
-                            },
-                            {
-                                surName: {
-                                    $regex: ".*" + searchText + ".*"
-                                }
-                            }
+                        $or: [
+                            { email: { $regex: ".*" + searchText + ".*", $options: 'i' } },
+                            { name: { $regex: ".*" + searchText + ".*", $options: 'i' } },
+                            { surName: { $regex: ".*" + searchText + ".*", $options: 'i' } }
                         ]
                     }
                 ]
@@ -96,38 +82,16 @@ module.exports = {
         return textSearch;
     },
     getMessagesBySenderAndReceiver(req, res) {
-        let messages = {
-            $or: [{
-                    $and: [{
-                            sender: res.user
-                        },
-                        {
-                            receiver: req.query.email
-                        },
-                    ]
-                },
-                {
-                    $and: [{
-                            sender: req.query.email
-                        },
-                        {
-                            receiver: res.user
-                        },
-                    ]
-                }
+        return {
+            $or: [
+                { $and: [{ sender: res.user }, { receiver: req.query.email }] },
+                { $and: [{ sender: req.query.email }, { receiver: res.user }] }
             ]
         };
-        return messages;
     },
     getAllMessages(res) {
-        let user = {
-            $or: [{
-                    sender: res.user
-                },
-                {
-                    receiver: res.user
-                }
-            ]
+        return {
+            $or: [{ sender: res.user }, { receiver: res.user }]
         };
     }
 };

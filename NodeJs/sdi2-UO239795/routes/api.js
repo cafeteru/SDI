@@ -6,7 +6,7 @@ module.exports = function (app, repository, ObjectId) {
             password: seguro
         };
         repository.getElements(user, "users", function (users) {
-            if (users == null || users.length == 0) {
+            if (users == null || users.length === 0) {
                 res.status(401);
                 res.json({
                     authenticated: false,

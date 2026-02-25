@@ -28,6 +28,16 @@ app.set('jwt', jwt);
 // Base de datos
 let mongo = require('mongodb');
 let ObjectId = require('mongodb').ObjectID;
+// Encriptación de contraseñas
+let crypto = require('crypto');
+
+// Variables
+app.set('port', 8081);
+app.set('db', 'mongodb://ivan_user:password1234@192.168.1.101:27017/sdi-enero-2019?authSource=admin');
+app.set('key', 'abcdefg');
+app.set('crypto', crypto);
+app.set('logger', logger);
+app.set('keyApi', 'secreto');
 
 // Objeto para manejar base de datos
 let repository = require("./modules/repository.js");
@@ -60,16 +70,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Para usar los img, css y js
 app.use(express.static('public'));
 
-// Encriptación de contraseñas
-let crypto = require('crypto');
 
-// Variables
-app.set('port', 8081);
-app.set('db', 'mongodb://admin:123456a@ds145184.mlab.com:45184/sdi-enero-2019');
-app.set('key', 'abcdefg');
-app.set('crypto', crypto);
-app.set('logger', logger);
-app.set('keyApi', 'secreto');
 
 // routerUsuarioToken
 let apiToken = express.Router();

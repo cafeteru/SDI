@@ -2,43 +2,53 @@ module.exports = function (app, swig, repository) {
     app.get('/signup', function (req, res) {
         let answer = swig.renderFile('views/signup.html', {});
         res.send(answer);
-        app.get('logger').info('Usuario se va a registrar');
+        app.get('logger').info('Usuario accediendo a la vista de registro');
     });
 
     app.post('/signup', function (req, res) {
-        app.get("logger").info('Usuario se intenta registrar');
+        app.get("logger").info('Intento de registro para el email: ' + req.body.email);
+
         let errors = checkErrorSignUp(req);
         if (errors.length > 0) {
+            app.get("logger").warn('Registro fallido por errores de validación: ' + errors);
             res.redirect("/signup?" + errors);
             return;
         }
+
         let password = app.get("crypto").createHmac('sha256', app.get('key'))
             .update(req.body.password).digest('hex');
+
         let user = {
             email: req.body.email,
             name: req.body.name,
             surName: req.body.surName,
             password: password
         };
-        let findByEmail = {
-            email: req.body.email
-        };
+
+        let findByEmail = { email: req.body.email };
+
         repository.getElements(findByEmail, "users", function (users) {
-            if (users === null || users.length === 0) {
+            if (users === null) {
+                app.get("logger").error('Error al consultar la base de datos buscando el email: ' + req.body.email);
+                res.redirect("/signup?email=Error interno al verificar el usuario");
+                return;
+            }
+            if (users.length === 0) {
                 repository.addElement(user, "users", function (id) {
                     if (id == null) {
+                        app.get("logger").error('Fallo al insertar el usuario ' + req.body.email + ' en la colección');
                         res.redirect("/signup?email=Error al añadir al usuario. Intentelo más tarde");
                     } else {
+                        app.get("logger").info('Usuario registrado con éxito. ID: ' + id + ' Email: ' + req.body.email);
                         let textSearch = {
                             email: req.body.email,
                             password: password
                         };
-                        app.get("logger").info('Usuario registrado como ' + req.body.email);
                         autoLogin(textSearch, req, res);
                     }
                 });
             } else {
-                app.get("logger").error('Error al registrar al usuarios');
+                app.get("logger").warn('Intento de registro con email ya existente: ' + req.body.email);
                 res.redirect("/signup?email=Este correo ya esta registrado.");
             }
         });

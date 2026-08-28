@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head th:replace="fragments/head" />
+<head th:replace="~{fragments/head}" />
 
 <body>
     <script src="/script/checkForm.js"></script>
-    <nav th:replace="fragments/nav" />
+    <nav th:replace="~{fragments/nav}" />
     <main>
         <h1 th:text="#{signup.register}">Registrar</h1>
         <form method="post" action="/signup" th:object="${user}">
@@ -63,7 +63,7 @@
             </fieldset>
         </form>
     </main>
-    <footer th:replace="fragments/footer" />
+    <footer th:replace="~{fragments/footer}" />
 </body>
 
 </html>

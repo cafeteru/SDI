@@ -79,7 +79,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.name("passwordConfirm")).clear();
 		driver.findElement(By.name("passwordConfirm")).sendKeys("123456");
-		driver.findElement(By.xpath("//input[@value='Registrar']")).click();
+		driver.findElement(By.xpath("//input[@value='Register']")).click();
 		test.textoPresentePagina("User authenticated as");
 		test.textoPresentePagina(email);
 	}
@@ -105,7 +105,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.name("passwordConfirm")).clear();
 		driver.findElement(By.name("passwordConfirm")).sendKeys("1234567");
-		driver.findElement(By.xpath("//input[@value='Registrar']")).click();
+		driver.findElement(By.xpath("//input[@value='Register']")).click();
 		assertEquals("These passwords do not match.",
 				test.closeAlertAndGetItsText());
 	}
@@ -645,7 +645,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		test.waitChangeWeb();
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		driver.findElement(By.xpath("//input[@value='Eliminar']"));
+		driver.findElement(By.xpath("//input[@value='Delete']"));
 	}
 
 	/**
@@ -670,6 +670,7 @@ public class Sdi1UO239795Test {
 		test.textoPresentePagina("Access is denied");
 	}
 }
+
 
 
 

@@ -9,3 +9,5 @@ node_modules/
 /RemoteSystemsTempFiles/
 .recommenders/
 .vscode/target/
+__pycache__/
+.venv/

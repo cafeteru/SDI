@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email)
 			throws UsernameNotFoundException {
 		com.uniovi.entities.User user = usersRepository.findByEmail(email);
-		if (user == null) {
+		if (java.util.Objects.isNull(user)) {
 			throw new UsernameNotFoundException(email);
 		}
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
@@ -30,4 +30,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 }
+
 

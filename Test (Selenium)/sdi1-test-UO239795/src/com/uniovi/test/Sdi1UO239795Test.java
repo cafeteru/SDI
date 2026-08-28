@@ -62,7 +62,7 @@ public class Sdi1UO239795Test {
 	 * Registro de Usuario con datos válidos.
 	 */
 	@Test
-	public void Test01_1_RegVal() {
+	public void Test01_1_RegValid() {
 		email = Random.email();
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Signup")).click();
@@ -89,7 +89,7 @@ public class Sdi1UO239795Test {
 	 * (repetición de contraseña invalida).
 	 */
 	@Test
-	public void Test01_2_RegInval() {
+	public void Test01_2_RegInvalid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Signup")).click();
 		test.waitChangeWeb();
@@ -114,7 +114,7 @@ public class Sdi1UO239795Test {
 	 * Inicio de sesión con datos válidos.
 	 */
 	@Test
-	public void Test02_1_Inval() {
+	public void Test02_1_LoginValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -137,7 +137,7 @@ public class Sdi1UO239795Test {
 	 * (usuario no existente en la aplicación).
 	 */
 	@Test
-	public void Test02_2_InInVal() {
+	public void Test02_2_LoginInvalid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -155,7 +155,7 @@ public class Sdi1UO239795Test {
 	 * Acceso al listado de usuarios desde un usuario en sesión
 	 */
 	@Test
-	public void Test03_1_LisUsrVal() {
+	public void Test03_1_ListUsersValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -182,7 +182,7 @@ public class Sdi1UO239795Test {
 	 * vistas privadas.
 	 */
 	@Test
-	public void Test03_2_LisUsrInVal() {
+	public void Test03_2_ListUsersInvalid() {
 		driver.get(URL + "?lang=en");
 		driver.get(URL + "user/list");
 		test.waitChangeWeb();
@@ -195,7 +195,7 @@ public class Sdi1UO239795Test {
 	 * un usuario en sesión.
 	 */
 	@Test
-	public void Test04_1_BusUsrVal() {
+	public void Test04_1_SearchUserValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -224,7 +224,7 @@ public class Sdi1UO239795Test {
 	 * identificado. Debe producirse un acceso no permitido a vistas privadas.
 	 */
 	@Test
-	public void Test04_2_BusUsrInVal() {
+	public void Test04_2_SearchUserInvalid() {
 		driver.get(URL + "?lang=en");
 		driver.get(URL + "user/list");
 		test.waitChangeWeb();
@@ -237,7 +237,7 @@ public class Sdi1UO239795Test {
 	 * Enviar una invitación de amistad a un usuario de forma valida.
 	 */
 	@Test
-	public void Test05_1_InvVal() {
+	public void Test05_1_InviteValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -272,7 +272,7 @@ public class Sdi1UO239795Test {
 	 * notificar que ya había sido enviada previamente.
 	 */
 	@Test
-	public void Test05_2_InvInVal() {
+	public void Test05_2_InviteInvalid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -304,7 +304,7 @@ public class Sdi1UO239795Test {
 	 * invitación recibida.
 	 */
 	@Test
-	public void Test06_1_LisInvVal() {
+	public void Test06_1_ListInvitesValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -326,7 +326,7 @@ public class Sdi1UO239795Test {
 	 * Aceptar una invitación recibida.
 	 */
 	@Test
-	public void Test07_1_AcepInvVal() {
+	public void Test07_1_AcceptInviteValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -354,7 +354,7 @@ public class Sdi1UO239795Test {
 	 * lista que al menos tenga un amigo.
 	 */
 	@Test
-	public void Test08_1_ListAmiVal() {
+	public void Test08_1_ListFriendsValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -376,7 +376,7 @@ public class Sdi1UO239795Test {
 	 * Crear una publicación con datos válidos.
 	 */
 	@Test
-	public void Test09_1_PubVal() {
+	public void Test09_1_PostValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -409,7 +409,7 @@ public class Sdi1UO239795Test {
 	 * Acceso al listado de publicaciones desde un usuario en sesión.
 	 */
 	@Test
-	public void Test10_1_LisPubVal() {
+	public void Test10_1_ListPostsValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -433,7 +433,7 @@ public class Sdi1UO239795Test {
 	 * Listar las publicaciones de un usuario amigo
 	 */
 	@Test
-	public void Test11_1_LisPubAmiVal() {
+	public void Test11_1_ListFriendPostsValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -460,7 +460,7 @@ public class Sdi1UO239795Test {
 	 * que no sea amigo del usuario identificado en sesión.
 	 */
 	@Test
-	public void Test11_2_LisPubAmiVal() {
+	public void Test11_2_ListFriendPostsInvalid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -483,7 +483,7 @@ public class Sdi1UO239795Test {
 	 * Crear una publicación con datos válidos y una foto adjunta.
 	 */
 	@Test
-	public void Test12_1_PubFot1Val() {
+	public void Test12_1_PostPhoto1Valid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -520,7 +520,7 @@ public class Sdi1UO239795Test {
 	 * Crear una publicación con datos válidos y sin una foto adjunta.
 	 */
 	@Test
-	public void Test12_2_PubFot2Val() {
+	public void Test12_2_PostPhoto2Valid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -553,7 +553,7 @@ public class Sdi1UO239795Test {
 	 * Inicio de sesión como administrador con datos válidos.
 	 */
 	@Test
-	public void Test13_1_AdInVal() {
+	public void Test13_1_AdminLoginValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("Admin")).click();
@@ -577,7 +577,7 @@ public class Sdi1UO239795Test {
 	 * datos de un usuario que no tenga perfil administrador).
 	 */
 	@Test
-	public void Test13_2_AdInInVal() {
+	public void Test13_2_AdminLoginInvalid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("Admin")).click();
@@ -598,7 +598,7 @@ public class Sdi1UO239795Test {
 	 * listar a todos los usuarios de la aplicación.
 	 */
 	@Test
-	public void Test14_1_AdLisUsrVal() {
+	public void Test14_1_AdminListUsersValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("Admin")).click();
@@ -622,7 +622,7 @@ public class Sdi1UO239795Test {
 	 * usuario existente en la aplicación.
 	 */
 	@Test
-	public void Test15_1_AdBorUsrVal() {
+	public void Test15_1_AdminDeleteUserValid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("Admin")).click();
@@ -654,7 +654,7 @@ public class Sdi1UO239795Test {
 	 * pero que no tenga perfil de administrador.
 	 */
 	@Test
-	public void Test15_2_AdBorUsrInVal() {
+	public void Test15_2_AdminDeleteUserInvalid() {
 		driver.get(URL + "?lang=en");
 		driver.findElement(By.linkText("Login")).click();
 		driver.findElement(By.linkText("User")).click();
@@ -670,6 +670,7 @@ public class Sdi1UO239795Test {
 		test.textoPresentePagina("Access is denied");
 	}
 }
+
 
 
 

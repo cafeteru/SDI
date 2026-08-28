@@ -1,35 +1,34 @@
 # SDI1-UO239795
 
-## Descripción
-Entregable 1 de la asignatura SDI. Aplicación basada en Spring Boot.
+## Description
+Deliverable 1 of the SDI subject. Spring Boot-based application.
 
-## Requisitos
+## Requirements
 - Java 1.8
 - Maven
 
-## Instalación
+## Installation
 ```sh
 mvn clean install
 ```
 
-## Ejecución
+## Execution
 ```sh
 mvn spring-boot:run
 ```
 
-## Dependencias principales
-La aplicación usa las siguientes tecnologías y dependencias:
+## Main Dependencies
+The application uses the following technologies and dependencies:
 - **Spring Boot 1.5.10** (Starter Web, JPA, Security, Thymeleaf, Test)
-- **H2 Database** como base de datos en memoria
-- **SLF4J** para logging
+- **H2 Database** as an in-memory database
+- **SLF4J** for logging
 - **Spring Data REST HAL Browser**
 
-## Configuración
-El proyecto está configurado para compilar y ejecutarse con **Java 1.8** y **Maven**.
+## Configuration
+The project is configured to compile and run with **Java 1.8** and **Maven**.
 
-## Desarrollador
-- **Nombre:** Iván González Mahagamage
+## Developer
+- **Name:** Iván González Mahagamage
 - **Email:** ivangonzalezmahagamge@gmail.com
-- **Rol:** Developer
-- **Zona horaria:** UTC+2
-
+- **Role:** Developer
+- **Timezone:** UTC+2

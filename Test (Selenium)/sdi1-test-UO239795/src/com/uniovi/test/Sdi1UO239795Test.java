@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.Rule;
+import org.junit.rules.TestName;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -667,6 +669,7 @@ public class Sdi1UO239795Test {
 		test.textoPresentePagina("Forbidden");
 	}
 }
+
 
 
 

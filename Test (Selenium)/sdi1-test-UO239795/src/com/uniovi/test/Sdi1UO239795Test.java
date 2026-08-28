@@ -260,7 +260,7 @@ public class Sdi1UO239795Test {
 		test.waitChangeWeb();
 		driver.findElement(By.name("searchText")).sendKeys(email);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		driver.findElement(By.xpath("//input[@value='Enviar solicitud']"))
+		driver.findElement(By.xpath("//input[@value='Send request']"))
 				.click();
 		test.textoNoPresentePagina(email);
 	}
@@ -342,7 +342,7 @@ public class Sdi1UO239795Test {
 		test.waitChangeWeb();
 		test.textoPresentePagina("Mahagamage");
 		test.textoPresentePagina("González Mahagamage");
-		driver.findElement(By.xpath("//input[@value='Aceptar invitación']"))
+		driver.findElement(By.xpath("//input[@value='Accept invitation']"))
 				.click();
 		test.waitChangeWeb();
 		test.textoNoPresentePagina("Accept Request");
@@ -398,7 +398,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("text")).clear();
 		driver.findElement(By.name("text"))
 				.sendKeys("Prueba de contenido de post");
-		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
+		driver.findElement(By.xpath("//input[@value='Send']")).click();
 		test.waitChangeWeb();
 		test.textoPresentePagina("List of posts");
 		test.textoPresentePagina("Prueba Post");
@@ -509,7 +509,7 @@ public class Sdi1UO239795Test {
 		
 		driver.findElement(By.name("text")).sendKeys(imagenDePrueba);
 		driver.findElement(By.name("imgn")).sendKeys(imagenDePrueba);
-		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
+		driver.findElement(By.xpath("//input[@value='Send']")).click();
 		test.waitChangeWeb();
 		test.textoPresentePagina("List of posts");
 		test.textoPresentePagina("Prueba Post con foto");
@@ -542,7 +542,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("text")).clear();
 		driver.findElement(By.name("text"))
 				.sendKeys("Prueba de contenido de post sin foto");
-		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
+		driver.findElement(By.xpath("//input[@value='Send']")).click();
 		test.waitChangeWeb();
 		test.textoPresentePagina("List of posts");
 		test.textoPresentePagina("Prueba Post sin foto");
@@ -670,6 +670,8 @@ public class Sdi1UO239795Test {
 		test.textoPresentePagina("Access is denied");
 	}
 }
+
+
 
 
 

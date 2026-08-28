@@ -7,7 +7,7 @@ class Check {
         var password = $('input[name=password]').val();
         var repassword = $('input[name=passwordConfirm]').val();
         if (password !== repassword) {
-            alert("Error: las contraseñas no coinciden");
+            alert("These passwords do not match.");
             return false;
         }
         return true;

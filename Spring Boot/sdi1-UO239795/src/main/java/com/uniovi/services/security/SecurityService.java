@@ -4,9 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;;
 
 @Service
@@ -29,15 +34,22 @@ public class SecurityService {
 		return null;
 	}
 
-	public void autoLogin(String email, String password) {
+	private SecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
+
+	public void autoLogin(String email, String password, HttpServletRequest request, HttpServletResponse response) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 		UsernamePasswordAuthenticationToken aToken;
 		aToken = new UsernamePasswordAuthenticationToken(userDetails, password,
 				userDetails.getAuthorities());
-		authenticationManager.authenticate(aToken);
-		if (aToken.isAuthenticated()) {
-			SecurityContextHolder.getContext().setAuthentication(aToken);
+		Authentication auth = authenticationManager.authenticate(aToken);
+		if (auth.isAuthenticated()) {
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			securityContextRepository.saveContext(SecurityContextHolder.getContext(), request, response);
 			logger.debug(String.format("Auto login %s successfully!", email));
 		}
 	}
 }
+
+
+
+

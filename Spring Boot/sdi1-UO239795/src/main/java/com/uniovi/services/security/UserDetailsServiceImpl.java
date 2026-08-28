@@ -20,6 +20,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email)
 			throws UsernameNotFoundException {
 		com.uniovi.entities.User user = usersRepository.findByEmail(email);
+		if (java.util.Objects.isNull(user)) {
+			throw new UsernameNotFoundException(email);
+		}
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
 		return new User(user.getEmail(), user.getPassword(),
@@ -27,3 +30,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 }
+
+

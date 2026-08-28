@@ -33,3 +33,6 @@ Traditional web application (MVC) rendered on the server using Thymeleaf templat
 
 ---
 *This document serves as a knowledge base for AI agents assisting in the improvement and maintenance of this project.*
+
+## Java Coding Standards
+- **Null Checks**: Always use \java.util.Objects.isNull(obj)\ or \java.util.Objects.nonNull(obj)\ instead of standard \== null\ or \!= null\ equality operators.

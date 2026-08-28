@@ -37,7 +37,7 @@ public class RequestController {
 	@GetMapping("/requests")
 	public String showReceiverRequests(Model model, Pageable pageable,
 			Principal principal) {
-		logService.info(principal.getName() + " lista sus peticiones");
+		logService.info(principal.getName() + " lists their requests");
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		Long id = user.getId();
@@ -50,7 +50,7 @@ public class RequestController {
 	@GetMapping("/request/send/{id}")
 	public String sendRequest(@PathVariable Long id, Principal principal) {
 		User user = usersService.getUserByEmail(principal.getName());
-		logService.info(principal.getName() + " envia una petición al usuario"
+		logService.info(principal.getName() + " sends request to user " + id
 				+ user.getEmail());
 		requestsService.add(new Request(user, usersService.getUser(id)));
 		return "redirect:/user/list";
@@ -60,7 +60,7 @@ public class RequestController {
 	public String acceptedRequest(@PathVariable Long id, Principal principal) {
 		User receiver = usersService.getUserByEmail(principal.getName());
 		User sender = usersService.getUser(id);
-		logService.info(principal.getName() + " acepto la amistad de "
+		logService.info(principal.getName() + " accepted friendship of "
 				+ sender.getEmail());
 		acceptBoth(receiver, sender);
 		createFriendshipBoth(receiver, sender);
@@ -154,3 +154,5 @@ public class RequestController {
 	}
 
 }
+
+

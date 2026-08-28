@@ -8,4 +8,6 @@ node_modules/
 /.metadata/
 /RemoteSystemsTempFiles/
 .recommenders/
-.vscode/
+.vscode/target/
+__pycache__/
+.venv/

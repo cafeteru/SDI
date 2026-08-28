@@ -14,6 +14,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
@@ -48,30 +51,30 @@ public class UserController {
 
 	@GetMapping("/signup")
 	public String signUp(Model model) {
-		logService.info("Usuario se intenta registrar");
+		logService.info("User tries to register");
 		model.addAttribute("user", new User());
 		return "signup";
 	}
 
 	@PostMapping("/signup")
 	public String signupPost(@Validated User user, BindingResult result,
-			Model model) {
+			Model model, HttpServletRequest request, HttpServletResponse response) {
 		signUpFormValidator.validate(user, result);
 		if (result.hasErrors()) {
-			logService.error("Usuario introdujo mal los datos");
+			logService.error("User introduced wrong data: " + result.getAllErrors());
 			return "signup";
 		}
-		logService.info("Usuario se ha registrado correctamente como "
+		logService.info("User registered successfully as "
 				+ user.getEmail());
 		user.setRole(rolesService.getUser());
 		usersService.add(user);
-		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
+		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm(), request, response);
 		return "redirect:home";
 	}
 
 	@GetMapping("/login")
 	public String login() {
-		logService.info("Usuario se intenta loggear");
+		logService.info("User tries to login");
 		return "login";
 	}
 
@@ -79,7 +82,7 @@ public class UserController {
 	public String listUsers(Model model, Pageable pageable,
 			@RequestParam(value = "", required = false) String searchText,
 			Principal principal) {
-		logService.info(principal.getName() + " lista los usuarios");
+		logService.info(principal.getName() + " lists users");
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> page = getUsers(pageable, searchText, user);
 		List<User> list = page.getContent();
@@ -96,7 +99,7 @@ public class UserController {
 	public String listUserAdmin(Model model, Principal principal,
 			Pageable pageable,
 			@RequestParam(value = "", required = false) String searchText) {
-		logService.info("Administrador " + principal.getName() + " "
+		logService.info("Admin " + principal.getName() + " "
 				+ "lista los usuarios");
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> page = getUsers(pageable, searchText, user);
@@ -108,30 +111,30 @@ public class UserController {
 
 	@GetMapping("/admin/login")
 	public String adminLoginGet() {
-		logService.info("Usuario se intenta loggear como admin");
+		logService.info("User tries to login as admin");
 		return "/adminLogin";
 	}
 
 	@PostMapping("/admin/login")
-	public String adminLoginPost(@Validated User user, Model model) {
+	public String adminLoginPost(@Validated User user, Model model, HttpServletRequest request, HttpServletResponse response) {
 		User user1 = usersService.getUserByEmail(user.getEmail());
 		if (user1 == null) {
-			logService.info("Usuario " + user.getEmail() + " no existe");
+			logService.info("User " + user.getEmail() + " does not exist");
 			model.addAttribute("noExist", "noExist");
 			return "/adminLogin";
 		}
 		if (!user1.getRole().equals(rolesService.getAdmin())) {
-			logService.info("Usuario " + user.getEmail() + " no es un Admin");
+			logService.info("User " + user.getEmail() + " is not an Admin");
 			model.addAttribute("noAdmin", "noAdmin");
 			return "/adminLogin";
 		}
 		if (!bCryptPasswordEncoder.matches(user.getPassword(),
 				user1.getPassword())) {
-			logService.info("Usuario " + user.getEmail() + " no es un Admin");
+			logService.info("User " + user.getEmail() + " is not an Admin");
 			model.addAttribute("password", "password");
 			return "/adminLogin";
 		}
-		securityService.autoLogin(user.getEmail(), user.getPassword());
+		securityService.autoLogin(user.getEmail(), user.getPassword(), request, response);
 		logService.info(
 				"Usuario " + user.getEmail() + " se ha logueado como Admin");
 		return "redirect:/home";
@@ -139,7 +142,7 @@ public class UserController {
 
 	@GetMapping("/home")
 	public String home(Model model, Principal principal) {
-		logService.info(principal.getName() + " se loggeo correctamente");
+		logService.info(principal.getName() + " logged in successfully");
 		return "/home";
 	}
 
@@ -155,7 +158,7 @@ public class UserController {
 	@PostMapping("/user/delete/{id}")
 	public String deleteUser(Principal principal, @PathVariable Long id) {
 		usersService.delete(id);
-		logService.info("Administrador " + principal.getName()
+		logService.info("Admin " + principal.getName()
 				+ " elimino al usuario con id " + id);
 		return "redirect:/admin/list";
 	}
@@ -163,7 +166,7 @@ public class UserController {
 	@GetMapping("/friends")
 	public String showFriends(Model model, Pageable pageable,
 			Principal principal) {
-		logService.info(principal.getName() + " lista sus amistades");
+		logService.info(principal.getName() + " lists their friendships");
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = usersService.findAllFriendsById(pageable,
 				user.getId());
@@ -173,3 +176,7 @@ public class UserController {
 	}
 
 }
+
+
+
+

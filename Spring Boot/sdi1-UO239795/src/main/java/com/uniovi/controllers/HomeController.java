@@ -12,8 +12,9 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String index() {
-		logService.info("Usuario ha entrado en la aplicación");
+		logService.info("User has entered the application");
 		return "index";
 	}
 
 }
+

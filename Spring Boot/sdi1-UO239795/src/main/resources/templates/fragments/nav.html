@@ -31,7 +31,7 @@
                 </ul>
             </li>
             <li class="nav-item active">
-                <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/admin/list" th:text="#{nav.admin}">Inicio</a>
+                <a sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-link" href="/admin/list" th:text="#{nav.admin}">Inicio</a>
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">

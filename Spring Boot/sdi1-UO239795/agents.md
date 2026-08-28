@@ -29,7 +29,7 @@ Traditional web application (MVC) rendered on the server using Thymeleaf templat
    - Review WebSecurity configurations to ensure endpoints are properly protected.
 
 ## Agent Rules & Guidelines
-- **Language Policy:** ALL documentation created within the project (e.g., `.md` files), commit messages, branch names, and anything published to GitHub (such as Pull Requests descriptions and titles) MUST be written in English.
+- **Language Policy (STRICT):** Even if the user interacts with the AI agent in Spanish, ALL documentation created within the project (e.g., `.md` files), commit messages, branch names, code comments, and anything published to GitHub (such as Pull Request descriptions and titles) MUST be written strictly in English without exceptions.
 
 ---
 *This document serves as a knowledge base for AI agents assisting in the improvement and maintenance of this project.*

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-<head th:replace="fragments/head" />
+<head th:replace="~{fragments/head}" />
 
 <body>
-    <nav th:replace="fragments/nav" />
+    <nav th:replace="~{fragments/nav}" />
     <main class="container">
         <h1 th:text="#{login.title}">Idéntificate</h1>
         <form class="form-horizontal" method="post" action="/login">
@@ -39,7 +39,7 @@
             </div>
         </form>
     </main>
-    <footer th:replace="fragments/footer" />
+    <footer th:replace="~{fragments/footer}" />
 </body>
 
 </html>

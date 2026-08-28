@@ -126,7 +126,8 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("password")).clear();
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		test.textoPresentePagina("Admin: List of user");
+		test.textoPresentePagina("User authenticated as");
+		test.textoPresentePagina("ivangonzalezmahagamage@gmail.com");
 		test.textoPresentePagina("Logout");
 		test.textoNoPresentePagina("Login");
 	}
@@ -563,7 +564,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("password")).clear();
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		test.textoPresentePagina("Admin: List of user");
+		test.textoPresentePagina("igm1990@hotmail.com");
 		test.textoPresentePagina("Logout");
 		test.textoNoPresentePagina("Admin Login");
 	}
@@ -666,6 +667,8 @@ public class Sdi1UO239795Test {
 		test.textoPresentePagina("Forbidden");
 	}
 }
+
+
 
 
 

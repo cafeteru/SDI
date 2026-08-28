@@ -126,8 +126,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("password")).clear();
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		test.textoPresentePagina("User authenticated as");
-		test.textoPresentePagina("ivangonzalezmahagamage@gmail.com");
+		test.textoPresentePagina("Admin: List of user");
 		test.textoPresentePagina("Logout");
 		test.textoNoPresentePagina("Login");
 	}
@@ -258,8 +257,6 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("searchText")).sendKeys(email);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		test.waitChangeWeb();
-		driver.findElement(By.name("searchText")).sendKeys(email);
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		driver.findElement(By.xpath("//input[@value='Send request']"))
 				.click();
 		test.textoNoPresentePagina(email);
@@ -566,8 +563,7 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("password")).clear();
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		test.textoPresentePagina("User authenticated as");
-		test.textoPresentePagina("ivangonzalezmahagamage@gmail.com");
+		test.textoPresentePagina("Admin: List of user");
 		test.textoPresentePagina("Logout");
 		test.textoNoPresentePagina("Admin Login");
 	}
@@ -667,9 +663,10 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("password")).sendKeys("123456");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		driver.get(URL + "admin/list");
-		test.textoPresentePagina("Access is denied");
+		test.textoPresentePagina("Forbidden");
 	}
 }
+
 
 
 

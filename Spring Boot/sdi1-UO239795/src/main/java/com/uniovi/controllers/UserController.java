@@ -14,6 +14,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
@@ -55,7 +58,7 @@ public class UserController {
 
 	@PostMapping("/signup")
 	public String signupPost(@Validated User user, BindingResult result,
-			Model model) {
+			Model model, HttpServletRequest request, HttpServletResponse response) {
 		signUpFormValidator.validate(user, result);
 		if (result.hasErrors()) {
 			logService.error("Usuario introdujo mal los datos");
@@ -65,7 +68,7 @@ public class UserController {
 				+ user.getEmail());
 		user.setRole(rolesService.getUser());
 		usersService.add(user);
-		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
+		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm(), request, response);
 		return "redirect:home";
 	}
 
@@ -113,7 +116,7 @@ public class UserController {
 	}
 
 	@PostMapping("/admin/login")
-	public String adminLoginPost(@Validated User user, Model model) {
+	public String adminLoginPost(@Validated User user, Model model, HttpServletRequest request, HttpServletResponse response) {
 		User user1 = usersService.getUserByEmail(user.getEmail());
 		if (user1 == null) {
 			logService.info("Usuario " + user.getEmail() + " no existe");
@@ -131,7 +134,7 @@ public class UserController {
 			model.addAttribute("password", "password");
 			return "/adminLogin";
 		}
-		securityService.autoLogin(user.getEmail(), user.getPassword());
+		securityService.autoLogin(user.getEmail(), user.getPassword(), request, response);
 		logService.info(
 				"Usuario " + user.getEmail() + " se ha logueado como Admin");
 		return "redirect:/home";
@@ -173,3 +176,4 @@ public class UserController {
 	}
 
 }
+

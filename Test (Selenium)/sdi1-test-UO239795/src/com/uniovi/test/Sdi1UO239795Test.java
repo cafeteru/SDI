@@ -11,7 +11,8 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.uniovi.test.util.Random;
 import com.uniovi.test.util.TestUtil;
@@ -21,13 +22,13 @@ public class Sdi1UO239795Test {
 
 	private static String email;
 
-	private static String PathFirefox = "../Firefox46.win/FirefoxPortable.exe";
+	
 	private static String URL = "http://localhost:8090/";
-	private static WebDriver driver = getDriver(PathFirefox);
+	private static WebDriver driver = getDriver();
 
-	public static WebDriver getDriver(String PathFirefox) {
-		System.setProperty("webdriver.firefox.bin", PathFirefox);
-		WebDriver driver = new FirefoxDriver();
+	public static WebDriver getDriver() {
+		ChromeOptions options = new ChromeOptions(); options.addArguments("--headless", "--window-size=1920,1080", "--disable-gpu", "--no-sandbox");
+		WebDriver driver = new ChromeDriver(options);
 		return driver;
 	}
 
@@ -446,7 +447,7 @@ public class Sdi1UO239795Test {
 		test.waitChangeWeb();
 		driver.findElement(By.linkText("Amigos")).click();
 		test.waitChangeWeb();
-		driver.findElement(By.xpath("//input[@value='Ver publilcaciones']"))
+		driver.findElement(By.xpath("//form[contains(@action, '/post/friends/')]/input"))
 				.click();
 		test.waitChangeWeb();
 		test.textoPresentePagina("Lista de publicaciones de");
@@ -502,10 +503,10 @@ public class Sdi1UO239795Test {
 		driver.findElement(By.name("title")).sendKeys("Prueba Post con foto");
 		driver.findElement(By.name("text")).click();
 		driver.findElement(By.name("text")).clear();
-		String imagenDePrueba = "file:///";
+		String imagenDePrueba = "";
 		imagenDePrueba += System.getProperty("user.dir");
 		imagenDePrueba += "\\imagenDePrueba.jpg";
-		imagenDePrueba = imagenDePrueba.replace("\\", "/");
+		
 		driver.findElement(By.name("text")).sendKeys(imagenDePrueba);
 		driver.findElement(By.name("imgn")).sendKeys(imagenDePrueba);
 		driver.findElement(By.xpath("//input[@value='Enviar']")).click();
@@ -669,3 +670,5 @@ public class Sdi1UO239795Test {
 		test.textoPresentePagina("Access is denied");
 	}
 }
+
+

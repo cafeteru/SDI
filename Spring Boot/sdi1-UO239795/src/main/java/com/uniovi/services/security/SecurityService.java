@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,12 +41,15 @@ public class SecurityService {
 		UsernamePasswordAuthenticationToken aToken;
 		aToken = new UsernamePasswordAuthenticationToken(userDetails, password,
 				userDetails.getAuthorities());
-		authenticationManager.authenticate(aToken);
-		if (aToken.isAuthenticated()) {
-			SecurityContextHolder.getContext().setAuthentication(aToken);
+		Authentication auth = authenticationManager.authenticate(aToken);
+		if (auth.isAuthenticated()) {
+			SecurityContextHolder.getContext().setAuthentication(auth);
 			securityContextRepository.saveContext(SecurityContextHolder.getContext(), request, response);
 			logger.debug(String.format("Auto login %s successfully!", email));
 		}
 	}
 }
+
+
+
 

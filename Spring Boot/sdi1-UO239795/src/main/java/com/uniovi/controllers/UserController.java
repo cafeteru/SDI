@@ -61,7 +61,7 @@ public class UserController {
 			Model model, HttpServletRequest request, HttpServletResponse response) {
 		signUpFormValidator.validate(user, result);
 		if (result.hasErrors()) {
-			logService.error("User introduced wrong data");
+			logService.error("User introduced wrong data: " + result.getAllErrors());
 			return "signup";
 		}
 		logService.info("User registered successfully as "
@@ -176,6 +176,7 @@ public class UserController {
 	}
 
 }
+
 
 
 

@@ -43,7 +43,7 @@ public class UsersService {
 	}
 
 	public User getUser(Long id) {
-		return usersRepository.findOne(id);
+		return usersRepository.findById(id).orElse(null);
 	}
 
 	public Page<User> findAllByRequestReceiverId(Pageable pageable, Long id) {
@@ -55,7 +55,7 @@ public class UsersService {
 	}
 
 	public void delete(Long id) {
-		usersRepository.delete(id);
+		usersRepository.deleteById(id);
 	}
 
 }

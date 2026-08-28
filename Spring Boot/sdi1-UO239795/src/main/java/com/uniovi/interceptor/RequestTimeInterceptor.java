@@ -1,15 +1,15 @@
 package com.uniovi.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.uniovi.services.util.LogService;
 
 @Component
-public class RequestTimeInterceptor extends HandlerInterceptorAdapter {
+public class RequestTimeInterceptor implements HandlerInterceptor {
 
 	private final LogService log = new LogService(this);
 
@@ -17,7 +17,7 @@ public class RequestTimeInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		request.setAttribute("time", System.currentTimeMillis());
-		return super.preHandle(request, response, handler);
+		return true;
 	}
 
 	@Override
@@ -28,7 +28,6 @@ public class RequestTimeInterceptor extends HandlerInterceptorAdapter {
 				- (long) request.getAttribute("time");
 		log.info("Request URL: " + request.getRequestURL().toString()
 				+ " -> Total time: " + time + " ms");
-		super.afterCompletion(request, response, handler, ex);
 	}
 
 }

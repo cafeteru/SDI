@@ -26,7 +26,7 @@ public class RequestsService {
 	}
 
 	public Request getById(Long id) {
-		return requestRepository.findOne(id);
+		return requestRepository.findById(id).orElse(null);
 	}
 
 	public void modify(Request request) {

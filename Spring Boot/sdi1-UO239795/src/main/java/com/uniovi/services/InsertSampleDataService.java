@@ -6,7 +6,7 @@ import com.uniovi.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.text.Normalizer;
 import java.util.HashSet;
 import java.util.Iterator;

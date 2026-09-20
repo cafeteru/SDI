@@ -12,14 +12,18 @@
                     <th scope="col" th:text="#{signup.name}">Column heading</th>
                     <th scope="col" th:text="#{signup.surname}">Column heading</th>
                     <th scope="col">Email</th>
-                    <th scope="col" th:text="#{nav.post}">Email</th>
+                    <th scope="col" th:text="#{messages.unread}">Mensajes no leídos</th>
+                    <th scope="col" th:text="#{nav.post}">Post</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="table-light" th:each="user:${usersList}">
-                    <td th:text="${user.name}">Column content</td>
+                    <td>
+                        <a th:href="${'/chat/' + user.id}" th:text="${user.name}">Column content</a>
+                    </td>
                     <td th:text="${user.surName}">Column content</td>
                     <td th:text="${user.email}">Column content</td>
+                    <td th:text="${unreadMessages.get(user.id)}">0</td>
                     <td>
                         <form th:attr="action=${'/post/friends/' + user.id}">
                             <input type="submit" class="btn btn-info" th:attr="value=#{post.button.friend}" />

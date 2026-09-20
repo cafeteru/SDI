@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="~{fragments/head}" />
+
+<body>
+    <nav th:replace="~{fragments/nav}" />
+    <main class="container">
+        <h2 class="mt-4">
+            <span th:text="#{messages.chatWith}">Chat con</span>
+            <span th:text="${friend.name + ' ' + friend.surName}">Amigo</span>
+        </h2>
+        
+        <!-- Buscador -->
+        <form class="form-inline mb-3" th:action="${'/chat/' + friend.id}" method="get">
+            <input class="form-control mr-sm-2" type="search" name="search" th:value="${search}" placeholder="Buscar en el chat..." aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+            <a th:if="${search != null}" th:href="${'/chat/' + friend.id}" class="btn btn-outline-secondary ml-2">Limpiar</a>
+        </form>
+
+        <div class="card mb-4">
+            <div id="chatContainer" class="card-body" style="height: 500px; overflow-y: auto; display: flex; flex-direction: column;">
+                <div th:each="msg : ${messages}" class="mb-3" th:classappend="${msg.sender.id == user.id ? 'text-right' : 'text-left'}">
+                    <div th:if="${msg.sender.id == user.id}" class="d-inline-block p-2 bg-primary text-white rounded text-left" style="max-width: 75%;">
+                        <strong th:text="${msg.sender.name}">Yo</strong>
+                        <p th:if="${msg.text != null and !msg.text.isEmpty()}" class="mb-1" th:text="${msg.text}">Mensaje</p>
+                        <div th:if="${msg.img != null}">
+                            <img th:src="${msg.img}" alt="Imagen enviada" class="img-fluid rounded mt-2" style="max-height: 200px;"/>
+                        </div>
+                        <small class="text-white-50 d-block mt-1" th:text="${#temporals.format(msg.date, 'dd/MM/yyyy HH:mm:ss')}">Fecha</small>
+                    </div>
+                    <div th:unless="${msg.sender.id == user.id}" class="d-inline-block p-2 bg-light text-dark rounded border text-left" style="max-width: 75%;">
+                        <strong th:text="${msg.sender.name}">Amigo</strong>
+                        <p th:if="${msg.text != null and !msg.text.isEmpty()}" class="mb-1" th:text="${msg.text}">Mensaje</p>
+                        <div th:if="${msg.img != null}">
+                            <img th:src="${msg.img}" alt="Imagen recibida" class="img-fluid rounded mt-2" style="max-height: 200px;"/>
+                        </div>
+                        <small class="text-muted d-block mt-1" th:text="${#temporals.format(msg.date, 'dd/MM/yyyy HH:mm:ss')}">Fecha</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-footer bg-white">
+                <form th:action="${'/chat/' + friend.id}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                    <input type="text" name="text" class="form-control mr-2" th:placeholder="#{messages.type}" />
+                    
+                    <label class="btn btn-outline-secondary mb-0 mr-2" style="cursor: pointer;" title="Adjuntar imagen">
+                        &#128247;
+                        <input type="file" name="imgn" accept="image/*" style="display: none;" onchange="this.form.querySelector('#fileNameDisplay').textContent = this.files[0].name;" />
+                    </label>
+                    
+                    <button type="submit" class="btn btn-success" th:text="#{messages.send}">Enviar</button>
+                </form>
+                <small id="fileNameDisplay" class="text-muted mt-1 d-block"></small>
+            </div>
+        </div>
+        
+    </main>
+    <footer th:replace="~{fragments/footer}" />
+
+    <!-- Script para auto-scroll al final del chat -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var chatContainer = document.getElementById("chatContainer");
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        });
+    </script>
+</body>
+</html>

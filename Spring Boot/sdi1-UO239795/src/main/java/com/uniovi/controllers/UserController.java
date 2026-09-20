@@ -163,6 +163,9 @@ public class UserController {
 		return "redirect:/admin/list";
 	}
 
+	@Autowired
+	private com.uniovi.services.MessageService messageService;
+
 	@GetMapping("/friends")
 	public String showFriends(Model model, Pageable pageable,
 			Principal principal) {
@@ -170,7 +173,14 @@ public class UserController {
 		User user = usersService.getUserByEmail(principal.getName());
 		Page<User> users = usersService.findAllFriendsById(pageable,
 				user.getId());
+		
+		java.util.Map<Long, Long> unreadMessages = new java.util.HashMap<>();
+		for (User friend : users.getContent()) {
+			unreadMessages.put(friend.getId(), messageService.getUnreadMessagesCount(user, friend));
+		}
+		
 		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("page", users);
 		return "/users/friends";
 	}
